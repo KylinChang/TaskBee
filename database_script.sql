@@ -8,19 +8,19 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema TaskBee
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema TaskBee
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
-USE `mydb` ;
+CREATE SCHEMA IF NOT EXISTS `TaskBee` DEFAULT CHARACTER SET utf8 ;
+USE `TaskBee` ;
 
 -- -----------------------------------------------------
--- Table `mydb`.`User_Info`
+-- Table `TaskBee`.`User_Info`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`User_Info` (
+CREATE TABLE IF NOT EXISTS `TaskBee`.`User_Info` (
   `username` VARCHAR(16) NOT NULL,
   `email` VARCHAR(255) NULL,
   `password` VARCHAR(32) NOT NULL,
@@ -32,9 +32,9 @@ CREATE TABLE IF NOT EXISTS `mydb`.`User_Info` (
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`User_Task_Post`
+-- Table `TaskBee`.`User_Task_Post`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`User_Task_Post` (
+CREATE TABLE IF NOT EXISTS `TaskBee`.`User_Task_Post` (
   `task_id` INT NOT NULL,
   `user_id` INT NOT NULL,
   PRIMARY KEY (`task_id`, `user_id`))
@@ -42,9 +42,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`User_Task_Serve`
+-- Table `TaskBee`.`User_Task_Serve`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`User_Task_Serve` (
+CREATE TABLE IF NOT EXISTS `TaskBee`.`User_Task_Serve` (
   `task_id` INT NOT NULL,
   `user_id` INT NOT NULL,
   `poster_id` INT NOT NULL,
@@ -53,9 +53,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`User_Post`
+-- Table `TaskBee`.`User_Post`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`User_Post` (
+CREATE TABLE IF NOT EXISTS `TaskBee`.`User_Post` (
   `post_id` INT NOT NULL,
   `user_id` INT NULL,
   PRIMARY KEY (`post_id`))
@@ -63,9 +63,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`User_Follow_Up`
+-- Table `TaskBee`.`User_Follow_Up`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`User_Follow_Up` (
+CREATE TABLE IF NOT EXISTS `TaskBee`.`User_Follow_Up` (
   `follow_up_id` INT NOT NULL,
   `user_id` INT NULL,
   `post_id` INT NULL,
@@ -74,9 +74,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`User_Tag`
+-- Table `TaskBee`.`User_Tag`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`User_Tag` (
+CREATE TABLE IF NOT EXISTS `TaskBee`.`User_Tag` (
   `user_id` INT NOT NULL,
   `tag_id` INT NOT NULL,
   PRIMARY KEY (`user_id`, `tag_id`))
@@ -84,9 +84,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Task_Info`
+-- Table `TaskBee`.`Task_Info`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`Task_Info` (
+CREATE TABLE IF NOT EXISTS `TaskBee`.`Task_Info` (
   `task_id` INT NOT NULL,
   `task_poster_id` INT NULL,
   `is_taken` TINYINT NULL,
@@ -103,9 +103,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Task_Tag`
+-- Table `TaskBee`.`Task_Tag`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`Task_Tag` (
+CREATE TABLE IF NOT EXISTS `TaskBee`.`Task_Tag` (
   `task_id` INT NOT NULL,
   `skill_tag_id` INT NOT NULL,
   PRIMARY KEY (`task_id`, `skill_tag_id`))
@@ -113,9 +113,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Post_Info`
+-- Table `TaskBee`.`Post_Info`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`Post_Info` (
+CREATE TABLE IF NOT EXISTS `TaskBee`.`Post_Info` (
   `post_id` INT NOT NULL,
   `posted_id` INT NULL,
   `post_time` TIMESTAMP NULL,
@@ -126,9 +126,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Post_Tag`
+-- Table `TaskBee`.`Post_Tag`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`Post_Tag` (
+CREATE TABLE IF NOT EXISTS `TaskBee`.`Post_Tag` (
   `post_id` INT NOT NULL,
   `topic_tag_id` INT NOT NULL,
   PRIMARY KEY (`post_id`, `topic_tag_id`))
@@ -136,9 +136,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Follow_Up_Info`
+-- Table `TaskBee`.`Follow_Up_Info`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`Follow_Up_Info` (
+CREATE TABLE IF NOT EXISTS `TaskBee`.`Follow_Up_Info` (
   `follow_up_id` INT NOT NULL,
   `post_id` INT NULL,
   `poster_id` INT NULL,
@@ -150,9 +150,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Skill_Tag`
+-- Table `TaskBee`.`Skill_Tag`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`Skill_Tag` (
+CREATE TABLE IF NOT EXISTS `TaskBee`.`Skill_Tag` (
   `skill_tag_id` INT NOT NULL,
   `skill` VARCHAR(45) NULL,
   `skill_description` VARCHAR(200) NULL,
@@ -161,9 +161,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Topic_Tag`
+-- Table `TaskBee`.`Topic_Tag`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`Topic_Tag` (
+CREATE TABLE IF NOT EXISTS `TaskBee`.`Topic_Tag` (
   `topic_tag_id` INT NOT NULL,
   `topic` VARCHAR(45) NULL,
   `topic_description` VARCHAR(1000) NULL,
