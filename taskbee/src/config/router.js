@@ -64,4 +64,19 @@ export const Tabs = TabNavigator(
   }
 );
 
-export const Root = Log;
+export const Root = StackNavigator({
+  Log: {
+    screen: Log,
+    navigationOptions: {
+      header: null,
+    },
+  },
+  Tabs: {
+    screen: Tabs,
+    navigationOptions: {
+      headerBackImage: null,
+    },
+  },
+}, {
+  initialRouteName: 'Log',
+});

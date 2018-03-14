@@ -47,12 +47,6 @@ class Log extends Component{
     super(props);
   }
 
-  onSubmit(navigator){
-    navigator.push({
-      component: Tabs,
-    });
-  }
-
   render(){
     const {navigator} = this.props;
 
@@ -73,7 +67,7 @@ class Log extends Component{
             <SubmitButton
               backgroundColor={"#FFF"}
               text={"Login"}
-              onPress={() => this.onSubmit(navigator)}/>
+              onPress={() => this.props.navigation.navigate('Tabs')}/>
             <SubmitButton
               backgroundColor={config.colorPrimary}
               text={"Register"}
