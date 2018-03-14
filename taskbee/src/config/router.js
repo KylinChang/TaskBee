@@ -2,6 +2,8 @@ import React from 'react';
 import {TabNavigator, StackNavigator} from 'react-navigation';
 import FontAwesome, { Icons } from 'react-native-fontawesome';
 
+import config from '../config/config';
+import Log from '../screens/log';
 import Task from '../screens/task';
 import Message from '../screens/message';
 import Forum from '../screens/forum';
@@ -16,6 +18,9 @@ export const Tabs = TabNavigator(
       navigationOptions: {
         title: 'Task',
         tabBarIcon: (<FontAwesome style={{fontSize: tabBarFontSize}}>{Icons.forumbee}</FontAwesome>),
+        headerStyle: {
+          backgroundColor: config.colorPrimary,
+        },
       },
     },
     Message: {
@@ -23,6 +28,9 @@ export const Tabs = TabNavigator(
       navigationOptions: {
         title: 'Message',
         tabBarIcon: (<FontAwesome style={{fontSize: tabBarFontSize}}>{Icons.comments}</FontAwesome>),
+        headerStyle: {
+          backgroundColor: config.colorPrimary,
+        },
       },
     },
     Forum: {
@@ -30,6 +38,9 @@ export const Tabs = TabNavigator(
       navigationOptions: {
         title: 'Forum',
         tabBarIcon: (<FontAwesome style={{fontSize: tabBarFontSize}}>{Icons.compass}</FontAwesome>),
+        headerStyle: {
+          backgroundColor: config.colorPrimary,
+        },
       }
     },
     Profile: {
@@ -37,20 +48,20 @@ export const Tabs = TabNavigator(
       navigationOptions: {
         title: 'Me',
         tabBarIcon: (<FontAwesome style={{fontSize: tabBarFontSize}}>{Icons.user}</FontAwesome>),
+        headerStyle: {
+          backgroundColor: config.colorPrimary,
+        },
       },
     },
   },
   {
-    tabBarOptions:{activeBackgroundColor:'#add8e6'},
+    tabBarOptions:{
+      activeBackgroundColor:config.colorPrimary,
+    },
     animationEnabled: true,
     swipeEnabled: true,
+    tabBarPosition: 'bottom',
   }
 );
 
-export const Root = StackNavigator(
-  {
-    Tabs: {
-      screen: Tabs,
-    },
-  }
-);
+export const Root = Log;

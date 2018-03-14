@@ -14,6 +14,8 @@
 
   ```
   npm install
+  npm install rnpm -g
+  rnpm install react-native-material-kit
   react-native link
   ```
 
