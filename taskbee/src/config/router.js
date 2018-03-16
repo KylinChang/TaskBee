@@ -4,6 +4,7 @@ import FontAwesome, { Icons } from 'react-native-fontawesome';
 
 import config from '../config/config';
 import Log from '../screens/log';
+import Register from '../screens/register';
 import Task from '../screens/task';
 import Message from '../screens/message';
 import Forum from '../screens/forum';
@@ -71,10 +72,20 @@ export const Root = StackNavigator({
       header: null,
     },
   },
+  Register: {
+    screen: Register,
+    navigationOptions: {
+      title: "Register",
+      headerStyle: {
+        backgroundColor: config.colorPrimary,
+      },
+    }
+  },
   Tabs: {
     screen: Tabs,
     navigationOptions: {
       headerBackImage: null,
+      headerLeft: null,
     },
   },
 }, {

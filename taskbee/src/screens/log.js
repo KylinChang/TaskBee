@@ -2,10 +2,13 @@ import React, {Component} from 'react';
 import {
   View,
   Text,
+  TextInput,
   StyleSheet,
 } from 'react-native';
+import {MKTextField,MKColor,} from 'react-native-material-kit';
 
 import Tabs from '../config/router';
+import Register from './register';
 import config from '../config/config';
 import Flower from '../components/flower';
 import Icon from '../components/icon';
@@ -40,11 +43,22 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 64,
   },
+  inputView:{
+    height: 42,
+  },
+  inputText:{
+    fontSize: 18,
+  }
 });
 
 class Log extends Component{
   constructor(props){
     super(props);
+
+    this.state = {
+      username: '',
+      password: '',
+    };
   }
 
   render(){
@@ -64,6 +78,24 @@ class Log extends Component{
         <View style={styles.container}>
           <Icon style={styles.logo} name="taskbee" size={96} color={config.colorPrimary}/>
           <View style={styles.controls}>
+            <MKTextField
+              autoFocus
+              style={styles.inputView}
+              tintColor={MKColor.Orange}
+              textInputStyle={styles.inputText}
+              placeholder="email/username"
+              onChangeText={(text) => this.setState({username:text})}
+            />
+
+            <MKTextField
+              style={styles.inputView}
+              tintColor={MKColor.Orange}
+              textInputStyle={styles.inputText}
+              placeholder="password"
+              onChangeText={(text) => this.setState({password:text})}
+              password={true}
+            />
+
             <SubmitButton
               backgroundColor={"#FFF"}
               text={"Login"}
@@ -71,7 +103,7 @@ class Log extends Component{
             <SubmitButton
               backgroundColor={config.colorPrimary}
               text={"Register"}
-              onPress={()=>{}}/>
+              onPress={() => this.props.navigation.navigate('Register')}/>
           </View>
         </View>
       </View>
