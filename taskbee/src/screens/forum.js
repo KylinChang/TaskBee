@@ -11,14 +11,6 @@ import {
 import SearchBar from 'react-native-search-bar'
 import Tags from 'react-native-tags';
 
-const UselessComponent = () => <Tags
-  initialText=""
-  initialTags={['dog', 'cat', 'chicken']}
-  onChangeTags={() => console.log('')}
-  onTagPress={(index, tagLabel, event) => console.log(index, tagLabel, event)}
-  inputStyle={{ backgroundColor: 'white' }}
-/>;
-
 const items = ['Apple', 'Pie', 'Juice', 'Cake', 'Nuggets']
 export default class Forum extends Component <{}, {search: string}> {
    state = {
@@ -46,6 +38,14 @@ export default class Forum extends Component <{}, {search: string}> {
           onPress={() => {}}
           title='Post'
         />
+
+        <Tags
+          initialText=""
+          initialTags={['Type_A', 'Type_B', 'Type_C']}
+          onChangeTags={() => console.log('')}
+          onTagPress={(index, tagLabel, event) => console.log(index, tagLabel, event)}
+          inputStyle={{ backgroundColor: 'white' }}
+        />;
         
         <ScrollView contentContainerStyle={{ flex: 1 }}>
           {items
