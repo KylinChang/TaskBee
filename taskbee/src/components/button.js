@@ -61,6 +61,14 @@ class SubmitButton extends Component{
   }
 }
 
+const FabButton = MKButton.coloredFab()
+  .build();
+
+const AccentFabButton = MKButton.accentColoredFab()
+  .build();
+
 export {
   SubmitButton,
+  FabButton,
+  AccentFabButton,
 };

@@ -60,7 +60,7 @@ export const Tabs = TabNavigator(
       activeBackgroundColor:config.colorPrimary,
     },
     animationEnabled: true,
-    swipeEnabled: true,
+    swipeEnabled: false,
     tabBarPosition: 'bottom',
   }
 );

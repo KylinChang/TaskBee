@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -40,8 +41,10 @@
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		67988C2EEC7841779BD2E722 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C9CBFD59416E4BDB8C038F69 /* SimpleLineIcons.ttf */; };
 		688552CEBC6143D882BC03BA /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 26B935993CC74207892A557D /* MaterialIcons.ttf */; };
+		6902FA0DCB3647588E1DBBBD /* libRNSearchBar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 682C91010D3140D38F61E798 /* libRNSearchBar.a */; };
 		6C9C41CB1AB5490694B40228 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3FDD6DAD568649FFB3F51241 /* Foundation.ttf */; };
 		6F612EBA028141A6B715671A /* libRCTMaterialKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B3A5BBDB16734F5EBDA995EF /* libRCTMaterialKit.a */; };
+		81F4ABDE032D70A2FEBF9569 /* libPods-taskbee.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D65EFB8744FC26EF2E6DB790 /* libPods-taskbee.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		87216D916BAD4D4CA7A15025 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 034F769F715049F6B2C21ED8 /* Octicons.ttf */; };
 		8C9C175A1E7547C9B8DAFBE7 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 59D81A30F6CA4F5CBC79E4FF /* Zocial.ttf */; };
@@ -51,7 +54,6 @@
 		D8FD0340E8954588BF848FDD /* taskbee-icons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1766280D1A01406EB680F53D /* taskbee-icons.ttf */; };
 		E936B2DE8E8F419F95628CC6 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 724DAD4BCD4C4A5C9BDE8C4E /* Feather.ttf */; };
 		F3929E853D1A4618B96AAD29 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5E79B403C6AD489E94E4ED66 /* Entypo.ttf */; };
-		6902FA0DCB3647588E1DBBBD /* libRNSearchBar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 682C91010D3140D38F61E798 /* libRNSearchBar.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -354,8 +356,10 @@
 		00E356EE1AD99517003FC87E /* taskbeeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = taskbeeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* taskbeeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = taskbeeTests.m; sourceTree = "<group>"; };
+		0202BB744C8F463BBCB386BA /* RNSearchBar.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNSearchBar.xcodeproj; path = "../node_modules/react-native-search-bar/ios/RNSearchBar.xcodeproj"; sourceTree = "<group>"; };
 		034F769F715049F6B2C21ED8 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		05C03E262E8147C8BAA6718A /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
+		0903C0CE96852794BE11BDCA /* Pods-taskbee.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-taskbee.debug.xcconfig"; path = "Pods/Target Support Files/Pods-taskbee/Pods-taskbee.debug.xcconfig"; sourceTree = "<group>"; };
 		0B713A87A4894A1E8EFE3A20 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
 		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
@@ -378,6 +382,7 @@
 		5E79B403C6AD489E94E4ED66 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		618810ED37A84740A7738CF3 /* icon.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = icon.png; path = ../assets/icon.png; sourceTree = "<group>"; };
+		682C91010D3140D38F61E798 /* libRNSearchBar.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = archive.ar; name = libRNSearchBar.a; path = libRNSearchBar.a; sourceTree = "<group>"; };
 		724DAD4BCD4C4A5C9BDE8C4E /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
@@ -387,9 +392,9 @@
 		B3A5BBDB16734F5EBDA995EF /* libRCTMaterialKit.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTMaterialKit.a; sourceTree = "<group>"; };
 		C86CFEF284284E57BF4B0AD7 /* RCTMaterialKit.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTMaterialKit.xcodeproj; path = "../node_modules/react-native-material-kit/iOS/RCTMaterialKit.xcodeproj"; sourceTree = "<group>"; };
 		C9CBFD59416E4BDB8C038F69 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
+		D65EFB8744FC26EF2E6DB790 /* libPods-taskbee.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-taskbee.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D94DBC393E404531990E6E3B /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
-		0202BB744C8F463BBCB386BA /* RNSearchBar.xcodeproj */ = {isa = PBXFileReference; name = "RNSearchBar.xcodeproj"; path = "../node_modules/react-native-search-bar/ios/RNSearchBar.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		682C91010D3140D38F61E798 /* libRNSearchBar.a */ = {isa = PBXFileReference; name = "libRNSearchBar.a"; path = "libRNSearchBar.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		F5C191EA771D35CC35270E0E /* Pods-taskbee.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-taskbee.release.xcconfig"; path = "Pods/Target Support Files/Pods-taskbee/Pods-taskbee.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -421,6 +426,7 @@
 				B46EE8DB8C0748548751B4BD /* libRNVectorIcons.a in Frameworks */,
 				6F612EBA028141A6B715671A /* libRCTMaterialKit.a in Frameworks */,
 				6902FA0DCB3647588E1DBBBD /* libRNSearchBar.a in Frameworks */,
+				81F4ABDE032D70A2FEBF9569 /* libPods-taskbee.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -565,10 +571,20 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		18277DDD65781C5D985DB1AE /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				0903C0CE96852794BE11BDCA /* Pods-taskbee.debug.xcconfig */,
+				F5C191EA771D35CC35270E0E /* Pods-taskbee.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				2D16E6891FA4F8E400B85C8A /* libReact.a */,
+				D65EFB8744FC26EF2E6DB790 /* libPods-taskbee.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -652,6 +668,7 @@
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				35DAF0C731EC4615A7AD8592 /* Resources */,
 				D45BCA63205AA843003E810E /* Recovered References */,
+				18277DDD65781C5D985DB1AE /* Pods */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -728,10 +745,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "taskbee" */;
 			buildPhases = (
+				9B93DDD4E9B5875AD1127EFE /* [CP] Check Pods Manifest.lock */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
+				FC48B4238AE0037349339FFD /* [CP] Embed Pods Frameworks */,
+				057FBDC3DD20B75C9EEFB339 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1219,6 +1239,21 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
+		057FBDC3DD20B75C9EEFB339 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-taskbee/Pods-taskbee-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1232,6 +1267,42 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+		};
+		9B93DDD4E9B5875AD1127EFE /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-taskbee-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FC48B4238AE0037349339FFD /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-taskbee/Pods-taskbee-frameworks.sh",
+				"${PODS_ROOT}/../../node_modules/@mapbox/react-native-mapbox-gl/ios/Mapbox.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mapbox.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-taskbee/Pods-taskbee-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1361,6 +1432,7 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0903C0CE96852794BE11BDCA /* Pods-taskbee.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1385,6 +1457,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F5C191EA771D35CC35270E0E /* Pods-taskbee.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
