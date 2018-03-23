@@ -3,10 +3,14 @@ import React, {
 } from 'react';
 import {
   Text,
+  View,
   StyleSheet,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import {MKButton, mdl} from 'react-native-material-kit';
+
+import config from '../config/config';
+import Icon from '../components/icon';
 
 const styles = StyleSheet.create({
   submitButton: {
@@ -22,6 +26,40 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginVertical: 10,
+  },
+  button: {
+    backgroundColor: '#fff',
+    height: 48,
+    alignItems: 'center',
+    flex: 1,
+    flexDirection: 'row',
+    paddingHorizontal: config.normalPadding,
+  },
+  LineTextButton:{
+    backgroundColor: '#fff',
+    height: 48,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1,
+    paddingHorizontal: config.normalPadding,
+  },
+  LineButtonRight: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  textNormal: {
+    marginLeft: 9,
+    color: '#4a4a4a',
+  },
+  textMain: {
+    flex: 1,
+    textAlign: 'right',
+  },
+  textCenter: {
+    color: '#4a4a4a',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 
@@ -61,6 +99,58 @@ class SubmitButton extends Component{
   }
 }
 
+class LineButton extends Component{
+  static propTypes = {
+
+  }
+
+  constructor(props){
+    super(props);
+  }
+
+  render(){
+    return(
+      <MKButton
+        backgroundColor="#fff"
+        onPress={this.props.onPress}
+        style={[styles.button, this.props.style]}
+      >
+        {this.props.icon && <Icon size={16} name={this.props.icon} color={config.colorPrimary}/>}
+        <Text pointerEvents="none" style={styles.textNormal}>
+          {this.props.label}
+        </Text>
+        <View style={styles.LineButtonRight}>
+          <Text pointerEvents="none" style={styles.textMain}>
+          {this.props.text}
+          </Text>
+          {this.props.children}
+          {!this.props.noJump && <Icon size={16} name="right-open-big" color='#737373'/>}
+        </View>
+      </MKButton>
+    );
+  }
+}
+
+class LineTextButton extends Component{
+  constructor(props){
+    super(props);
+  }
+
+  render(){
+    return(
+      <MKButton
+        backgroundColor="#fff"
+        onPress={this.props.onPress}
+        style={[styles.LineTextButton, this.props.style]}
+      >
+        <Text pointerEvents="none" style={styles.textCenter}>
+          {this.props.label}
+        </Text>
+      </MKButton>
+    );
+  }
+}
+
 const FabButton = MKButton.coloredFab()
   .build();
 
@@ -71,4 +161,6 @@ export {
   SubmitButton,
   FabButton,
   AccentFabButton,
+  LineButton,
+  LineTextButton,
 };

@@ -10,7 +10,7 @@ import {
 import {
   TabNavigator,
 } from 'react-navigation';
-import Mapbox from '@mapbox/react-native-mapbox-gl';
+import MapboxGL from '@mapbox/react-native-mapbox-gl';
 import FontAwesome, { Icons } from 'react-native-fontawesome';
 
 import config from '../config/config';
@@ -20,18 +20,19 @@ import {
   FabButton,
 } from '../components/button';
 
-Mapbox.setAccessToken(config.mapboxPublicKey);
+MapboxGL.setAccessToken(config.mapboxPublicKey);
 
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: config.colorBackground,
   },
   fabContainer: {
     flex: 1,
     flexDirection: "row",
     position: 'absolute',
-    bottom: 10,
+    bottom: 20,
     right: 10,
   },
   fabCol:{
@@ -47,23 +48,45 @@ class TaskMap extends Component{
     super(props);
 
     this.state = {
-      region: null
+      timestamp: 0,
+      latitude: 0.0,
+      longitude: 0.0,
+      altitude: 0.0,
     }
+
+    this.onUserLocationUpdate = this.onUserLocationUpdate.bind(this);
   }
 
-  onRegionChange(region) {
-    this.setState({ region });
+  onUserLocationUpdate(location) {
+    this.setState({
+      timestamp: location.timestamp,
+      latitude: location.coords.latitude,
+      longitude: location.coords.longitude,
+      altitude: location.coords.altitude,
+    });
   }
 
   render(){
     return (
       <View style={{flex:1}}>
-        <Mapbox.MapView
+        <MapboxGL.MapView
             zoomLevel={15}
-            centerCoordinate={[11.256, 43.770]}
+            centerCoordinate={[this.state.longitude, this.state.latitude]}
             style={{flex: 1}}
-            styleURL={Mapbox.StyleURL.Street}
+            styleURL={MapboxGL.StyleURL.Street}
+            rotateEnabled={true}
+            scrollEnabled={true}
+            showsUserLocation={true}
+            logoEnabled={false}
+            userTrackingMode={MapboxGL.UserTrackingModes.Follow}
+            onUserLocationUpdate={this.onUserLocationUpdate}
           />
+          <View>
+            <Text>Timestamp: {this.state.timestamp}</Text>
+            <Text>Latitude: {this.state.latitude}</Text>
+            <Text>Longitude: {this.state.longitude}</Text>
+            <Text>Altitude: {this.state.altitude}</Text>
+          </View>
       </View>
     );
   }
@@ -162,8 +185,8 @@ class Task extends Component{
         <TaskTabs />
         <View style={styles.fabContainer}>
           <View style={styles.fabCol}>
-            <AccentFabButton>
-              <FontAwesome>{Icons.map}</FontAwesome>
+            <AccentFabButton onPress={() => this.props.navigation.navigate('TaskMap')}>
+              <FontAwesome>{Icons.mapO}</FontAwesome>
             </AccentFabButton>
           </View>
           <View style={styles.fabCol}>
@@ -177,4 +200,7 @@ class Task extends Component{
   }
 }
 
-export default Task;
+export {
+  Task,
+  TaskMap,
+};

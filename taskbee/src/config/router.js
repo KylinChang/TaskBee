@@ -1,11 +1,15 @@
 import React from 'react';
-import {TabNavigator, StackNavigator} from 'react-navigation';
+import {
+  TabNavigator,
+  StackNavigator,
+  HeaderBackButton,
+} from 'react-navigation';
 import FontAwesome, { Icons } from 'react-native-fontawesome';
 
 import config from '../config/config';
 import Log from '../screens/log';
 import Register from '../screens/register';
-import Task from '../screens/task';
+import {Task, TaskMap,} from '../screens/task';
 import Message from '../screens/message';
 import Forum from '../screens/forum';
 import Profile from '../screens/profile';
@@ -17,7 +21,7 @@ export const Tabs = TabNavigator(
     Task: {
       screen: Task,
       navigationOptions: {
-        title: 'Task',
+        title: 'My Task',
         tabBarIcon: (<FontAwesome style={{fontSize: tabBarFontSize}}>{Icons.forumbee}</FontAwesome>),
         headerStyle: {
           backgroundColor: config.colorPrimary,
@@ -86,6 +90,17 @@ export const Root = StackNavigator({
     navigationOptions: {
       headerBackImage: null,
       headerLeft: null,
+    },
+  },
+  TaskMap: {
+    screen: TaskMap,
+    navigationOptions: {
+      headerStyle: {
+        position: 'absolute',
+        backgroundColor: 'transparent',
+        borderBottomWidth: 0,
+        zIndex: 100, top: 0, left: 0, right: 0
+      },
     },
   },
 }, {

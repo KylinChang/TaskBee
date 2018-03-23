@@ -13,4 +13,9 @@ export default config = {
   colorBlue: '#4A90E2',
   colorGreen: '#9FE0DB',
   colorPink: '#F9678F',
+
+  normalPadding: 14,
+  tabHeight: 48,
+  bannerHeight: Platform.OS === 'ios' ? 64 : 56,
+  textInputHeight: 48,
 };
