@@ -4,6 +4,7 @@ import React, {
 import {
   Text,
   View,
+  Image,
   StyleSheet,
 } from 'react-native';
 import PropTypes from 'prop-types';
@@ -35,7 +36,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingHorizontal: config.normalPadding,
   },
-  LineTextButton:{
+  lineTextButton:{
     backgroundColor: '#fff',
     height: 48,
     justifyContent: 'center',
@@ -43,11 +44,25 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: config.normalPadding,
   },
-  LineButtonRight: {
+  lineButtonRight: {
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
   },
+  accountButton: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: config.normalPadding,
+    height: 96,
+  },
+
+  accountButtonTextView: {
+    flex: 1,
+    flexDirection: 'column',
+    paddingHorizontal: config.normalPadding,
+  },
+
   textNormal: {
     marginLeft: 9,
     color: '#4a4a4a',
@@ -119,7 +134,7 @@ class LineButton extends Component{
         <Text pointerEvents="none" style={styles.textNormal}>
           {this.props.label}
         </Text>
-        <View style={styles.LineButtonRight}>
+        <View style={styles.lineButtonRight}>
           <Text pointerEvents="none" style={styles.textMain}>
           {this.props.text}
           </Text>
@@ -141,13 +156,42 @@ class LineTextButton extends Component{
       <MKButton
         backgroundColor="#fff"
         onPress={this.props.onPress}
-        style={[styles.LineTextButton, this.props.style]}
+        style={[styles.lineTextButton, this.props.style]}
       >
         <Text pointerEvents="none" style={styles.textCenter}>
           {this.props.label}
         </Text>
       </MKButton>
     );
+  }
+}
+
+class AccountButton extends Component{
+  constructor(props){
+    super(props);
+  }
+
+  render(){
+    return(
+    <MKButton
+      backgroundColor="#fff"
+      onPress={this.props.onPress}
+      style={[styles.accountButton, this.props.style]}
+    >
+      <Image
+        style={{width: 64, height: 64}}
+        source={{uri: this.props.imgUri}}
+      />
+      <View style={styles.accountButtonTextView}>
+        <Text pointerEvents="none" style={styles.textNormal}>
+          {this.props.username}
+        </Text>
+        <Text pointerEvents="none" style={styles.textNormal}>
+          {'Email: ' + this.props.email}
+        </Text>
+      </View>
+    </MKButton>
+  );
   }
 }
 
@@ -159,8 +203,10 @@ const AccentFabButton = MKButton.accentColoredFab()
 
 export {
   SubmitButton,
-  FabButton,
-  AccentFabButton,
   LineButton,
   LineTextButton,
+  AccountButton,
+
+  FabButton,
+  AccentFabButton,
 };

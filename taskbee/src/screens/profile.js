@@ -5,10 +5,12 @@ import {
   StyleSheet,
   ScrollView,
 } from 'react-native';
+import ImagePicker from 'react-native-image-crop-picker';
 
 import {
   LineButton,
   LineTextButton,
+  AccountButton,
 } from '../components/button';
 
 const styles = StyleSheet.create({
@@ -34,10 +36,34 @@ const styles = StyleSheet.create({
 });
 
 class Profile extends Component{
+  constructor(props){
+    super(props);
+
+    this.choose_avatar = this.choose_avatar.bind(this);
+  }
+
+  choose_avatar(){
+    // ImagePicker.openPicker({
+    //   width: 300,
+    //   height: 400,
+    //   cropping: true
+    // }).then(image => {
+    //   console.log(image);
+    // });
+  }
+
   render(){
     return (
       <View style={styles.container}>
         <ScrollView contentContainerStyle={styles.contentContainer}>
+          <View style={styles.section}>
+            <AccountButton
+              username={"Stephen"}
+              email={"gdgyzzl@gmail.com"}
+              imgUri={'https://facebook.github.io/react-native/docs/assets/favicon.png'}
+              onPress={this.choose_avatar}
+            />
+          </View>
           <View style={styles.section}>
             <LineButton icon="vallet" label={"Wallet"} text={'$'}/>
             <View style={styles.spliter}/>

@@ -1,4 +1,5 @@
 PODS:
+  - QBImagePickerController (3.4.0)
   - React (0.54.0):
     - React/Core (= 0.54.0)
   - react-native-mapbox-gl (6.1.0):
@@ -41,6 +42,10 @@ PODS:
     - React/Core
     - React/fishhook
     - React/RCTBlob
+  - RNImageCropPicker (0.20.0):
+    - QBImagePickerController
+    - RSKImageCropper
+  - RSKImageCropper (2.0.0)
   - yoga (0.54.0.React)
 
 DEPENDENCIES:
@@ -61,6 +66,7 @@ DEPENDENCIES:
   - React/RCTText (from `../node_modules/react-native`)
   - React/RCTVibration (from `../node_modules/react-native`)
   - React/RCTWebSocket (from `../node_modules/react-native`)
+  - RNImageCropPicker (from `../node_modules/react-native-image-crop-picker`)
   - yoga (from `../node_modules/react-native/ReactCommon/yoga/Yoga.podspec`)
 
 EXTERNAL SOURCES:
@@ -68,14 +74,19 @@ EXTERNAL SOURCES:
     :path: ../node_modules/react-native
   react-native-mapbox-gl:
     :path: ../node_modules/@mapbox/react-native-mapbox-gl
+  RNImageCropPicker:
+    :path: ../node_modules/react-native-image-crop-picker
   yoga:
     :path: ../node_modules/react-native/ReactCommon/yoga/Yoga.podspec
 
 SPEC CHECKSUMS:
+  QBImagePickerController: d54cf93db6decf26baf6ed3472f336ef35cae022
   React: c237e42de9c70e5cac6eeb52b4cfd3a0910c1f00
   react-native-mapbox-gl: b42480060cdcc515dfa3d8e403fb4dd32466a1b9
+  RNImageCropPicker: a637beb8f4c76bf9fe8a89d404ad65a33c4215ac
+  RSKImageCropper: d9a1acbc0600bf8decc8f0d21895872c99a9e4cf
   yoga: 55da126afc384965b96bff46652464373b330add
 
-PODFILE CHECKSUM: 3a70007d1b695ed49a05a46dcf6195327ce88def
+PODFILE CHECKSUM: 75d6ee1d7660966bfe7ee351bad963c7630b3197
 
 COCOAPODS: 1.4.0
