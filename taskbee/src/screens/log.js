@@ -15,7 +15,8 @@ import Flower from '../components/flower';
 import Icon from '../components/icon';
 import {SubmitButton,} from '../components/button';
 
-import {login} from '../reducers/user';
+import {login, } from '../reducers/user';
+// import {socket, } from '../utils/socket';
 
 const styles = StyleSheet.create({
   main: {
@@ -67,7 +68,18 @@ class Log extends Component{
   }
 
   loginSubmit(){
-
+    let msg = {
+      username: this.state.username,
+      password: this.state.password,
+    };
+    this.setState({username: "submit"});
+    socket.emit(
+      'login',
+      msg,
+      function(err, message){
+        
+      }
+    );
   }
 
   render(){
@@ -108,11 +120,12 @@ class Log extends Component{
             <SubmitButton
               backgroundColor={"#FFF"}
               text={"Login"}
-              onPress={() => this.props.navigation.navigate('Tabs')}/>
+              onPress={this.loginSubmit}/>
             <SubmitButton
               backgroundColor={config.colorPrimary}
               text={"Register"}
               onPress={() => this.props.navigation.navigate('Register')}/>
+            <Text>{this.state.username}</Text>
           </View>
         </View>
       </View>
