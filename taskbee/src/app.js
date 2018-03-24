@@ -7,7 +7,7 @@ import Reducers from './reducers/index';
 import {login, } from './reducers/user';
 
 const store = createStore(Reducers);
-store.dispatch(login());
+// store.dispatch(login());
 
 class App extends Component{
   render(){

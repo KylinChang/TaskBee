@@ -1,8 +1,9 @@
 const LOGIN="USER/LOGIN";
 
 const initialState = {
-  loggingIn: false,
-  username: "test",
+  logError: false,
+  loggedIn: false,
+  username: "",
 };
 
 function user(state=initialState, action){
@@ -10,15 +11,17 @@ function user(state=initialState, action){
     case LOGIN:
       return Object.assign({}, state, {
         loggedIn: true,
+        username: username,
       })
     default:
       return state;
   }
 }
 
-function login(){
+function login(username){
   return {
     type: LOGIN,
+    username: username,
   }
 }
 

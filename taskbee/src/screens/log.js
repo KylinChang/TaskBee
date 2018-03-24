@@ -15,7 +15,7 @@ import Flower from '../components/flower';
 import Icon from '../components/icon';
 import {SubmitButton,} from '../components/button';
 
-import {}
+import {login} from '../reducers/user';
 
 const styles = StyleSheet.create({
   main: {
@@ -62,6 +62,8 @@ class Log extends Component{
       username: '',
       password: '',
     };
+
+    this.loginSubmit = this.loginSubmit.bind(this);
   }
 
   loginSubmit(){
@@ -118,4 +120,11 @@ class Log extends Component{
   }
 }
 
-export default Log;
+export default connect(
+  state => ({
+    logError: state.user.logError,
+    loggedIn: state.user.loggedIn,
+  }),
+  {
+    login,
+  })(Log);
