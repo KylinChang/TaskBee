@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {
+  Text,
   View,
   StyleSheet,
 } from 'react-native';
@@ -28,6 +29,10 @@ const styles = StyleSheet.create({
 });
 
 class Message extends Component{
+  constructor(props){
+    super(props);
+  }
+
   render(){
     return(
       <View style={styles.container}>
@@ -38,6 +43,10 @@ class Message extends Component{
             </FabButton>
           </View>
         </View>
+        {/* <View>
+          <Text>{this.props.store.user.loggedIn}</Text>
+          <Text>{this.props.store.user.username}</Text>
+        </View> */}
       </View>
     );
   }

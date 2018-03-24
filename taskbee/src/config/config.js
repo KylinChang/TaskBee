@@ -4,6 +4,7 @@ import React, {
 
 export default config = {
   isIOS: Platform.OS == 'ios',
+  DEVWebsite: 'http://localhost:3000',
 
   mapboxPublicKey: 'pk.eyJ1Ijoia3lsaW5jaGFuZyIsImEiOiJjamV0aHNjbjcwaTc3MnFtcGg2c2VlZnNhIn0.H2aVgZ8lkQDkeF1nXOZISg',
 

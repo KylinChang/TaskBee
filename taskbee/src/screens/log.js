@@ -5,6 +5,7 @@ import {
   TextInput,
   StyleSheet,
 } from 'react-native';
+import {connect} from 'react-redux';
 import {MKTextField,MKColor,} from 'react-native-material-kit';
 
 import Tabs from '../config/router';
@@ -13,6 +14,8 @@ import config from '../config/config';
 import Flower from '../components/flower';
 import Icon from '../components/icon';
 import {SubmitButton,} from '../components/button';
+
+import {}
 
 const styles = StyleSheet.create({
   main: {
@@ -59,6 +62,10 @@ class Log extends Component{
       username: '',
       password: '',
     };
+  }
+
+  loginSubmit(){
+
   }
 
   render(){
