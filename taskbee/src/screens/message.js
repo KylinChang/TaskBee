@@ -80,6 +80,8 @@ class Message extends React.Component {
     this.setState(previousState => ({
       messages: GiftedChat.append(previousState.messages, messages),
     }))
+    console.log(messages);
+    socket.emit("sendmessage", messages[0].text);
   }
   renderBubble (props) {
   return (

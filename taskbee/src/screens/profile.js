@@ -13,9 +13,6 @@ import {
   AccountButton,
 } from '../components/button';
 
-import {
-  socket,
-} from '../utils/socket';
 
 const styles = StyleSheet.create({
   container:{
@@ -51,36 +48,53 @@ class Profile extends Component{
     };
   }
 
+
+
+/*
+change avatar.
+*/
   choose_avatar(){
     ImagePicker.openPicker({
       width: 300,
       height: 400,
       cropping: true
     }).then(image => {
-      this.setState({imgUri: image.path});
+        var thisStore = this;
+      // this.setState({imgUri: image.path});
 
 
       //send to server
-      // socket.emit("upload_photo", { data: {photo: image} });
-      console.log(image);
-      var photo = {
-          uri: image.sourceURL,
-          type: 'file',
-          name: 'photo',//image.filename
-      };
-
+      // console.log(image);
+    var photo = {
+            uri: image.sourceURL,
+            type: 'file',
+            name: 'photo',//image.filename
+            username: 'haolin',
+    };
     var body = new FormData();
-    // body.append('authToken', 'secret');
-    // body.append('photo', photo);
-    body.append('file', image.sourceURL);
-    // body.append('name', 'photo');
+        body.append('photo', photo);
+        // body.append('photo', "https://facebook.github.io/react-native/docs/assets/favicon.png");
+        body.append('username', 'haolin');
 
 
     console.log(body);
     var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+            console.log("get 1!");
+            console.log(xhr.responseText);
+            var imgUri = 'http://172.26.110.5:3000'+JSON.parse(xhr.responseText).url;
+            console.log(imgUri);
+            thisStore.setState({imgUri: imgUri});
+        }
+    };
     xhr.open('POST', 'http://172.26.110.5:3000/uploadphoto');
     // xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
     xhr.send(body);
+    // socket.on('uploadphotofinish', (res) => {
+    //     console.log("finish!");
+    //     console.log(res);
+    // })
 
 
 //     fetch('http://172.26.110.5:3000/uploadphoto', {

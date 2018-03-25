@@ -181,6 +181,7 @@ class AccountButton extends Component{
       <Image
         style={{width: 64, height: 64}}
         source={{uri: this.props.imgUri}}
+        key= {new Date()}
       />
       <View style={styles.accountButtonTextView}>
         <Text pointerEvents="none" style={styles.textNormal}>
