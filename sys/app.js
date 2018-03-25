@@ -187,7 +187,7 @@ io.on('connection', function(socket) {
                    info(string) indicates failure reason
                    message_content(string) contains all message haven't been received, fields corresponding to \
                                             message_queue tabel in db
-                   email(string) email of user
+                   user_info(JSON) user infos, fields corresponding to User_Info table in db
     */
     console.log(DATA);
 
@@ -200,7 +200,7 @@ io.on('connection', function(socket) {
 
       if (user_info_rows.length <= 0) {
         socket.emit("login_res", {state : false, info : "user name not found"});
-      } else if (uesr_info_rows[0].password != DATA.password) {
+      } else if (user_info_rows[0].password != DATA.password) {
         socket.emit("login_res", {state : false, info : "wrong password"});
       } else {
         user_socket[DATA.user_name] = socket.id;
@@ -214,7 +214,7 @@ io.on('connection', function(socket) {
           }
 
           socket.emit("login_res", {state : true, message_content : message_rows,
-                                  email : user_info_rows[0].email});
+                                  user_info : user_info_rows[0]});
         });
       }
 
@@ -274,32 +274,40 @@ io.on('connection', function(socket) {
   socket.on('send_message', function (DATA) {
     /*
      *  forward message from one user to another
-     *  params: DATA {send_user, receive_user, content}
+     *  params: DATA {send_user, receive_user, message_content}
      *  returns: None
      * */
     console.log(DATA);
 
     var receiver_socket_id = user_socket[DATA.receive_user];
+    console.log(user_socket);
+    console.log(receiver_socket_id);
+    console.log(io.sockets.sockets[receiver_socket_id]);
 
-    if (io.sockets.socket[receiver_socket_id] == undefined) {
+    //console.log(Object.keys(io.sockets.sockets));
+    if (io.sockets.sockets[receiver_socket_id] === undefined) {
+      console.log("receive user offline!");
       user_socket[DATA.receive_user] = undefined;
     }
 
     if (user_socket[DATA.receive_user] == undefined) {
+      console.log("can't find receive user!");
       insert_message_body = "insert into message_queue \
         (send_user, receive_user, content) \
-        VALUES( \'" + DATA.send_user + "\', \'" + DATA.receive_user + "\'" + DATA.content + "\' )";
+        VALUES( \'" + DATA.send_user + "\', \'" + DATA.receive_user + "\', \'" + DATA.message_content + "\' )";
 
       connection.query(insert_message_body, function(err, result) {
         if (err) {
           console.log('error in send message: insert message error!');
           throw err;
         }
+
       });
     } else {
+      console.log("message sent!");
       var date = new Date();
       var curdate = ""+date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
-      io.sockets.socket(receiver_socket_id).emit("push_message", {content: DATA.content, send_user: DATA.send_user, time: curdate});
+      io.to(receiver_socket_id).emit("push_message", {message_content: DATA.message_content, send_user: DATA.send_user, time: curdate});
     }
 });
 
