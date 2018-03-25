@@ -8,12 +8,12 @@ import {
   ScrollView,
   Image,
 } from 'react-native';
+import {connect} from 'react-redux';
 import {
   TabNavigator,
 } from 'react-navigation';
 import MapboxGL from '@mapbox/react-native-mapbox-gl';
 import FontAwesome, { Icons } from 'react-native-fontawesome';
-import { Container, Header, Content, List, ListItem} from 'native-base';
 
 import config from '../config/config';
 import Icon from '../components/icon';
@@ -21,10 +21,10 @@ import {
   AccentFabButton,
   FabButton,
 } from '../components/button';
-import {TaskItem, } from '../components/list';
-
-MapboxGL.setAccessToken(config.mapboxPublicKey);
-
+import {
+  TaskItem,
+  OrderItem,
+} from '../components/list';
 
 const styles = StyleSheet.create({
   container: {
@@ -43,59 +43,6 @@ const styles = StyleSheet.create({
   },
 });
 
-/*
-* The map view of tasks
-*/
-class TaskMap extends Component{
-  constructor(props){
-    super(props);
-
-    this.state = {
-      timestamp: 0,
-      latitude: 0.0,
-      longitude: 0.0,
-      altitude: 0.0,
-    }
-
-    this.onUserLocationUpdate = this.onUserLocationUpdate.bind(this);
-  }
-
-  onUserLocationUpdate(location) {
-    this.setState({
-      timestamp: location.timestamp,
-      latitude: location.coords.latitude,
-      longitude: location.coords.longitude,
-      altitude: location.coords.altitude,
-    });
-  }
-
-  render(){
-    return (
-      <View style={{flex:1}}>
-        <MapboxGL.MapView
-            zoomLevel={15}
-            centerCoordinate={[this.state.longitude, this.state.latitude]}
-            style={{flex: 1}}
-            styleURL={MapboxGL.StyleURL.Street}
-            rotateEnabled={true}
-            scrollEnabled={true}
-            showsUserLocation={true}
-            logoEnabled={false}
-            userTrackingMode={MapboxGL.UserTrackingModes.Follow}
-            onUserLocationUpdate={this.onUserLocationUpdate}
-          />
-          <View>
-            <Text>Timestamp: {this.state.timestamp}</Text>
-            <Text>Latitude: {this.state.latitude}</Text>
-            <Text>Longitude: {this.state.longitude}</Text>
-            <Text>Altitude: {this.state.altitude}</Text>
-          </View>
-      </View>
-    );
-  }
-}
-
-
 class TaskPost extends Component{
   constructor(props){
     super(props);
@@ -105,23 +52,16 @@ class TaskPost extends Component{
     return (
       <ScrollView>
         <TaskItem
-          username={"kk"}
           userImg={'https://facebook.github.io/react-native/docs/assets/favicon.png'}
-        />
-        <TaskItem
-          username={"kk"}
-          userImg={'https://facebook.github.io/react-native/docs/assets/favicon.png'}
-        />
-        <TaskItem
-          title={"Hello"}
           price={30}
-          username={"kk"}
-          taskImgs={[
-            {uri: 'https://facebook.github.io/react-native/docs/assets/favicon.png'},
-            {uri: 'https://facebook.github.io/react-native/docs/assets/favicon.png'}
-          ]}
-          description={"what are you doing man"}
+          title={"mama"}
+          username={"cool"}
+        />
+        <OrderItem
           userImg={'https://facebook.github.io/react-native/docs/assets/favicon.png'}
+          price={30}
+          title={"mama"}
+          username={"cool"}
         />
       </ScrollView>
     );
@@ -223,7 +163,7 @@ class Task extends Component{
             </AccentFabButton>
           </View>
           <View style={styles.fabCol}>
-            <FabButton>
+            <FabButton onPress={() => this.props.navigation.navigate('PostTask')}>
               <Image pointerEvents="none" source={require('../../assets/plus_white.png')}/>
             </FabButton>
           </View>
@@ -233,7 +173,9 @@ class Task extends Component{
   }
 }
 
-export {
-  Task,
-  TaskMap,
-};
+export default connect(
+    state => ({
+      username: state.user.username,
+      email: state.user.email,
+    }),
+)(Task);

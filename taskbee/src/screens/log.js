@@ -69,13 +69,20 @@ class Log extends Component{
 
   loginSubmit(){
     let msg = {
-      username: this.state.username,
+      user_name: this.state.username,
       password: this.state.password,
     };
+    this.props.login(this.state.username, "hello@gmail.com");
     this.props.navigation.navigate('Tabs');
     // socket.emit(
     //   'login',
-    //   msg
+    //   msg,
+    //   function(err, message){
+    //     if(message.state){
+    //       this.props.login(this.state.username);
+    //       this.props.navigation.navigate('Tabs');
+    //     }
+    //   }
     // );
   }
 

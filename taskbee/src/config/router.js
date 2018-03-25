@@ -9,7 +9,9 @@ import FontAwesome, { Icons } from 'react-native-fontawesome';
 import config from '../config/config';
 import Log from '../screens/log';
 import Register from '../screens/register';
-import {Task, TaskMap,} from '../screens/task';
+import Task from '../screens/task';
+import TaskMap from '../screens/taskMap';
+import PostTask from '../screens/postTask';
 import Message from '../screens/message';
 import Forum from '../screens/forum';
 import Profile from '../screens/profile';
@@ -103,6 +105,15 @@ export const Root = StackNavigator({
       },
     },
   },
+  PostTask: {
+    screen: PostTask,
+    navigationOptions: {
+      title: "Task Post",
+      headerStyle: {
+        backgroundColor: config.colorPrimary,
+      },
+    }
+  }
 }, {
   initialRouteName: 'Log',
 });
