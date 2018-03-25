@@ -56,8 +56,20 @@ const styles = StyleSheet.create({
     paddingHorizontal: config.normalPadding,
     height: 96,
   },
+  chatButton: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: config.normalPadding,
+    height: 48,
+  },
 
   accountButtonTextView: {
+    flex: 1,
+    flexDirection: 'column',
+    paddingHorizontal: config.normalPadding,
+  },
+  chatButtonTextView: {
     flex: 1,
     flexDirection: 'column',
     paddingHorizontal: config.normalPadding,
@@ -135,9 +147,9 @@ class LineButton extends Component{
           {this.props.label}
         </Text>
         <View style={styles.lineButtonRight}>
-          {/* <Text pointerEvents="none" style={styles.textMain}>
-          {this.props.text}
-          </Text> */}
+          <Text pointerEvents="none" style={styles.textMain}>
+          {""}
+          </Text>
           {this.props.children}
           {!this.props.noJump && <Icon size={16} name="right-open-big" color='#737373'/>}
         </View>
@@ -196,6 +208,37 @@ class AccountButton extends Component{
   }
 }
 
+class ChatButton extends Component{
+  constructor(props){
+    super(props);
+  }
+
+  render(){
+    const {onPress, style, imgUri, username, email} = this.props;
+
+    return(
+    <MKButton
+      backgroundColor="#fff"
+      onPress={onPress}
+      style={[styles.chatButton, style]}
+    >
+      <Image
+        style={{width: 36, height: 36}}
+        source={{uri: imgUri}}
+      />
+      <View style={styles.chatButtonTextView}>
+        <Text pointerEvents="none" style={styles.textNormal}>
+          {username}
+        </Text>
+        <Text pointerEvents="none" style={styles.textNormal}>
+          {'Email: ' + email}
+        </Text>
+      </View>
+    </MKButton>
+  );
+  }
+}
+
 const FabButton = MKButton.coloredFab()
   .build();
 
@@ -207,6 +250,7 @@ export {
   LineButton,
   LineTextButton,
   AccountButton,
+  ChatButton,
 
   FabButton,
   AccentFabButton,

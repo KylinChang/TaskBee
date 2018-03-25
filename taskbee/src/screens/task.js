@@ -20,6 +20,7 @@ import Icon from '../components/icon';
 import {
   AccentFabButton,
   FabButton,
+  ChatButton,
 } from '../components/button';
 import {
   TaskItem,
@@ -62,6 +63,11 @@ class TaskPost extends Component{
           price={30}
           title={"mama"}
           username={"cool"}
+        />
+        <ChatButton
+          imgUri={'https://facebook.github.io/react-native/docs/assets/favicon.png'}
+          username={"lala"}
+          email={"lala@gmail.com"}
         />
       </ScrollView>
     );
