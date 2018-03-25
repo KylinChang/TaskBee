@@ -230,7 +230,7 @@ io.on('connection', function(socket) {
     console.log(DATA);
 
     var query_user_name_body = "select * from User_Info where \
-                          username = " + DATA.user_name;
+                          username = \'" + DATA.user_name + "\'";
     connection.query(query_user_name_body, function(err, user_name_rows, field) {
       if (err) {
         console.log("error in register: query username!");
@@ -242,7 +242,7 @@ io.on('connection', function(socket) {
       }
 
       var query_email_body = "select * from User_Info where \
-                          email = " + DATA.email;
+                          email = \'" + DATA.email + "\'";
       connection.query(query_email_body, function(err, email_rows, field) {
         if (err) {
           console.log("error in register: query email!");
@@ -256,12 +256,14 @@ io.on('connection', function(socket) {
         var date = new Date();
         var curdate = ""+date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
         insert_user_info_body = 'insert into User_Info \
-        (username, email, password, creat_time, money) \
-        values( \'' + DATA.user_name + '\', \'' + DATA.email + ' ' + DATA.password + '\',\''
-    + date + '\', 0 )';
+        (username, email, password, create_time, money) \
+        values( \'' + DATA.user_name + '\', \'' + DATA.email + '\', \'' + DATA.password + '\',\''
+    + curdate + '\', 0 )';
 
         connection.query(insert_user_info_body, function(err, result) {
               if (err) throw err;
+
+              socket.emit("register_res", {state : true});
         });
       });
     });
@@ -284,7 +286,7 @@ io.on('connection', function(socket) {
     if (user_socket[DATA.receive_user] == undefined) {
       insert_message_body = "insert into message_queue \
         (send_user, receive_user, content) \
-        VALUES( \'" + DATA.send_user + "\', \'" + DATA.receive_user + "\'" + DATA.conten + "\'";
+        VALUES( \'" + DATA.send_user + "\', \'" + DATA.receive_user + "\'" + DATA.content + "\' )";
 
       connection.query(insert_message_body, function(err, result) {
         if (err) {
