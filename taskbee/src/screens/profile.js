@@ -13,6 +13,10 @@ import {
   AccountButton,
 } from '../components/button';
 
+import {
+  socket,
+} from '../utils/socket';
+
 const styles = StyleSheet.create({
   container:{
     flex: 1,
@@ -40,16 +44,56 @@ class Profile extends Component{
     super(props);
 
     this.choose_avatar = this.choose_avatar.bind(this);
+    this.state = {
+        imgUri: "https://facebook.github.io/react-native/docs/assets/favicon.png",
+        username: "Stephen",
+        email: "gdgyzzl@gmail.com"
+    };
   }
 
   choose_avatar(){
-    // ImagePicker.openPicker({
-    //   width: 300,
-    //   height: 400,
-    //   cropping: true
-    // }).then(image => {
-    //   console.log(image);
-    // });
+    ImagePicker.openPicker({
+      width: 300,
+      height: 400,
+      cropping: true
+    }).then(image => {
+      this.setState({imgUri: image.path});
+
+
+      //send to server
+      // socket.emit("upload_photo", { data: {photo: image} });
+      console.log(image);
+      var photo = {
+          uri: image.sourceURL,
+          type: 'file',
+          name: 'photo',//image.filename
+      };
+
+    var body = new FormData();
+    // body.append('authToken', 'secret');
+    // body.append('photo', photo);
+    body.append('file', image.sourceURL);
+    // body.append('name', 'photo');
+
+
+    console.log(body);
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'http://172.26.110.5:3000/uploadphoto');
+    // xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+    xhr.send(body);
+
+
+//     fetch('http://172.26.110.5:3000/uploadphoto', {
+//   headers: {
+//     'Accept': 'application/json',
+//     'Content-Type': 'multipart/form-data'
+//   },
+//   method: 'POST',
+//   body: body
+// });
+
+
+    });
   }
 
   render(){
@@ -58,9 +102,9 @@ class Profile extends Component{
         <ScrollView contentContainerStyle={styles.contentContainer}>
           <View style={styles.section}>
             <AccountButton
-              username={"Stephen"}
-              email={"gdgyzzl@gmail.com"}
-              imgUri={'https://facebook.github.io/react-native/docs/assets/favicon.png'}
+              username={this.state.username}
+              email={this.state.email}
+              imgUri={this.state.imgUri}
               onPress={this.choose_avatar}
             />
           </View>
@@ -74,6 +118,8 @@ class Profile extends Component{
           <View style={styles.section}>
             <LineTextButton label={"Log Out"}/>
           </View>
+
+
         </ScrollView>
       </View>
     );
