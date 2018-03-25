@@ -182,29 +182,30 @@ io.on('connection', function(socket) {
     /*
       login function
       params: DATA {user_name, password}
-      returns: DATA {state, info, message_content}
+      returns: DATA {state, info, message_content, email}
       return type: state(bool) indicates login state
                    info(string) indicates failure reason
                    message_content(string) contains all message haven't been received, fields corresponding to \
                                             message_queue tabel in db
+                   email(string) email of user
     */
     console.log(DATA);
 
-
-
     var query_login_body = "select * from User_Info where username = \'" + DATA.user_name + "\'";
-    connection.query(query_login_body, function(err, rows, fields) {
-      if (err) throw err;
-      console.log("error in login: query login error!");
+    connection.query(query_login_body, function(err, user_info_rows, fields) {
+      if (err) {
+        console.log("error in login: query login error!");
+        throw err;
+      }
 
-      if (rows.length <= 0) {
+      if (user_info_rows.length <= 0) {
         socket.emit("login_res", {state : false, info : "user name not found"});
-      } else if (rows[0].password != DATA.password) {
+      } else if (uesr_info_rows[0].password != DATA.password) {
         socket.emit("login_res", {state : false, info : "wrong password"});
       } else {
         user_socket[DATA.user_name] = socket.id;
-        query_message_body = "select * from message_queue where receive_user = " +
-                              DATA.user_name;
+        query_message_body = "select * from message_queue where receive_user = \'" +
+                              DATA.user_name + "\'";
 
         connection.query(query_message_body, function(err, message_rows, fields) {
           if (err) {
@@ -212,7 +213,8 @@ io.on('connection', function(socket) {
             throw err;
           }
 
-          socket.emit("login_res", {state : true, message_content : message_rows});
+          socket.emit("login_res", {state : true, message_content : message_rows,
+                                  email : user_info_rows[0].email});
         });
       }
 
