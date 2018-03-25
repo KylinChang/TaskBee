@@ -5,6 +5,7 @@ import {
   TextInput,
   StyleSheet,
   NativeModules,
+  ScrollView,
   Image,
 } from 'react-native';
 import {
@@ -12,6 +13,7 @@ import {
 } from 'react-navigation';
 import MapboxGL from '@mapbox/react-native-mapbox-gl';
 import FontAwesome, { Icons } from 'react-native-fontawesome';
+import { Container, Header, Content, List, ListItem} from 'native-base';
 
 import config from '../config/config';
 import Icon from '../components/icon';
@@ -19,6 +21,7 @@ import {
   AccentFabButton,
   FabButton,
 } from '../components/button';
+import {TaskItem, } from '../components/list';
 
 MapboxGL.setAccessToken(config.mapboxPublicKey);
 
@@ -94,16 +97,42 @@ class TaskMap extends Component{
 
 
 class TaskPost extends Component{
+  constructor(props){
+    super(props);
+  }
+
   render(){
     return (
-      <View>
-
-      </View>
+      <ScrollView>
+        <TaskItem
+          username={"kk"}
+          userImg={'https://facebook.github.io/react-native/docs/assets/favicon.png'}
+        />
+        <TaskItem
+          username={"kk"}
+          userImg={'https://facebook.github.io/react-native/docs/assets/favicon.png'}
+        />
+        <TaskItem
+          title={"Hello"}
+          price={30}
+          username={"kk"}
+          taskImgs={[
+            {uri: 'https://facebook.github.io/react-native/docs/assets/favicon.png'},
+            {uri: 'https://facebook.github.io/react-native/docs/assets/favicon.png'}
+          ]}
+          description={"what are you doing man"}
+          userImg={'https://facebook.github.io/react-native/docs/assets/favicon.png'}
+        />
+      </ScrollView>
     );
   }
 }
 
 class TaskUnderway extends Component{
+  constructor(props){
+    super(props);
+  }
+
   render(){
     return (
       <View>
@@ -114,6 +143,10 @@ class TaskUnderway extends Component{
 }
 
 class TaskHistory extends Component{
+  constructor(props){
+    super(props);
+  }
+
   render(){
     return (
       <View>

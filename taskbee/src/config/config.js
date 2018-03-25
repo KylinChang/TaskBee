@@ -1,10 +1,11 @@
 import React, {
-  Platform
+  Platform,
+  StyleSheet,
 } from 'react-native'
 
 export default config = {
   isIOS: Platform.OS == 'ios',
-  DEVWebsite: 'http://localhost:3000',
+  DEVWebsite: 'http://localhost:8000',
 
   mapboxPublicKey: 'pk.eyJ1Ijoia3lsaW5jaGFuZyIsImEiOiJjamV0aHNjbjcwaTc3MnFtcGg2c2VlZnNhIn0.H2aVgZ8lkQDkeF1nXOZISg',
 
@@ -14,6 +15,12 @@ export default config = {
   colorBlue: '#4A90E2',
   colorGreen: '#9FE0DB',
   colorPink: '#F9678F',
+  colorText: '#4A4A4A',
+  colorBorder: 'rgba(0,0,0,.1)',
+  colorSubtle: '#E7E7E7',
+
+  borderRaidus: 3,
+  borderWidth: StyleSheet.hairlineWidth,
 
   normalPadding: 14,
   tabHeight: 48,

@@ -72,14 +72,11 @@ class Log extends Component{
       username: this.state.username,
       password: this.state.password,
     };
-    this.setState({username: "submit"});
-    socket.emit(
-      'login',
-      msg,
-      function(err, message){
-        
-      }
-    );
+    this.props.navigation.navigate('Tabs');
+    // socket.emit(
+    //   'login',
+    //   msg
+    // );
   }
 
   render(){
@@ -125,7 +122,6 @@ class Log extends Component{
               backgroundColor={config.colorPrimary}
               text={"Register"}
               onPress={() => this.props.navigation.navigate('Register')}/>
-            <Text>{this.state.username}</Text>
           </View>
         </View>
       </View>

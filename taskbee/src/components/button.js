@@ -135,9 +135,9 @@ class LineButton extends Component{
           {this.props.label}
         </Text>
         <View style={styles.lineButtonRight}>
-          <Text pointerEvents="none" style={styles.textMain}>
+          {/* <Text pointerEvents="none" style={styles.textMain}>
           {this.props.text}
-          </Text>
+          </Text> */}
           {this.props.children}
           {!this.props.noJump && <Icon size={16} name="right-open-big" color='#737373'/>}
         </View>
