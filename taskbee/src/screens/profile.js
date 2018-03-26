@@ -6,6 +6,8 @@ import {
   ScrollView,
 } from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
+//import PaymentRequest from 'react-native-payments';
+global.PaymentRequest = require('react-native-payments').PaymentRequest;
 
 import {
   LineButton,
@@ -95,19 +97,43 @@ change avatar.
     //     console.log("finish!");
     //     console.log(res);
     // })
-
-
-//     fetch('http://172.26.110.5:3000/uploadphoto', {
-//   headers: {
-//     'Accept': 'application/json',
-//     'Content-Type': 'multipart/form-data'
-//   },
-//   method: 'POST',
-//   body: body
-// });
-
-
     });
+  }
+  addValue()
+  {
+      console.log("add value");
+      const METHOD_DATA = [{
+          supportedMethods: ['apple-pay'],
+          data: {
+              merchantIdentifier: 'merchant.com.your-app.namespace',
+              supportedNetworks: ['visa', 'mastercard', 'amex'],
+              countryCode: 'US',
+              currencyCode: 'USD'
+          }
+      }];
+
+      const DETAILS = {
+          id: 'basic-example',
+          displayItems: [
+              {
+                  label: 'Add Value to TaskBee Wallet',
+                  amount: { currency: 'USD', value: '30.00' }
+              }
+          ],
+          total: {
+              label: 'TaskBee Group',
+              amount: { currency: 'USD', value: '30.00' }
+          }
+      };
+
+      const paymentRequest = new PaymentRequest(METHOD_DATA, DETAILS);
+      paymentRequest.show().then(paymentResponse => {
+          // Your payment processing code goes here
+          paymentResponse.complete('success');
+          // send to server..
+
+          return processPayment(paymentResponse);
+      });
   }
 
   render(){
@@ -123,7 +149,8 @@ change avatar.
             />
           </View>
           <View style={styles.section}>
-            <LineButton icon="vallet" label={"Wallet"} text={'$'}/>
+            <LineButton icon="vallet" label={"Wallet"} text={'$'}
+              onPress = {this.addValue}/>
             <View style={styles.spliter}/>
             <LineButton label={"My Posts"}/>
             <View style={styles.spliter}/>
