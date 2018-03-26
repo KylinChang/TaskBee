@@ -14,7 +14,7 @@ import {
 } from 'react-navigation';
 import MapboxGL from '@mapbox/react-native-mapbox-gl';
 import FontAwesome, { Icons } from 'react-native-fontawesome';
-import {chat,} from '../reducers/user';
+import {task,} from '../reducers/user';
 import config from '../config/config';
 import Icon from '../components/icon';
 import {
@@ -48,13 +48,6 @@ const styles = StyleSheet.create({
 class TaskPost extends Component{
   constructor(props){
     super(props);
-    this.pressChat = this.pressChat.bind(this);
-  }
-
-  pressChat(itemUsername)
-  {
-    this.props.chat(itemUsername);
-    this.props.navigation.navigate('Chat');
   }
 
   render(){
@@ -66,13 +59,7 @@ class TaskPost extends Component{
           title={"mama"}
           username={"cool"}
         />
-        <OrderItem
-          userImg={'https://facebook.github.io/react-native/docs/assets/favicon.png'}
-          price={30}
-          onPressChat = {() => this.pressChat(itemUsername)}
-          title={"mama"}
-          username={itemUsername}
-        />
+
         <ChatButton
           imgUri={'https://facebook.github.io/react-native/docs/assets/favicon.png'}
           username={"lala"}
@@ -97,7 +84,7 @@ class TaskUnderway extends Component{
   }
 }
 
-class TaskHistory extends Component{
+class TaskTake extends Component{
   constructor(props){
     super(props);
   }
@@ -116,22 +103,22 @@ class TaskHistory extends Component{
 */
 const TaskTabs = TabNavigator(
   {
-    TaskPost: {
-      screen: TaskPost,
-      navigationOptions: {
-        title: 'Post',
-      },
-    },
     TaskUnderway: {
       screen: TaskUnderway,
       navigationOptions: {
         title: 'Underway',
       },
     },
-    TaskHistory: {
-      screen: TaskHistory,
+    TaskPost: {
+      screen: TaskPost,
       navigationOptions: {
-        title: 'History',
+        title: 'Post',
+      },
+    },
+    TaskTake: {
+      screen: TaskTake,
+      navigationOptions: {
+        title: 'Take',
       },
     },
   },
@@ -167,6 +154,21 @@ const TaskTabs = TabNavigator(
 );
 
 class Task extends Component{
+  componentWillMount(){
+    var xhr = new XMLHttpRequest();
+    var thisSave = this;
+    xhr.onreadystatechange = function () {
+      if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+        console.log("get forum data!");
+        console.log(xhr.responseText);
+        var forumList = JSON.parse(xhr.responseText).forumList; // array
+        thisSave.setState({forumList});
+      }
+    };
+    xhr.open('POST', 'http://172.26.110.5:3000/get_task_list');
+    xhr.send("");
+  }
+
   render(){
     return(
       <View style={styles.container}>
@@ -196,5 +198,5 @@ export default connect(
       email: state.user.email,
     }),
     {
-      chat,
+      task,
     })(Task);

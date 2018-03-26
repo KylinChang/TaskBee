@@ -80,6 +80,7 @@ class PostTask extends Component{
       startDate: new Date(),
       endDate: new Date(),
       priceText: "",
+      price: 0,
       descriptionValid: false,
       priceValid: true,
       tagValid: false,
@@ -95,11 +96,11 @@ class PostTask extends Component{
     this.openCalendar = this.openCalendar.bind(this);
   }
 
-  getYYYYMMDD(date){
-    let mm = date.getMonth();
+  getYYYYMMDD(date, spliter="-"){
+    let mm = date.getMonth()+1;
     let dd = date.getDate();
-    return [date.getFullYear()+"-",
-          (mm>9 ? '' : '0') + mm + "-",
+    return [date.getFullYear()+spliter,
+          (mm>9 ? '' : '0') + mm + spliter,
           (dd>9 ? '' : '0') + dd
          ].join('');
   }
@@ -136,7 +137,7 @@ class PostTask extends Component{
     }).then(images => {
       let taskImgs = [];
       for(let i=0; i<images.length; i++){
-        taskImgs.push(images[i].path);
+        taskImgs.push(images[i].sourceURL);
       }
       this.setState({taskImgs: taskImgs});
     });
@@ -146,7 +147,7 @@ class PostTask extends Component{
     const {goBack} = this.props.navigation;
 
     const {
-      description, price, askImgs, startDate, endDate
+      description, price, taskImgs, startDate, endDate, tags,
     } = this.state;
 
     if(description.length==0){
@@ -170,7 +171,37 @@ class PostTask extends Component{
 
     this.setState({hasErr: false});
 
-    goBack();
+    var body = new FormData();
+    taskImgs.forEach(function (d, i) {
+      body.append("photo", {
+        uri: d,
+        type: 'file',
+        name: 'photo',//image.filename
+        username: '123',
+      });
+    });
+
+
+    // body.append('photo', "https://facebook.github.io/react-native/docs/assets/favicon.png");
+    body.append('user_name', '123');
+    body.append('description', description);
+    body.append('price', price);
+    body.append('start_date', this.getYYYYMMDD(startDate));
+    body.append('end_date', this.getYYYYMMDD(endDate));
+    body.append('tag', tags[0]);
+
+    console.log(body);
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+      if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+        console.log("get response");
+        goBack();
+      }
+    };
+    xhr.open('POST', 'http://172.26.110.5:3000/post_task');
+    // xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+    xhr.send(body);
+
   }
 
   renderImages(){
@@ -204,6 +235,8 @@ class PostTask extends Component{
 
   render(){
     const {startDate, endDate} = this.state;
+    console.log(startDate);
+    console.log(endDate);
 
     return (
       <ScrollView style={styles.container}>
@@ -272,8 +305,8 @@ class PostTask extends Component{
           i18n="en"
           ref={(calendar) => {this.calendar = calendar;}}
           format="YYYYMMDD"
-          startDate={this.state.startDate}
-          endDate={this.state.endDate}
+          startDate={this.getYYYYMMDD(this.state.startDate, "")}
+          endDate={this.getYYYYMMDD(this.state.endDate, "")}
           onConfirm={this.confirmDate}
         />
       </ScrollView>

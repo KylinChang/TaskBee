@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
         marginLeft: 10, marginRight: 10,
     },
 });
+
 class Message extends Component{
     constructor(props){
         super(props);
@@ -47,9 +48,9 @@ class Message extends Component{
 
         <View style={styles.section}>
             <ChatButton
-                username={this.state.username}
-                email={this.state.email}
-                imgUri={this.state.imgUri}
+                username={item.buddy_name}
+                email={item.email}
+                imgUri={item.avatar}
                 onPress={() => this.props.navigation.navigate('Chat')}
             />
         </View>
@@ -64,34 +65,27 @@ class Message extends Component{
 
 
     render(){
+        const {buddies} = this.props;
+        var buddiesList = [];
+        for(var key in buddies)
+        {
+            buddiesList.push(buddies[key]);
+        }
+        buddiesList.sort(function (a, b) {
+            return a.date < b.date;
+        });
+        console.log(buddiesList);
+        //var buddiesList = Object.keys(buddies).sort(function (a, b) {
+        //    return buddies[a].date < buddies[b].date;
+        //});
         return(
             <View style={styles.container}>
-                /*<View style={styles.fabContainer}>
-                    <View style={styles.fabCol}>
-                        <FabButton>
-                            <FontAwesome>{Icons.userPlus}</FontAwesome>
-                        </FabButton>
-                    </View>
-                </View>*/
-                {/* <View>
-                 <Text>{this.props.store.user.loggedIn}</Text>
-                 <Text>{this.props.store.user.username}</Text>
-                 </View> */}
-                <FlatList
-                    data={this.props.data}
+                {buddiesList.length > 0 &&
+                    <FlatList
+                    data={buddiesList}
                     renderItem={this.renderItem}
-                />
-
-                /*<ScrollView contentContainerStyle={styles.contentContainer}>
-                    <View style={styles.section}>
-                        <ChatButton
-                            username={this.state.username}
-                            email={this.state.email}
-                            imgUri={this.state.imgUri}
-                            onPress={() => this.props.navigation.navigate('Chat')}
-                        />
-                    </View>
-                </ScrollView>*/
+                    />
+                }
             </View>
         );
     }

@@ -192,7 +192,7 @@ class AccountButton extends Component{
     >
       <Image
         style={{width: 64, height: 64}}
-        source={{uri: this.props.imgUri}}
+        source={{uri: this.props.imgUri?this.props.imgUri:config.defaultAvatar}}
         key= {new Date()}
       />
       <View style={styles.accountButtonTextView}>
@@ -224,7 +224,7 @@ class ChatButton extends Component{
     >
       <Image
         style={{width: 36, height: 36}}
-        source={{uri: imgUri}}
+        source={{uri: imgUri?imgUri:config.defaultAvatar}}
       />
       <View style={styles.chatButtonTextView}>
         <Text pointerEvents="none" style={styles.textNormal}>

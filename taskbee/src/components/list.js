@@ -131,7 +131,7 @@ class TaskItem extends Component{
       <View style={styles.taskItem}>
 
         <View style={styles.taskItemUser}>
-          <Image source={{uri: userImg}} key={new Date()} style={{width: 36, height: 36, marginLeft: 12}}/>
+          <Image source={{uri: userImg?userImg:config.defaultAvatar}} key={new Date()} style={{width: 36, height: 36, marginLeft: 12}}/>
           <Text style={styles.textUser}>{username}</Text>
           <View style={{flex: 1}}>
             <Text style={styles.textPrice}>{"$" + price}</Text>
@@ -174,11 +174,15 @@ class OrderItem extends Component{
       description, price, onPressChat, onPressAppointment,
     } = this.props;
 
+    let taskImgs_ = [];
+    taskImgs.forEach((k, i) => {
+      if(k) taskImgs_.push(k);
+    });
     return (
       <View style={styles.taskItem}>
 
         <View style={styles.taskItemUser}>
-          <Image source={{uri: userImg}} key={new Date()} style={{width: 36, height: 36, marginLeft: 12}}/>
+          <Image source={{uri: userImg?userImg:config.defaultAvatar}} key={new Date()} style={{width: 36, height: 36, marginLeft: 12}}/>
           <Text style={styles.textUser}>{username}</Text>
           <View style={{flex: 1}}>
             <Text style={styles.textPrice}>{"$" + price}</Text>
@@ -187,8 +191,8 @@ class OrderItem extends Component{
         <View style={styles.spliter}/>
         <View style={styles.taskItemDescription}>
           <Text style={styles.textDescription}>{description}</Text>
-          {taskImgs && taskImgs.length ?
-            this.renderImages(taskImgs)
+          {taskImgs_ && taskImgs_.length ?
+            this.renderImages(taskImgs_)
             : null}
         </View>
         <View style={styles.spliter}/>

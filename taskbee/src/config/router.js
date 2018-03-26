@@ -21,6 +21,16 @@ const tabBarFontSize = 32;
 
 export const Tabs = TabNavigator(
   {
+    Forum: {
+      screen: Forum,
+      navigationOptions: {
+        title: 'Discover',
+        tabBarIcon: (<FontAwesome style={{fontSize: tabBarFontSize}}>{Icons.compass}</FontAwesome>),
+        headerStyle: {
+          backgroundColor: config.colorPrimary,
+        },
+      }
+    },
     Task: {
       screen: Task,
       navigationOptions: {
@@ -40,16 +50,6 @@ export const Tabs = TabNavigator(
           backgroundColor: config.colorPrimary,
         },
       },
-    },
-    Forum: {
-      screen: Forum,
-      navigationOptions: {
-        title: 'Forum',
-        tabBarIcon: (<FontAwesome style={{fontSize: tabBarFontSize}}>{Icons.compass}</FontAwesome>),
-        headerStyle: {
-          backgroundColor: config.colorPrimary,
-        },
-      }
     },
     Profile: {
       screen: Profile,

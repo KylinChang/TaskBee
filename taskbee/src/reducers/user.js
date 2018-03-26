@@ -3,6 +3,8 @@ import config from '../config/config';
 const LOGIN="USER/LOGIN";
 const REGISTER ="USER/REGISTER";
 const CHAT="USER/CHAT";
+const GETTASK = "USER/GETTASK";
+const TAKETASK = "USER/TAKETASK";
 
 const initialState = {
   logError: false,
@@ -13,6 +15,7 @@ const initialState = {
   messages: [],
   buddies: {},
   buddy: "",
+  task_list: {},
 };
 
 function user(state=initialState, action){
@@ -26,6 +29,7 @@ function user(state=initialState, action){
         buddies: action.buddies,
         avatar: action.avatar,
         buddy: "",
+        task_list: {},
       });
     case REGISTER:
       return Object.assign({}, state, {
@@ -36,13 +40,23 @@ function user(state=initialState, action){
         messages: [],
         buddies: {},
         buddy: "",
+        task_list: {},
       });
     case CHAT:
       let buddies = Object.assign({}, state.buddies);
-      buddies[action.buddy] = new Date();
+      buddies[action.buddy] = {
+        buddy_name: action.buddy,
+        date: new Date(),
+        email: action.email,
+        avatar: action.avatar,
+      };
       return Object.assign({}, state, {
         buddies: buddies,
         buddy: action.budy,
+      });
+    case GETTASK:
+      return Object.assign({}, state, {
+        task_list: action.task_list,
       });
     default:
       return state;
@@ -69,16 +83,35 @@ function register(username, email, avatar){
   }
 }
 
-function chat(buddy)
+function chat(buddy, email, avatar)
 {
   return {
     type: CHAT,
     buddy: buddy,
+    email: email,
+    avatar: avatar,
   }
 }
+
+function getTask(task_list)
+{
+  return {
+    type: GETTASK,
+    task_list: task_list,
+  }
+}
+
+function takeTask(taskID){
+  return {
+    type: TAKETASK,
+    taskid: taskID,
+  };
+}
+
 export {
   user,
   login,
   register,
   chat,
+  getTask,
 };
