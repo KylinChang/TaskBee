@@ -257,6 +257,7 @@ app.post("/get_self_task", upload.single(), function(req, res, next) {
    *  get all self related tasks
    *  params: DATA {user_name}
    *  returns: tasks {
+   *              user_info (JSON, has all field of User_Info table in db)
    *              self_post_task (array)
    *              underway_task (array, include post and take)
    *              self_take_task (array)
@@ -299,7 +300,18 @@ app.post("/get_self_task", upload.single(), function(req, res, next) {
           throw err;
         }
 
-        res.json({self_post_task: post_task_rows, underway_rows: underway_rows, self_take_task: take_task_rows});
+        query_user_info_body = "select * from User_Info \
+              where username = \'" + DATA.user_name + "\'";
+
+        connection.query(query_user_info_body, function(err, user_info_rows, fields) {
+          if (err) {
+            console.log("error in get self task: get user info error!");
+            throw err;
+          }
+
+          res.json({user_info: user_info_rows[0], self_post_task: post_task_rows, underway_task: underway_rows, self_take_task: take_task_rows});
+        });
+
       });
     });
   });
