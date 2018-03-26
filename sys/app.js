@@ -230,7 +230,12 @@ app.post("/get_task_list", function(req, res, next) {
               throw err;
             }
 
-            task_list.push({task_info: task_row, tags: tag_rows, poster_info: user_rows[0]});
+            var tag_res = [];
+            for (var i = 0; i < tag_rows.length; i += 1) {
+              tag_res.push(tag_rows[i].tag);
+            }
+
+            task_list.push({task_info: task_row, tags: tag_res, poster_info: user_rows[0]});
 
             resolve(1);
           });
@@ -247,7 +252,7 @@ app.post("/get_task_list", function(req, res, next) {
   });
 });
 
-app.post("/get_self_task", function(DATA) {
+app.post("/get_self_task", upload.single(), function(req, res, next) {
   /*
    *  get all self related tasks
    *  params: DATA {user_name}
@@ -258,9 +263,10 @@ app.post("/get_self_task", function(DATA) {
    *            }
    *            ## note: every task in array has all fields of Task_Info in db
    * */
+  var DATA = req.body;
   console.log(DATA);
 
-  query_post_task_body = "select * from Task_Info \
+  var query_post_task_body = "select * from Task_Info \
         where poster_name = \'" + DATA.user_name + "\'";
 
   connection.query(query_post_task_body, function(err, post_task_rows, fields) {
@@ -273,7 +279,7 @@ app.post("/get_self_task", function(DATA) {
     var curdate = ""+date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
 
     query_underway_task = "select * from Task_Info, User_Task_Serve \
-            where Task_Info.task_id = User_Task_Serve.task_id and Task_Info.iscompleted = 0 \
+            where Task_Info.task_id = User_Task_Serve.task_id and Task_Info.is_completed = 0 \
             and Task_Info.end_date >= \'" + curdate + "\' and (Task_Info.poster_name = \'" +
             DATA.user_name + "\' or User_Task_Serve.taker_name = \'" + DATA.user_name + "\')"
 
@@ -285,7 +291,7 @@ app.post("/get_self_task", function(DATA) {
 
       query_take_task_body = "select * from Task_Info, User_Task_Serve \
             where Task_Info.task_id = User_Task_Serve.task_id and \
-            User_Task_Serve.taker_name = '\'" + DATA.user_name + "\'";
+            User_Task_Serve.taker_name = \'" + DATA.user_name + "\'";
 
       connection.query(query_take_task_body, function(err, take_task_rows, fields) {
         if (err) {
@@ -608,7 +614,7 @@ io.on('connection', function(socket) {
             throw err;
           }
 
-          // do nothing
+          socket.emit("take_task_res", {state: true});
         });
       });
     });
