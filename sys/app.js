@@ -97,7 +97,7 @@ app.post('/post_task', upload.array('photo', 3), function(req, res, next) {
                   price
                   start_date(YYYY-MM-DD)
                   end_date(YYYY-MM-DD)
-                  tag
+                  tag(array)
                   imgs(send by files)}
     returns: state (bool) indicate whether post succeed
 
@@ -155,20 +155,26 @@ app.post('/post_task', upload.array('photo', 3), function(req, res, next) {
 
     Promise.all(promises);
 
-    insert_task_tag_body = "insert into Task_Tag \
-                  (task_id, tag)                 \
-                  VALUES (" + result.insertId + ", \'" + req.body.tag + "\')";
-    console.log(insert_task_tag_body);
+    for (var i = 0; i < req.body.tag.length; i += 1) {
 
+      insert_task_tag_body = "insert into Task_Tag \
+                    (task_id, tag)                 \
+                    VALUES (" + result.insertId + ", \'" + req.body.tag[i] + "\')";
+      console.log(insert_task_tag_body);
 
-    connection.query(insert_task_tag_body, function(err, result) {
-      if (err) {
-        console.log("error in post task: insert tag error!");
-        throw err;
-      }
+      connection.query(insert_task_tag_body, function(err, result) {
+        if (err) {
+          console.log("error in post task: insert tag error!");
+          throw err;
+        }
 
-      res.json({state: true});
-    });
+        // do nothing
+      });
+
+    }
+
+    res.json({state: true});
+
   });
 });
 
@@ -237,6 +243,58 @@ app.post("/get_task_list", function(req, res, next) {
     Promise.all(promises).then(function(values) {
       console.log(task_list);
       res.json({forumList: task_list});
+    });
+  });
+});
+
+app.post("/get_self_task", function(DATA) {
+  /*
+   *  get all self related tasks
+   *  params: DATA {user_name}
+   *  returns: tasks {
+   *              self_post_task (array)
+   *              underway_task (array, include post and take)
+   *              self_take_task (array)
+   *            }
+   *            ## note: every task in array has all fields of Task_Info in db
+   * */
+  console.log(DATA);
+
+  query_post_task_body = "select * from Task_Info \
+        where poster_name = \'" + DATA.user_name + "\'";
+
+  connection.query(query_post_task_body, function(err, post_task_rows, fields) {
+    if (err) {
+      console.log("error in get self task: get post task error!");
+      throw err;
+    }
+
+    var date = new Date();
+    var curdate = ""+date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+
+    query_underway_task = "select * from Task_Info, User_Task_Serve \
+            where Task_Info.task_id = User_Task_Serve.task_id and Task_Info.iscompleted = 0 \
+            and Task_Info.end_date >= \'" + curdate + "\' and (Task_Info.poster_name = \'" +
+            DATA.user_name + "\' or User_Task_Serve.taker_name = \'" + DATA.user_name + "\')"
+
+    connection.query(query_underway_task, function(err, underway_rows, fields) {
+      if (err) {
+        console.log("error in get self task: get underway task error!");
+        throw err;
+      }
+
+      query_take_task_body = "select * from Task_Info, User_Task_Serve \
+            where Task_Info.task_id = User_Task_Serve.task_id and \
+            User_Task_Serve.taker_name = '\'" + DATA.user_name + "\'";
+
+      connection.query(query_take_task_body, function(err, take_task_rows, fields) {
+        if (err) {
+          console.log("error in get self task: get take task error!");
+          throw err;
+        }
+
+        res.json({self_post_task: post_task_rows, underway_rows: underway_rows, self_take_task: take_task_rows});
+      });
     });
   });
 });
