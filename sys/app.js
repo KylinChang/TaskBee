@@ -116,28 +116,44 @@ app.post('/post_task', upload.array('photo', 3), function(req, res, next) {
     }
 
     console.log(req);
+    promises = [];
+
     for (var i = 0; i < req.files.length; i += 1) {
+
       if (req.files[i] != undefined) {
-        var pic_name = './images/' + result.insertId.toString() + '_'  + i.toString() + '.JPG';
-        var fstream = fs.createWriteStream(pic_name);
 
-        fstream.write(req.files[i].buffer, function () {
-          console.log("write file" + i.toString() + " succeed!");
+        promises.push( new Promise (
 
-          insert_img_url_body = "insert into Task_Info \
-                      (img_url" + i.toString() + ")    \
-                      VALUES (\'" + pic_name.substr(1) + "\' )";
+          function(resolve, reject) {
 
-          connection.query(insert_img_url_body, function(err, result) {
-            if (err) {
-              console.log("error in post task, insert image url error!");
-              throw err;
-            }
-          });
-        });
-        fstream.end();
+            var pic_name = './images/' + result.insertId.toString() + '_'  + i.toString() + '.JPG';
+            var fstream = fs.createWriteStream(pic_name);
+            var update_img_url_body = "update Task_Info set \
+                        img_url" + i.toString() + " = \'" + pic_name.substr(1) + "\' \
+                        where task_id = \'" + result.insertId + "\'";
+
+            fstream.write(req.files[i].buffer, function () {
+              //console.log("write file" + i.toString() + " succeed!");
+
+              console.log(update_img_url_body);
+
+              connection.query(update_img_url_body, function(err, result) {
+                if (err) {
+                  console.log("error in post task, insert image url error!");
+                  throw err;
+                }
+
+                resolve(1);
+                // do nothing
+              });
+            });
+            fstream.end();
+          }
+        ));
       }
     }
+
+    Promise.all(promises);
 
     insert_task_tag_body = "insert into Task_Tag \
                   (task_id, tag)                 \
@@ -163,7 +179,7 @@ app.post("/get_task_list", function(req, res, next) {
    *  returns: Tasks [
                      task_info (Json object, have all fields of Task_Info table in db \
                            note: img_url can be NULL)
-                     tags[] (array of tags)
+                     tags ([], array of tags)
                      poster_info (Json object, have all fields of tabel User_Info in db)
                      ]
    * */
@@ -173,7 +189,8 @@ app.post("/get_task_list", function(req, res, next) {
   var curdate = ""+date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
 
   var query_task_body = "select * from Task_Info \
-    where is_complete = " + 0 + " and end_date > \'" + curdate + "\'";
+    where is_completed = " + 0 + " and end_date >= \'" + curdate + "\'";
+  //console.log(query_task_body);
 
   connection.query(query_task_body, function(err, task_rows, fields) {
     if (err) {
@@ -184,9 +201,12 @@ app.post("/get_task_list", function(req, res, next) {
     var promises = []
     var task_list = []
 
-    for (var i = 0; i < task_rows.length(); i += 1) {
+    for (var i = 0; i < task_rows.length; i += 1) {
       var query_tag_body = "select tag from Task_Tag \
               where task_id = \'" + task_rows[i].task_id + "\'";
+      var query_user_info_body = "select * from User_Info \
+              where username = \'" + task_rows[i].poster_name + "\'";
+      var task_row = task_rows[i];
 
       var promise = new Promise(function(resolve, reject) {
 
@@ -196,8 +216,7 @@ app.post("/get_task_list", function(req, res, next) {
             throw err;
           }
 
-          var query_user_info_body = "select * from User_Info \
-                  where user_name = \'" + task_rows[i].poster_name + "\'";
+          console.log(query_user_info_body);
 
           connection.query(query_user_info_body, function(err, user_rows, fields) {
             if (err) {
@@ -205,18 +224,18 @@ app.post("/get_task_list", function(req, res, next) {
               throw err;
             }
 
-            task_list.task_info = task_rows[i];
-            task_list.tags = tag_rows;
-            task_list.poster_info = user_rows;
+            task_list.push({task_info: task_row, tags: tag_rows, poster_info: user_rows[0]});
+
+            resolve(1);
           });
         });
-
       });
 
       promises.push(promise);
     }
 
     Promise.all(promises).then(function(values) {
+      console.log(task_list);
       res.json({forumList: task_list});
     });
   });
