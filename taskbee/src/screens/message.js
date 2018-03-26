@@ -4,6 +4,7 @@ import {
     View,
     StyleSheet,
     ScrollView,
+    FlatList,
 } from 'react-native';
 import FontAwesome, { Icons } from 'react-native-fontawesome';
 import {connect} from 'react-redux';
