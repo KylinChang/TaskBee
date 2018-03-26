@@ -72,23 +72,6 @@ class Log extends Component{
       user_name: this.state.username,
       password: this.state.password,
     };
-<<<<<<< HEAD
-    this.props.login(this.state.username, "hello@gmail.com");
-    this.props.navigation.navigate('Tabs');
-    // socket.on(
-    //   'login_res',
-    //   function(data){
-    //     if(data.state){
-    //       this.props.login(this.state.username, "hello@gmail.com");
-    //       this.props.navigation.navigate('Tabs');
-    //     }
-    //   }
-    // );
-=======
-    // this.props.login(this.state.username, "hello@gmail.com");
-    // this.props.navigation.navigate('Tabs');
-
->>>>>>> 2b48cfd01082e437523bb4c099c37e5543cc4158
     socket.emit(
       'login',
       msg
