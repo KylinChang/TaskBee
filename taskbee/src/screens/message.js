@@ -43,12 +43,17 @@ class Message extends Component{
             email: "gdgyzzl@gmail.com",
             buddiesList: [],
         };
+        const {buddiesList} = this.state;
+        let thisSave = this;
         socket.on('push_message', function(res){
             console.log('message page:: received');
             console.log(res);
             if(!buddiesList.includes(res.send_user))
             {
-                this.state.buddiesList.push(res.send_user);
+                let tmp = buddiesList.slice();
+                tmp.push(res.send_user);
+                thisSave.setState({buddiesList: tmp});
+                //this.state.buddiesList.push(res.send_user);
             }
         });
     }

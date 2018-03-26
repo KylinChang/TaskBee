@@ -47,7 +47,7 @@ class Chat extends React.Component {
   constructor(props){
     super(props);
     this.onSend = this.onSend.bind(this);
-    console.log(this.props.buddy);
+    //console.log(this.props.buddy);
   }
   componentWillMount() {
     this.setState({

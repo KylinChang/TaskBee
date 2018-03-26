@@ -102,16 +102,16 @@ class Register extends Component{
     }
     this.props.register(username, email, config.defaultAvatar);
     this.props.navigation.navigate('Tabs');
-    // socket.on('register_res', (data) => {
-    //   if(data.state){
-    //     this.props.login(this.state.username);
-    //     his.props.navigation.navigate('Tabs');
-    //   }
-    // });
-    // socket.emit(
-    //   'register',
-    //   msg
-    // );
+     //socket.on('register_res', (data) => {
+     //  if(data.state){
+     //    this.props.login(this.state.username);
+     //    this.props.navigation.navigate('Tabs');
+     //  }
+     //});
+     socket.emit(
+       'register',
+       msg
+     );
   }
 
   render(){
