@@ -40,8 +40,17 @@ class Message extends Component{
         this.state = {
             imgUri: "https://facebook.github.io/react-native/docs/assets/favicon.png",
             username: "Stephen",
-            email: "gdgyzzl@gmail.com"
+            email: "gdgyzzl@gmail.com",
+            buddiesList: [],
         };
+        socket.on('push_message', function(res){
+            console.log('message page:: received');
+            console.log(res);
+            if(!buddiesList.includes(res.send_user))
+            {
+                this.state.buddiesList.push(res.send_user);
+            }
+        });
     }
 
     renderItem = ({item}) => (
@@ -66,23 +75,22 @@ class Message extends Component{
 
     render(){
         const {buddies} = this.props;
-        var buddiesList = [];
         for(var key in buddies)
         {
-            buddiesList.push(buddies[key]);
+            this.state.buddiesList.push(buddies[key]);
         }
-        buddiesList.sort(function (a, b) {
+       this.state.buddiesList.sort(function (a, b) {
             return a.date < b.date;
         });
-        console.log(buddiesList);
+        console.log(this.state.buddiesList);
         //var buddiesList = Object.keys(buddies).sort(function (a, b) {
         //    return buddies[a].date < buddies[b].date;
         //});
         return(
             <View style={styles.container}>
-                {buddiesList.length > 0 &&
+                {this.state.buddiesList.length > 0 &&
                     <FlatList
-                    data={buddiesList}
+                    data={this.state.buddiesList}
                     renderItem={this.renderItem}
                     />
                 }

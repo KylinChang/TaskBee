@@ -157,16 +157,19 @@ class Task extends Component{
   componentWillMount(){
     var xhr = new XMLHttpRequest();
     var thisSave = this;
+    var body = new FormData();
+
+    body.append('user_name', this.props.username);
     xhr.onreadystatechange = function () {
       if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-        console.log("get forum data!");
+        console.log("get self data!");
         console.log(xhr.responseText);
         var forumList = JSON.parse(xhr.responseText).forumList; // array
         thisSave.setState({forumList});
       }
     };
-    xhr.open('POST', 'http://172.26.110.5:3000/get_task_list');
-    xhr.send("");
+    xhr.open('POST', 'http://172.26.110.5:3000/get_self_task');
+    xhr.send(body);
   }
 
   render(){

@@ -52,7 +52,7 @@ function user(state=initialState, action){
       };
       return Object.assign({}, state, {
         buddies: buddies,
-        buddy: action.budy,
+        buddy: action.buddy,
       });
     case GETTASK:
       return Object.assign({}, state, {

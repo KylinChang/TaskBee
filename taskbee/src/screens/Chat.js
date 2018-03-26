@@ -66,7 +66,7 @@ class Chat extends React.Component {
     });
     var thisSave = this;
     socket.on('push_message', function(res){
-      console.log("received!!");
+      console.log("chat page::received!!");
       var msg = {
         _id: (new Date()).toString(),
         text: res.message_content,
@@ -97,7 +97,7 @@ class Chat extends React.Component {
       receive_user: this.props.buddy, // should be changed.
       message_content: messages[0].text
     }
-    // console.log(oneMessage);
+     console.log(oneMessage);
     socket.emit("send_message", oneMessage);
   }
 
