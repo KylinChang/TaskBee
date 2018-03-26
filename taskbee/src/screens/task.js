@@ -14,7 +14,7 @@ import {
 } from 'react-navigation';
 import MapboxGL from '@mapbox/react-native-mapbox-gl';
 import FontAwesome, { Icons } from 'react-native-fontawesome';
-
+import {chat,} from '../reducers/user';
 import config from '../config/config';
 import Icon from '../components/icon';
 import {
@@ -27,6 +27,7 @@ import {
   OrderItem,
 } from '../components/list';
 
+const itemUsername = "jjjj";
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -47,6 +48,13 @@ const styles = StyleSheet.create({
 class TaskPost extends Component{
   constructor(props){
     super(props);
+    this.pressChat = this.pressChat.bind(this);
+  }
+
+  pressChat(itemUsername)
+  {
+    this.props.chat(itemUsername);
+    this.props.navigation.navigate('Chat');
   }
 
   render(){
@@ -61,8 +69,9 @@ class TaskPost extends Component{
         <OrderItem
           userImg={'https://facebook.github.io/react-native/docs/assets/favicon.png'}
           price={30}
+          onPressChat = {() => this.pressChat(itemUsername)}
           title={"mama"}
-          username={"cool"}
+          username={itemUsername}
         />
         <ChatButton
           imgUri={'https://facebook.github.io/react-native/docs/assets/favicon.png'}
@@ -179,9 +188,13 @@ class Task extends Component{
   }
 }
 
+
+
 export default connect(
     state => ({
       username: state.user.username,
       email: state.user.email,
     }),
-)(Task);
+    {
+      chat,
+    })(Task);

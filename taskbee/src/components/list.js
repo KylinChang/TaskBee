@@ -171,7 +171,7 @@ class OrderItem extends Component{
   render(){
     const {
       userImg, username, taskImgs,
-      description, price
+      description, price, onPressChat, onPressAppointment,
     } = this.props;
 
     return (
@@ -196,6 +196,7 @@ class OrderItem extends Component{
         <View style={styles.orderItemButtons}>
           <MKButton
             style={styles.buttonChat}
+            onPress = {onPressChat}
             >
             <Text pointerEvents="none" style={styles.textNormal}>
                 Chat
@@ -203,6 +204,7 @@ class OrderItem extends Component{
           </MKButton>
           <MKButton
             style={styles.buttonAppointment}
+            onPress = {onPressAppointment}
             >
             <Text pointerEvents="none" style={styles.textNormal}>
               Make Appointment
