@@ -100,6 +100,7 @@ app.post('/post_task', upload.array('photo', 3), function(req, res, next) {
                   tag(array)
                   imgs(send by files)}
     returns: state (bool) indicate whether post succeed
+             task_info (json) all task information
 
   */
   console.log("enter post task!");
@@ -116,44 +117,64 @@ app.post('/post_task', upload.array('photo', 3), function(req, res, next) {
     }
 
     console.log(req);
-    promises = [];
+    var promises = [];
+
+    var promise = function(i) {
+
+      return new Promise (
+
+        function(resolve, reject) {
+
+          var pic_name = './images/' + result.insertId.toString() + '_'  + i.toString() + '.JPG';
+          var fstream = fs.createWriteStream(pic_name);
+          var update_img_url_body = "update Task_Info set \
+                      img_url" + i.toString() + " = \'" + pic_name.substr(1) + "\' \
+                      where task_id = \'" + result.insertId + "\'";
+
+          fstream.write(req.files[i].buffer, function () {
+            //console.log("write file" + i.toString() + " succeed!");
+
+            console.log(update_img_url_body);
+
+            connection.query(update_img_url_body, function(err, result) {
+              if (err) {
+                console.log("error in post task, insert image url error!");
+                throw err;
+              }
+
+              resolve(1);
+              // do nothing
+            });
+          });
+          fstream.end();
+        }
+      )
+    }
 
     for (var i = 0; i < req.files.length; i += 1) {
 
       if (req.files[i] != undefined) {
 
-        promises.push( new Promise (
+        promises.push(promise(i));
 
-          function(resolve, reject) {
-
-            var pic_name = './images/' + result.insertId.toString() + '_'  + i.toString() + '.JPG';
-            var fstream = fs.createWriteStream(pic_name);
-            var update_img_url_body = "update Task_Info set \
-                        img_url" + i.toString() + " = \'" + pic_name.substr(1) + "\' \
-                        where task_id = \'" + result.insertId + "\'";
-
-            fstream.write(req.files[i].buffer, function () {
-              //console.log("write file" + i.toString() + " succeed!");
-
-              console.log(update_img_url_body);
-
-              connection.query(update_img_url_body, function(err, result) {
-                if (err) {
-                  console.log("error in post task, insert image url error!");
-                  throw err;
-                }
-
-                resolve(1);
-                // do nothing
-              });
-            });
-            fstream.end();
-          }
-        ));
       }
     }
 
-    Promise.all(promises);
+    Promise.all(promises).then(function(values) {
+
+      var query_task_body = "select * from Task_Info \
+            where task_id = " + result.insertId.toString();
+
+      connection.query(query_task_body, function(err, task_rows, fields) {
+        if (err) {
+          console.log("error in post task: query task info error!");
+          throw err;
+        }
+
+        res.json({state: true, task_info: task_rows[0]});
+      });
+
+    });
 
     for (var i = 0; i < req.body.tag.length; i += 1) {
 
@@ -172,8 +193,6 @@ app.post('/post_task', upload.array('photo', 3), function(req, res, next) {
       });
 
     }
-
-    res.json({state: true});
 
   });
 });
@@ -207,14 +226,9 @@ app.post("/get_task_list", function(req, res, next) {
     var promises = []
     var task_list = []
 
-    for (var i = 0; i < task_rows.length; i += 1) {
-      var query_tag_body = "select tag from Task_Tag \
-              where task_id = \'" + task_rows[i].task_id + "\'";
-      var query_user_info_body = "select * from User_Info \
-              where username = \'" + task_rows[i].poster_name + "\'";
-      var task_row = task_rows[i];
+    var promise = function(query_tag_body, query_user_info_body, task_row) {
 
-      var promise = new Promise(function(resolve, reject) {
+      return new Promise(function(resolve, reject) {
 
         connection.query(query_tag_body, function(err, tag_rows, fields) {
           if (err) {
@@ -231,8 +245,8 @@ app.post("/get_task_list", function(req, res, next) {
             }
 
             var tag_res = [];
-            for (var i = 0; i < tag_rows.length; i += 1) {
-              tag_res.push(tag_rows[i].tag);
+            for (var j = 0; j < tag_rows.length; j += 1) {
+              tag_res.push(tag_rows[j].tag);
             }
 
             task_list.push({task_info: task_row, tags: tag_res, poster_info: user_rows[0]});
@@ -241,8 +255,16 @@ app.post("/get_task_list", function(req, res, next) {
           });
         });
       });
+    }
 
-      promises.push(promise);
+    for (var i = 0; i < task_rows.length; i += 1) {
+      var query_tag_body = "select tag from Task_Tag \
+              where task_id = \'" + task_rows[i].task_id + "\'";
+      var query_user_info_body = "select * from User_Info \
+              where username = \'" + task_rows[i].poster_name + "\'";
+      var task_row = task_rows[i];
+
+      promises.push(promise(query_tag_body, query_user_info_body, task_row));
     }
 
     Promise.all(promises).then(function(values) {
@@ -257,18 +279,18 @@ app.post("/get_self_task", upload.single(), function(req, res, next) {
    *  get all self related tasks
    *  params: DATA {user_name}
    *  returns: tasks {
-   *              user_info (JSON, has all field of User_Info table in db)
    *              self_post_task (array)
    *              underway_task (array, include post and take)
    *              self_take_task (array)
    *            }
-   *            ## note: every task in array has all fields of Task_Info in db
+   *            ## note: every task in array has all fields of Task_Info and User_Info in db
    * */
   var DATA = req.body;
   console.log(DATA);
 
-  var query_post_task_body = "select * from Task_Info \
-        where poster_name = \'" + DATA.user_name + "\'";
+  var query_post_task_body = "select * from Task_Info, User_Info \
+        where Task_Info.poster_name = User_Info.username and \
+        poster_name = \'" + DATA.user_name + "\'";
 
   connection.query(query_post_task_body, function(err, post_task_rows, fields) {
     if (err) {
@@ -279,10 +301,13 @@ app.post("/get_self_task", upload.single(), function(req, res, next) {
     var date = new Date();
     var curdate = ""+date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
 
-    query_underway_task = "select * from Task_Info, User_Task_Serve \
-            where Task_Info.task_id = User_Task_Serve.task_id and Task_Info.is_completed = 0 \
-            and Task_Info.end_date >= \'" + curdate + "\' and (Task_Info.poster_name = \'" +
-            DATA.user_name + "\' or User_Task_Serve.taker_name = \'" + DATA.user_name + "\')"
+    query_underway_task = "select * from (Task_Info inner join User_Info on Task_Info.poster_name = User_Info.username) \
+            left join User_Task_Serve using (task_id) \
+            where Task_Info.is_completed = 0 and \
+            Task_Info.start_date <= \'" + curdate + "\' and \
+            Task_Info.end_date >= \'" + curdate + "\' and \
+            (Task_Info.poster_name = \'" + DATA.user_name + "\' or User_Task_Serve.taker_name = \'" + DATA.user_name + "\')"
+    console.log(query_underway_task);
 
     connection.query(query_underway_task, function(err, underway_rows, fields) {
       if (err) {
@@ -290,8 +315,9 @@ app.post("/get_self_task", upload.single(), function(req, res, next) {
         throw err;
       }
 
-      query_take_task_body = "select * from Task_Info, User_Task_Serve \
+      query_take_task_body = "select * from Task_Info, User_Task_Serve, User_Info \
             where Task_Info.task_id = User_Task_Serve.task_id and \
+            User_Info.username = Task_Info.poster_name and \
             User_Task_Serve.taker_name = \'" + DATA.user_name + "\'";
 
       connection.query(query_take_task_body, function(err, take_task_rows, fields) {
@@ -300,18 +326,19 @@ app.post("/get_self_task", upload.single(), function(req, res, next) {
           throw err;
         }
 
-        query_user_info_body = "select * from User_Info \
-              where username = \'" + DATA.user_name + "\'";
+        // query_user_info_body = "select * from User_Info \
+        //       where username = \'" + DATA.user_name + "\'";
+        //
+        // connection.query(query_user_info_body, function(err, user_info_rows, fields) {
+        //   if (err) {
+        //     console.log("error in get self task: get user info error!");
+        //     throw err;
+        //   }
+        //
+        //
+        // });
 
-        connection.query(query_user_info_body, function(err, user_info_rows, fields) {
-          if (err) {
-            console.log("error in get self task: get user info error!");
-            throw err;
-          }
-
-          res.json({user_info: user_info_rows[0], self_post_task: post_task_rows, underway_task: underway_rows, self_take_task: take_task_rows});
-        });
-
+        res.json({self_post_task: post_task_rows, underway_task: underway_rows, self_take_task: take_task_rows});
       });
     });
   });
@@ -513,8 +540,17 @@ io.on('connection', function(socket) {
   socket.on('send_message', function (DATA) {
     /*
      *  forward message from one user to another
-     *  params: DATA {send_user, receive_user, message_content}
+     *  params: DATA {
+                      send_user
+                      receive_user
+                      message_content
+                    }
      *  returns: None
+     *  message sent to receiver: {
+                          message_content (string)
+                          user_info (JSON, has all field of User_Info table in db)
+                          time (timestamp)
+                        }
      * */
     console.log(DATA);
 
@@ -546,7 +582,18 @@ io.on('connection', function(socket) {
       console.log("message sent!");
       var date = new Date();
       var curdate = ""+date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
-      io.to(receiver_socket_id).emit("push_message", {message_content: DATA.message_content, send_user: DATA.send_user, time: curdate});
+
+      var query_user_info_body = "select * from User_Info \
+            where User_Info.username = \'" + DATA.send_user + "\'";
+
+      connection.query(query_user_info_body, function(err, user_info_rows, fields) {
+        if (err) {
+          console.log("error in send message: query sender info error!");
+          throw err;
+        }
+
+        io.to(receiver_socket_id).emit("push_message", {message_content: DATA.message_content, user_info: user_info_rows[0], time: curdate});
+      });
     }
   });
 
