@@ -12,6 +12,7 @@ import PropTypes from 'prop-types';
 import {MKButton, mdl} from 'react-native-material-kit';
 import ImagePicker from 'react-native-image-crop-picker';
 import Calendar from 'react-native-calendar-select';
+import MultipleTags from 'react-native-multiple-tags';
 
 import config from '../config/config';
 
@@ -26,7 +27,6 @@ const styles = StyleSheet.create({
   dateContainer: {
     flex: 1,
     flexDirection: 'row',
-    // justifyContent: "space-between",
     paddingHorizontal: config.normalPadding,
   },
 
@@ -34,8 +34,8 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 18,
     height: 200,
-    borderBottomWidth:2,
-    borderBottomColor: config.colorBorder,
+    borderWidth:2,
+    borderColor: config.colorBorder,
     padding: config.normalPadding,
   },
   textPrice: {
@@ -82,7 +82,9 @@ class PostTask extends Component{
       priceText: "",
       descriptionValid: false,
       priceValid: true,
+      tagValid: false,
       hasErr: false,
+      tags: [],
     }
 
     this.onPrice = this.onPrice.bind(this);
@@ -159,6 +161,13 @@ class PostTask extends Component{
       return;
     }
 
+    if(this.state.tags.length==0){
+      this.setState({hasErr: false, tagValid: false});
+      return;
+    }else{
+      this.setState({tagValid: true});
+    }
+
     this.setState({hasErr: false});
 
     goBack();
@@ -182,10 +191,13 @@ class PostTask extends Component{
 
   renderErr(){
     if(!this.state.descriptionValid){
-      return <Text>Task description cannot be empty!</Text>;
+      return <Text style={{fontSize: 18, color: 'orange', fontWeight: 'bold'}}>Task description cannot be empty</Text>;
     }
     if(!this.state.priceValid){
-      return <Text>Please enter a valid price!</Text>;
+      return <Text style={{fontSize: 18, color: 'orange', fontWeight: 'bold'}}>Please enter a valid price</Text>;
+    }
+    if(!this.state.tagValid){
+      return <Text style={{fontSize: 18, color: 'orange', fontWeight: 'bold'}}>Please choose at least one tag</Text>;
     }
     return null;
   }
@@ -196,6 +208,15 @@ class PostTask extends Component{
     return (
       <ScrollView style={styles.container}>
         {this.state.hasErr && this.renderErr()}
+        <View style={{flex:1, padding: config.normalPadding}}>
+          <MultipleTags
+            tags={config.tags}
+            preselectedTags={config.tags}
+            search={false}
+            onChangeItem={(tags) => {this.setState({tags})}}
+            title="Topic"
+          />
+        </View>
         <TextInput
           style={styles.textInput}
           multiline

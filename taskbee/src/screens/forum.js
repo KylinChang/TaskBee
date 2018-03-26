@@ -11,99 +11,32 @@ import {
   Alert,
 } from 'react-native';
 import SearchBar from 'react-native-search-bar';
-import {SubmitButton,} from '../components/button';
 import MultipleTags from 'react-native-multiple-tags';
 
+import {SubmitButton,} from '../components/button';
+import config from '../config/config';
 
-// mock data
-const items = [{title: 'title_A', context: 'git clone git@github.com:KylinChang/TaskBee.git'},
-  {title: 'title_P', context: 'git checkout app'}, {title: 'title_J', context: 'rnpm install react-native-material-kit'},
-  {title: 'title_C', context: 'react-native run-ios --simulator="iPhone 6"'}, {title: 'title_N', context: 'react-native link'}]
-const tags = ['Type_A', 'Type_B', 'Type_C', 'Type_D', 'Type_E']
-
-function urlQuery() {}
-
-export default class Forum extends Component <{}, {search: string}> {
-  constructor(props) {
+class Forum extends Component{
+  constructor(props){
     super(props);
+
     this.state = {
-      searchString: 'default',
-      content: [],
-    };
+      tags: config.tags,
+    }
   }
 
-  search_bar: SearchBar
-
-  _onSelect(value, label) {
-    this.setState({value : value});
-  }
-
-  _onPressForum() {
-    Alert.alert('Forum Item Action Request');
-  }
-
-  _onPressButton() {
-    Alert.alert('Post Forum Request');
-  }
-
-  _onSearch() {
-    Alert.alert('Serach Request');
-    this.search_bar.blur();
-  }
-
-  _onPressTest = (value) => {
-    Alert.alert('Test');
-  }
-
-  render() {
-    return (
-      <SafeAreaView style = {styles.container}>
-        <SearchBar
-          placeholder         = 'Search via key words'/>
-          text                = {this.state.search}
-          ref                 = {ref => (this.search_bar = ref)}
-          onChange            = {e => console.log(e.nativeEvent)}
-          onChangeText        = {search => this.setState({ search })}
-          onSearchButtonPress = {() => this._onSearch}
-        />
-
-        <View style = {styles.button_style}>
-          <SubmitButton
-            backgroundColor = {config.colorPrimary}
-            text            = {"Post Forum"}
-            onPress         = {this._onPressButton}
-          />
-        </View>
-
-        <View>
-          <MultipleTags
-            tags         = {tags}
-            search
-            onChangeItem = {(content) => { this.setState({ content }); }}
-            title        = "Topic Type"
-          />
-          {
-            (() => this.state.content.map(item => <Text key={item}> {item} </Text>) )()
-          }
-        </View>
-
-        <ScrollView contentContainerStyle = {{ flex: 1 }}>
-          {items.map(a => (
-            <TouchableOpacity style={{flex: 1}} onPress = {this._onPressForum} underlayColor='#dddddd'>
-              <View style = {styles.container_forums}>
-                <Text style = {styles.listTitle}>
-                  {a.title}
-                </Text>
-                <Text numberOfLines = {3} style = {styles.listItem}>
-                  {a.context}
-                </Text>
-              </View>
-            </TouchableOpacity>
-          ))}
-        </ScrollView>
-
-      </SafeAreaView>
-    )
+  render(){
+    return(
+    <View>
+      <MultipleTags
+        tags={config.tags}
+        preselectedTags={config.tags}
+        search={false}
+        onChangeItem={(tags) => {this.setState({tags})}}
+        title="Topic"
+      />
+    </View>
+    );
   }
 }
 
@@ -150,3 +83,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
 });
+
+export default Forum;
