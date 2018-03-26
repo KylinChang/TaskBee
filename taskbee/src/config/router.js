@@ -8,6 +8,7 @@ import FontAwesome, { Icons } from 'react-native-fontawesome';
 
 import config from '../config/config';
 import Log from '../screens/log';
+import Chat from '../screens/chat';
 import Register from '../screens/register';
 import Task from '../screens/task';
 import TaskMap from '../screens/taskMap';
@@ -109,6 +110,15 @@ export const Root = StackNavigator({
     screen: PostTask,
     navigationOptions: {
       title: "Task Post",
+      headerStyle: {
+        backgroundColor: config.colorPrimary,
+      },
+    }
+  },
+  Chat: {
+    screen: Chat,
+    navigationOptions: {
+      title: "Chat",
       headerStyle: {
         backgroundColor: config.colorPrimary,
       },
