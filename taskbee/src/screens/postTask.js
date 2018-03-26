@@ -147,7 +147,7 @@ class PostTask extends Component{
 
   onSubmit(){
     const {goBack} = this.props.navigation;
-
+    const {username, email} = this.props;
     const {
       description, price, taskImgs, startDate, endDate, tags,
     } = this.state;
@@ -179,12 +179,12 @@ class PostTask extends Component{
         uri: d,
         type: 'file',
         name: 'photo',//image.filename
-        username: '123',
+        username: username,
       });
     });
 
 
-    body.append('user_name', '123');
+    body.append('user_name', username);
     body.append('description', description);
     body.append('price', price);
     body.append('start_date', this.getYYYYMMDD(startDate));
