@@ -268,7 +268,7 @@ app.post("/get_task_list", function(req, res, next) {
     }
 
     Promise.all(promises).then(function(values) {
-      console.log(task_list);
+      //console.log(task_list);
       res.json({forumList: task_list});
     });
   });
@@ -511,6 +511,7 @@ io.on('connection', function(socket) {
 
       var query_email_body = "select * from User_Info where \
                           email = \'" + DATA.email + "\'";
+
       connection.query(query_email_body, function(err, email_rows, field) {
         if (err) {
           console.log("error in register: query email!");
@@ -530,6 +531,7 @@ io.on('connection', function(socket) {
 
         connection.query(insert_user_info_body, function(err, result) {
               if (err) throw err;
+              console.log("register succeed!");
 
               socket.emit("register_res", {state : true});
         });
@@ -560,7 +562,7 @@ io.on('connection', function(socket) {
     console.log(io.sockets.sockets[receiver_socket_id]);
 
     //console.log(Object.keys(io.sockets.sockets));
-    if (io.sockets.sockets[receiver_socket_id] === undefined) {
+    if (io.sockets.sockets[receiver_socket_id] == undefined) {
       console.log("receive user offline!");
       user_socket[DATA.receive_user] = undefined;
     }
@@ -652,7 +654,7 @@ io.on('connection', function(socket) {
        *            }
           returns: None
        * */
-      console.log("DATA");
+      //console.log("DATA");
 
       update_task_body = "update Task_info set is_taken = 1 \
               where task_id = \'" + DATA.task_id + "\'";
