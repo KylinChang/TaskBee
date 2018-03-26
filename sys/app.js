@@ -142,14 +142,15 @@ io.on('connection', function(socket) {
         throw err;
       }
 
-      var query_task_post_body = "select * from User_Task_Post where user_id = " + user_info_rows[0].user_id;
+      var query_task_post_body = "select * from Task_Info where poster_name = " + user_info_rows[0].user_name;
       connection.query(query_task_post_body, function(err, task_post_rows, fields) {
         if (err) {
           console.log("error in get_profile: get user post task!");
           throw err;
         }
 
-        var query_task_serve_body = "select * from User_Task_Serve where user_id = " + user_info_rows[0].user_id;
+        var query_task_serve_body = "select * from User_Task_Serve, Task_Info \
+            where User_Task_Serve.task_id = Task_Info.task_id and User_Task_Serve.taker_name = " + user_info_rows[0].user_name;
         connection.query(query_task_serve_body, function(err, task_serve_rows, fields) {
           if (err) {
             console.log("error in get_profile: get user task serve!");
@@ -309,7 +310,35 @@ io.on('connection', function(socket) {
       var curdate = ""+date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
       io.to(receiver_socket_id).emit("push_message", {message_content: DATA.message_content, send_user: DATA.send_user, time: curdate});
     }
-});
+  });
+
+// socket.on('post_task', upload.single('task_image', 3), function(DATA) {
+//   /*
+//     user post a task
+//     params: DATA {
+//                   user_name
+//                   descritpion
+//                   price
+//                   start_date(YYYY-MM-DD)
+//                   end_date(YYYY-MM-DD)
+//                   tag
+//                   imgs(send by files)}
+//   */
+//   insert_task_body = "insert into Task_Info \
+//       (poster_name, description, price, start_date, end_date) \
+//       VALUES ( \'" + user_name + "\', \'" + description + "\', " + price + ", \'" +
+//       start_date + "\', \'" + end_date + "\'" + " )";
+//   // for (int i = 0; i < 3; i += 1) {
+//   //   var fs =
+//   // }
+//
+//   var pic_name = './images/' + user_rows[0].user_id.toString() + '.JPG';
+//   var fstream = fs.createWriteStream(pic_name);
+//   fstream.write(req.file.buffer, function () {
+//     res.json({url : pic_name.substr(1)});
+//   });
+//   fstream.end();
+//
 
   //socket.on('send_message', function ());
 
@@ -324,6 +353,230 @@ io.on('connection', function(socket) {
   //   fstream.write(DATA.body);
   //   fstream.end();
   // });
-});
+
+    socket.on('post_task', upload.single('task_image', 3), function(DATA) {
+      /*
+        user post a task
+        params: DATA {
+                      user_name
+                      descritpion
+                      price
+                      start_date(YYYY-MM-DD)
+                      end_date(YYYY-MM-DD)
+                      tag
+                      imgs(send by files)}
+      */
+      insert_task_body = "insert into Task_Info \
+          (poster_name, description, price, start_date, end_date) \
+          VALUES ( \'" + user_name + "\', \'" + description + "\', " + price + ", \'" +
+          start_date + "\', \'" + end_date + "\'" + " )";
+
+      connection.query(insert_task_body, function(err, result) {
+        if (err) {
+          console.log("error in post_task: insert task error!");
+          throw err;
+        }
+
+
+        for (var i = 0; i < res.files.length; i += 1) {
+          if (res.files[i] != undefined) {
+            var pic_name = './images/' + result.poster_id.toString() + '_'  + i.toString() + '.JPG';
+            var fstream = fs.createWriteStream(pic_name);
+
+            fstream.write(req.files[i].buffer, function () {
+              console.log("write file" + i.toString() + " succeed!");
+
+              insert_img_url_body = "insert into Task_Info \
+                          (img_url" + i.toString() + ")    \
+                          VALUES (\'" + pic_name.substr(1) + "\' )";
+
+              connection.query(insert_img_url_body, function(err, result) {
+                if (err) {
+                  console.log("error in post task, insert image url error!");
+                  throw err;
+                }
+              });
+            });
+            fstream.end();
+          }
+        }
+
+        insert_task_tag_body = "insert into Task_Tag \
+                      (task_id, tag)                 \
+                      VALUES (" + result.task_id + ", \'" + DATA.tag + "\')";
+
+        connection.query(insert_task_tag_body, function(err, result) {
+          if (err) {
+            console.log("error in post task: insert tag error!");
+            throw err;
+          }
+
+          // do nothing
+        });
+      });
+    });
+
+    socket.on('get_task_list', function() {
+      /*
+       *  get all active task
+       *  params: None
+       *  returns: Tasks [
+                         ... (all task information correspoding to Task_Info table in db \
+                               note: img_url can be NULL)
+                         tags[] (array of tags)
+                         ]
+       * */
+      console.log("in get task list!");
+
+      var date = new Date();
+      var curdate = ""+date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+
+      var query_task_body = "select * from Task_Info \
+        where is_complete = " + 0 + " and end_date > \'" + curdate + "\'";
+
+      connection.query(query_task_body, function(err, task_rows, fields) {
+        if (err) {
+          console.log("error in get task list: query task info error!");
+          throw err;
+        }
+
+        var promises = []
+
+        for (var i = 0; i < task_rows.length(); i += 1) {
+          var query_tag_body = "select tag from Task_Tag \
+                  where task_id = \'" + task_rows[i].task_id + "\'";
+
+          var promise = new Promise(function(resolve, reject) {
+
+            connection.query(query_tag_body, function(err, tag_rows, fields) {
+              if (err) {
+                console.log("error in get task list: query tag error!");
+                throw err;
+              }
+
+              task_rows[i].append(tag_rows);
+            });
+
+          });
+
+          promises.append(promise);
+        }
+
+        Promise.all(promises).then(function(values) {
+          socket.emit("get_task_list_res", {DATA: task_rows});
+        });
+      });
+    });
+
+    socket.on("take_task", function(DATA) {
+      /*
+       *  some user take task
+       *  params: DATA {
+       *              task_id,
+       *              taker_id
+       *            }
+          returns: None
+       * */
+      console.log("DATA");
+
+      update_task_body = "update Task_info set is_taken = 1 \
+              where task_id = \'" + DATA.task_id + "\'";
+
+      connection.query(update_task_body, function(err, result) {
+        if (err) {
+          console.log("error in take task: update task info error!");
+          throw err;
+        }
+
+        insert_task_serve_body = "insert into User_Task_Serve \
+                        (task_id, taker_id) \
+                        VALUES ( " + DATA.task_id + ", " + DATA.taker_id + ")";
+
+        connection.query(insert_task_serve_body, function(err, result) {
+          if (err) {
+            console.log("error in take task: insert task server error!");
+            throw err;
+          }
+
+          // do nothing
+        });
+      });
+    });
+
+    socket.on("complete_task", function(DATA) {
+      /*
+       * complete one task
+       * params: DATA {task_id}
+       * */
+      console.log(DATA);
+
+      var date = new Date();
+      var curdate = ""+date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+      update_task_body = "update Task_Info set is_completed = 1, completed_time = \'" + curdate + " \
+              where task_id = " + DATA.task_id;
+
+      connection.query(update_task_body, function(err, result) {
+        if (err) {
+          console.log("error in complete task: update task state error!");
+          throw err;
+        }
+
+        // do nothing
+      });
+    });
+
+    socket.on("add_friend", function(DATA) {
+      /*
+        add one friend to friend list
+        params: DATA {
+                      user_name
+                      friend_name
+                     }
+        returns: None
+      */
+      console.log(DATA);
+
+      var insert_friend_body = "insert into Friend_List \
+                  (user_name, friend_name) \
+                  VALUES (\'" + DATA.user_name + "\', \'" + DATA.friend_name + "\')";
+      connection.query(insert_friend_body, function(err, result) {
+        if (err) {
+          console.log("error in add friend: insert friend1 error!");
+          throw err;
+        }
+
+        var insert_friend_body = "insert into Friend_List \
+                    (user_name, friend_name) \
+                    VALUES (\'" + DATA.user_name + "\', \'" + DATA.friend_name + "\')";
+        connection.query(insert_friend_body, function(err, result) {
+          if (err) {
+            console.log("error in add friend: insert friend2 error!");
+            throw err;
+          }
+        });
+      });
+    });
+
+    socket.on("get_friends", function(DATA) {
+      /*
+        return all friends of a user;
+        params: DATA {user_name}
+        returns: friend_names []
+      */
+      console.log(DATA);
+
+      query_friend_body = "select friend_name from Friend_List \
+              where user_name = \'" + DATA.user_name + "\'";
+      connection.query(query_friend_body, function(err, friend_rows, fields) {
+        if (err) {
+          console.log("error in get friend: query friend name error!");
+          throw err;
+        }
+
+        socket.emit("get_friends_res", {friend_names: friend_rows});
+      });
+    });
+
+  });
 
 module.exports = app;
