@@ -72,12 +72,155 @@ app.post('/uploadphoto', upload.single('photo'), function(req, res, next) {
     var pic_name = './images/' + user_rows[0].user_id.toString() + '.JPG';
     var fstream = fs.createWriteStream(pic_name);
     fstream.write(req.file.buffer, function () {
-      res.json({url : pic_name.substr(1)});
+
+      var update_img_url_body = "update User_Info set img_url = \'" + pic_name.substr(1) + "\' " +
+                "where username = \'" + req.body.username + "\'";
+      connection.query(update_img_url_body, function(err, result) {
+        if (err) {
+          console.log("error in upload photo: insert image url error!");
+          throw err;
+        }
+
+        res.json({url : pic_name.substr(1)});
+      });
     });
     fstream.end();
   });
 });
 
+app.post('/post_task', upload.array('photo', 3), function(req, res, next) {
+  /*
+    user post a task
+    params: DATA {
+                  user_name
+                  descritpion
+                  price
+                  start_date(YYYY-MM-DD)
+                  end_date(YYYY-MM-DD)
+                  tag
+                  imgs(send by files)}
+    returns: state (bool) indicate whether post succeed
+
+  */
+  console.log("enter post task!");
+  //console.log(req);
+  insert_task_body = "insert into Task_Info \
+      (poster_name, description, price, start_date, end_date) \
+      VALUES ( \'" + req.body.user_name + "\', \'" + req.body.description + "\', " + req.body.price + ", \'" +
+      req.body.start_date + "\', \'" + req.body.end_date + "\'" + " )";
+
+  connection.query(insert_task_body, function(err, result) {
+    if (err) {
+      console.log("error in post_task: insert task error!");
+      throw err;
+    }
+
+    console.log(req);
+    for (var i = 0; i < req.files.length; i += 1) {
+      if (req.files[i] != undefined) {
+        var pic_name = './images/' + result.insertId.toString() + '_'  + i.toString() + '.JPG';
+        var fstream = fs.createWriteStream(pic_name);
+
+        fstream.write(req.files[i].buffer, function () {
+          console.log("write file" + i.toString() + " succeed!");
+
+          insert_img_url_body = "insert into Task_Info \
+                      (img_url" + i.toString() + ")    \
+                      VALUES (\'" + pic_name.substr(1) + "\' )";
+
+          connection.query(insert_img_url_body, function(err, result) {
+            if (err) {
+              console.log("error in post task, insert image url error!");
+              throw err;
+            }
+          });
+        });
+        fstream.end();
+      }
+    }
+
+    insert_task_tag_body = "insert into Task_Tag \
+                  (task_id, tag)                 \
+                  VALUES (" + result.insertId + ", \'" + req.body.tag + "\')";
+    console.log(insert_task_tag_body);
+
+
+    connection.query(insert_task_tag_body, function(err, result) {
+      if (err) {
+        console.log("error in post task: insert tag error!");
+        throw err;
+      }
+
+      res.json({state: true});
+    });
+  });
+});
+
+app.post("/get_task_list", function(req, res, next) {
+  /*
+   *  get all active task
+   *  params: None
+   *  returns: Tasks [
+                     task_info (Json object, have all fields of Task_Info table in db \
+                           note: img_url can be NULL)
+                     tags[] (array of tags)
+                     poster_info (Json object, have all fields of tabel User_Info in db)
+                     ]
+   * */
+  console.log("in get task list!");
+
+  var date = new Date();
+  var curdate = ""+date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+
+  var query_task_body = "select * from Task_Info \
+    where is_complete = " + 0 + " and end_date > \'" + curdate + "\'";
+
+  connection.query(query_task_body, function(err, task_rows, fields) {
+    if (err) {
+      console.log("error in get task list: query task info error!");
+      throw err;
+    }
+
+    var promises = []
+    var task_list = []
+
+    for (var i = 0; i < task_rows.length(); i += 1) {
+      var query_tag_body = "select tag from Task_Tag \
+              where task_id = \'" + task_rows[i].task_id + "\'";
+
+      var promise = new Promise(function(resolve, reject) {
+
+        connection.query(query_tag_body, function(err, tag_rows, fields) {
+          if (err) {
+            console.log("error in get task list: query tag error!");
+            throw err;
+          }
+
+          var query_user_info_body = "select * from User_Info \
+                  where user_name = \'" + task_rows[i].poster_name + "\'";
+
+          connection.query(query_user_info_body, function(err, user_rows, fields) {
+            if (err) {
+              console.log("error in get task list: query poster info error!");
+              throw err;
+            }
+
+            task_list.task_info = task_rows[i];
+            task_list.tags = tag_rows;
+            task_list.poster_info = user_rows;
+          });
+        });
+
+      });
+
+      promises.push(promise);
+    }
+
+    Promise.all(promises).then(function(values) {
+      res.json({forumList: task_list});
+    });
+  });
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -354,119 +497,9 @@ io.on('connection', function(socket) {
   //   fstream.end();
   // });
 
-    socket.on('post_task', upload.single('task_image', 3), function(DATA) {
-      /*
-        user post a task
-        params: DATA {
-                      user_name
-                      descritpion
-                      price
-                      start_date(YYYY-MM-DD)
-                      end_date(YYYY-MM-DD)
-                      tag
-                      imgs(send by files)}
-      */
-      insert_task_body = "insert into Task_Info \
-          (poster_name, description, price, start_date, end_date) \
-          VALUES ( \'" + user_name + "\', \'" + description + "\', " + price + ", \'" +
-          start_date + "\', \'" + end_date + "\'" + " )";
-
-      connection.query(insert_task_body, function(err, result) {
-        if (err) {
-          console.log("error in post_task: insert task error!");
-          throw err;
-        }
-
-
-        for (var i = 0; i < res.files.length; i += 1) {
-          if (res.files[i] != undefined) {
-            var pic_name = './images/' + result.poster_id.toString() + '_'  + i.toString() + '.JPG';
-            var fstream = fs.createWriteStream(pic_name);
-
-            fstream.write(req.files[i].buffer, function () {
-              console.log("write file" + i.toString() + " succeed!");
-
-              insert_img_url_body = "insert into Task_Info \
-                          (img_url" + i.toString() + ")    \
-                          VALUES (\'" + pic_name.substr(1) + "\' )";
-
-              connection.query(insert_img_url_body, function(err, result) {
-                if (err) {
-                  console.log("error in post task, insert image url error!");
-                  throw err;
-                }
-              });
-            });
-            fstream.end();
-          }
-        }
-
-        insert_task_tag_body = "insert into Task_Tag \
-                      (task_id, tag)                 \
-                      VALUES (" + result.task_id + ", \'" + DATA.tag + "\')";
-
-        connection.query(insert_task_tag_body, function(err, result) {
-          if (err) {
-            console.log("error in post task: insert tag error!");
-            throw err;
-          }
-
-          // do nothing
-        });
-      });
-    });
-
-    socket.on('get_task_list', function() {
-      /*
-       *  get all active task
-       *  params: None
-       *  returns: Tasks [
-                         ... (all task information correspoding to Task_Info table in db \
-                               note: img_url can be NULL)
-                         tags[] (array of tags)
-                         ]
-       * */
-      console.log("in get task list!");
-
-      var date = new Date();
-      var curdate = ""+date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
-
-      var query_task_body = "select * from Task_Info \
-        where is_complete = " + 0 + " and end_date > \'" + curdate + "\'";
-
-      connection.query(query_task_body, function(err, task_rows, fields) {
-        if (err) {
-          console.log("error in get task list: query task info error!");
-          throw err;
-        }
-
-        var promises = []
-
-        for (var i = 0; i < task_rows.length(); i += 1) {
-          var query_tag_body = "select tag from Task_Tag \
-                  where task_id = \'" + task_rows[i].task_id + "\'";
-
-          var promise = new Promise(function(resolve, reject) {
-
-            connection.query(query_tag_body, function(err, tag_rows, fields) {
-              if (err) {
-                console.log("error in get task list: query tag error!");
-                throw err;
-              }
-
-              task_rows[i].append(tag_rows);
-            });
-
-          });
-
-          promises.append(promise);
-        }
-
-        Promise.all(promises).then(function(values) {
-          socket.emit("get_task_list_res", {DATA: task_rows});
-        });
-      });
-    });
+    // socket.on('get_task_list', function() {
+    //
+    // });
 
     socket.on("take_task", function(DATA) {
       /*
