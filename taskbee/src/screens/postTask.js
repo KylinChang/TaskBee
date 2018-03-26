@@ -11,6 +11,7 @@ import {
 import PropTypes from 'prop-types';
 import {MKButton, mdl} from 'react-native-material-kit';
 import ImagePicker from 'react-native-image-crop-picker';
+import Calendar from 'react-native-calendar-select';
 
 import config from '../config/config';
 
@@ -22,14 +23,29 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: config.normalPadding,
   },
+  dateContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    // justifyContent: "space-between",
+    paddingHorizontal: config.normalPadding,
+  },
+
   textInput: {
     flex: 1,
     fontSize: 18,
-    height: 300,
+    height: 200,
     borderBottomWidth:2,
     borderBottomColor: config.colorBorder,
     padding: config.normalPadding,
   },
+  textPrice: {
+    flex: 1,
+    fontSize: 18,
+    padding: config.normalPadding,
+    borderBottomWidth:2,
+    borderBottomColor: config.colorPrimary,
+  },
+
   button: {
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: 'rgba(0,0,0,.1)',
@@ -50,7 +66,7 @@ const styles = StyleSheet.create({
   taskImg: {
     width: 100,
     height: 100,
-    // marginRight: 9,
+    marginRight: 9,
   },
 });
 
@@ -61,11 +77,53 @@ class PostTask extends Component{
     this.state = {
       description: "",
       taskImgs: [],
+      startDate: new Date(),
+      endDate: new Date(),
+      priceText: "",
+      descriptionValid: false,
+      priceValid: true,
+      hasErr: false,
     }
 
+    this.onPrice = this.onPrice.bind(this);
     this.onAddPhotos = this.onAddPhotos.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.renderImages = this.renderImages.bind(this);
+    this.confirmDate = this.confirmDate.bind(this);
+    this.openCalendar = this.openCalendar.bind(this);
+  }
+
+  getYYYYMMDD(date){
+    let mm = date.getMonth();
+    let dd = date.getDate();
+    return [date.getFullYear()+"-",
+          (mm>9 ? '' : '0') + mm + "-",
+          (dd>9 ? '' : '0') + dd
+         ].join('');
+  }
+
+  confirmDate({startDate, endDate, startMoment, endMoment}) {
+    this.setState({
+      startDate,
+      endDate
+    });
+  }
+
+  onPrice(text){
+    if(text.length==0){
+      this.setState({priceValid: true, price: 0});
+      return;
+    }
+    let price = parseFloat(text);
+    if(isNaN(price)){
+      this.setState({priceValid: false});
+    }else{
+      this.setState({priceValid: true, price: price});
+    }
+  }
+
+  openCalendar() {
+    this.calendar && this.calendar.open();
   }
 
   onAddPhotos(){
@@ -85,6 +143,24 @@ class PostTask extends Component{
   onSubmit(){
     const {goBack} = this.props.navigation;
 
+    const {
+      description, price, askImgs, startDate, endDate
+    } = this.state;
+
+    if(description.length==0){
+      this.setState({hasErr: true, descriptionValid: false});
+      return;
+    }else{
+      this.setState({descriptionValid: true});
+    }
+
+    if(!this.state.priceValid){
+      this.setState({hasErr: true});
+      return;
+    }
+
+    this.setState({hasErr: false});
+
     goBack();
   }
 
@@ -92,7 +168,7 @@ class PostTask extends Component{
     const {taskImgs} = this.state;
 
     return (
-      <View style={{flex: 1, justifyContent: "center", alignItems: "center", paddingHorizontal: config.normalPadding,}}>
+      <View style={{flex: 1, justifyContent: "center", alignItems: "center", padding: config.normalPadding,}}>
       <ScrollView
         // horizontal
         style={styles.taskItemImages}
@@ -104,10 +180,22 @@ class PostTask extends Component{
     );
   }
 
+  renderErr(){
+    if(!this.state.descriptionValid){
+      return <Text>Task description cannot be empty!</Text>;
+    }
+    if(!this.state.priceValid){
+      return <Text>Please enter a valid price!</Text>;
+    }
+    return null;
+  }
+
   render(){
+    const {startDate, endDate} = this.state;
 
     return (
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
+        {this.state.hasErr && this.renderErr()}
         <TextInput
           style={styles.textInput}
           multiline
@@ -115,11 +203,29 @@ class PostTask extends Component{
           editable
           onChangeText={(text) => this.setState({description: text})}
           maxLength={800}
-          maxHeight={300}
+          maxHeight={200}
           placeholder={"Task description"}
         />
         {this.state.taskImgs.length>0? this.renderImages() : null}
         <View style={styles.buttonContainer}>
+          <TextInput
+            style={styles.textPrice}
+            placeholder={"Price: free as default"}
+            keyboardType={'numeric'}
+            onChangeText={this.onPrice}
+          />
+        <MKButton
+            style={styles.button}
+            shadowRadius = {1}
+            shadowOffset={{width: 0, height: 0.5}}
+            shadowOpacity={0.5}
+            backgroundColor={config.colorBlue}
+            onPress={this.openCalendar}
+          >
+            <Text style={{fontWeight: 'bold'}}>
+              {"Date: " + this.getYYYYMMDD(startDate) + " / " + this.getYYYYMMDD(endDate)}
+            </Text>
+        </MKButton>
         <MKButton
           style={styles.button}
           shadowRadius = {1}
@@ -141,7 +247,15 @@ class PostTask extends Component{
           <Text style={{fontWeight: 'bold'}}>Submit</Text>
         </MKButton>
         </View>
-      </View>
+        <Calendar
+          i18n="en"
+          ref={(calendar) => {this.calendar = calendar;}}
+          format="YYYYMMDD"
+          startDate={this.state.startDate}
+          endDate={this.state.endDate}
+          onConfirm={this.confirmDate}
+        />
+      </ScrollView>
     );
   }
 }

@@ -72,17 +72,17 @@ class Log extends Component{
       user_name: this.state.username,
       password: this.state.password,
     };
-    // this.props.login(this.state.username, "hello@gmail.com");
-    // this.props.navigation.navigate('Tabs');
-    socket.on(
-      'login_res',
-      function(data){
-        if(data.state){
-          this.props.login(this.state.username, "hello@gmail.com");
-          this.props.navigation.navigate('Tabs');
-        }
-      }
-    );
+    this.props.login(this.state.username, "hello@gmail.com");
+    this.props.navigation.navigate('Tabs');
+    // socket.on(
+    //   'login_res',
+    //   function(data){
+    //     if(data.state){
+    //       this.props.login(this.state.username, "hello@gmail.com");
+    //       this.props.navigation.navigate('Tabs');
+    //     }
+    //   }
+    // );
     socket.emit(
       'login',
       msg
