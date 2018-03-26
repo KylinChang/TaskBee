@@ -110,6 +110,7 @@ class TaskItem extends Component{
   }
 
   renderImages(taskImgs){
+
     return (
       <FlatList
         horizontal
@@ -127,6 +128,10 @@ class TaskItem extends Component{
       description, price
     } = this.props;
 
+    let taskImgs_ = [];
+    for(let i=0; i<taskImgs.length; i++){
+      if(taskImgs[i]) taskImgs_.push(taskImgs[i]);
+    }
     return (
       <View style={styles.taskItem}>
 
@@ -140,8 +145,8 @@ class TaskItem extends Component{
         <View style={styles.spliter}/>
         <View style={styles.taskItemDescription}>
           <Text style={styles.textDescription}>{description}</Text>
-          {taskImgs && taskImgs.length ?
-            this.renderImages(taskImgs)
+          {taskImgs_ && taskImgs_.length ?
+            this.renderImages(taskImgs_)
             : null}
         </View>
         <View style={styles.spliter}/>
@@ -167,7 +172,7 @@ class OrderItem extends Component{
       />
     );
   }
-  
+
   render(){
     const {
       userImg, username, taskImgs,

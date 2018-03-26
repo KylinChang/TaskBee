@@ -9,12 +9,14 @@ import {
   ScrollView,
 } from 'react-native';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 import {MKButton, mdl} from 'react-native-material-kit';
 import ImagePicker from 'react-native-image-crop-picker';
 import Calendar from 'react-native-calendar-select';
 import MultipleTags from 'react-native-multiple-tags';
 
 import config from '../config/config';
+import {postTask,} from '../reducers/user';
 
 const styles = StyleSheet.create({
   container: {
@@ -182,19 +184,22 @@ class PostTask extends Component{
     });
 
 
-    // body.append('photo', "https://facebook.github.io/react-native/docs/assets/favicon.png");
     body.append('user_name', '123');
     body.append('description', description);
     body.append('price', price);
     body.append('start_date', this.getYYYYMMDD(startDate));
     body.append('end_date', this.getYYYYMMDD(endDate));
-    body.append('tag', tags[0]);
+    for(let i=0; i<tags.length; i++) body.append('tag', tags[i]);
 
-    console.log(body);
+    // console.log(body);
+    var thisSave = this;
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
       if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
         console.log("get response");
+        var taskInfo = JSON.parse(xhr.responseText).task_info; // array
+        console.log(taskInfo);
+        thisSave.props.postTask(taskInfo);
         goBack();
       }
     };
@@ -314,4 +319,10 @@ class PostTask extends Component{
   }
 }
 
-export default PostTask;
+export default connect(
+    state => ({
+      username: state.user.username,
+      email: state.user.email,
+    }), {
+      postTask,
+    })(PostTask);

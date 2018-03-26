@@ -6,15 +6,19 @@ import {
   StyleSheet,
   NativeModules,
   ScrollView,
+  FlatList,
   Image,
 } from 'react-native';
 import {connect} from 'react-redux';
 import {
   TabNavigator,
 } from 'react-navigation';
-import MapboxGL from '@mapbox/react-native-mapbox-gl';
 import FontAwesome, { Icons } from 'react-native-fontawesome';
-import {task,} from '../reducers/user';
+
+import {getTask,} from '../reducers/user';
+import TaskPost from './taskPost';
+import TaskTake from './taskTake';
+import TaskUnderway from './taskUnderway';
 import config from '../config/config';
 import Icon from '../components/icon';
 import {
@@ -27,7 +31,6 @@ import {
   OrderItem,
 } from '../components/list';
 
-const itemUsername = "jjjj";
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -45,58 +48,6 @@ const styles = StyleSheet.create({
   },
 });
 
-class TaskPost extends Component{
-  constructor(props){
-    super(props);
-  }
-
-  render(){
-    return (
-      <ScrollView>
-        <TaskItem
-          userImg={'https://facebook.github.io/react-native/docs/assets/favicon.png'}
-          price={30}
-          title={"mama"}
-          username={"cool"}
-        />
-
-        <ChatButton
-          imgUri={'https://facebook.github.io/react-native/docs/assets/favicon.png'}
-          username={"lala"}
-          email={"lala@gmail.com"}
-        />
-      </ScrollView>
-    );
-  }
-}
-
-class TaskUnderway extends Component{
-  constructor(props){
-    super(props);
-  }
-
-  render(){
-    return (
-      <View>
-
-      </View>
-    );
-  }
-}
-
-class TaskTake extends Component{
-  constructor(props){
-    super(props);
-  }
-
-  render(){
-    return (
-      <View>
-
-      </View>
-    );
-  }
-}
 
 /*
 * Whole picture of the task tab
@@ -164,8 +115,8 @@ class Task extends Component{
       if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
         console.log("get self data!");
         console.log(xhr.responseText);
-        var forumList = JSON.parse(xhr.responseText).forumList; // array
-        thisSave.setState({forumList});
+        var taskList = JSON.parse(xhr.responseText); // array
+        thisSave.props.getTask(taskList);
       }
     };
     xhr.open('POST', 'http://172.26.110.5:3000/get_self_task');
@@ -199,7 +150,7 @@ export default connect(
     state => ({
       username: state.user.username,
       email: state.user.email,
-    }),
-    {
-      task,
-    })(Task);
+    }), {
+      getTask,
+    }
+  )(Task);

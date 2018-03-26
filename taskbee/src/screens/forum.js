@@ -16,14 +16,14 @@ import MultipleTags from 'react-native-multiple-tags';
 import {connect} from 'react-redux';
 import {SubmitButton,} from '../components/button';
 import config from '../config/config';
-import {chat, appointment} from '../reducers/user';
+import {chat, takeTask} from '../reducers/user';
 import {OrderItem, } from '../components/list';
 
 class Forum extends Component{
   constructor(props){
     super(props);
     this.pressChat = this.pressChat.bind(this);
-    //this.renderItem = this.renderItem.bind(this);
+    this.pressAppointment = this.pressAppointment.bind(this);
     this.state = {
       tags: config.tags,
       forumList: [
@@ -65,8 +65,18 @@ class Forum extends Component{
     this.props.navigation.navigate('Chat');
   }
 
-  pressAppointment(taskID){
-    this.props.appointment(taskId, this.props.username);
+  pressAppointment(taskID, taskInfo){
+    const {username} = this.props;
+    let msg = {
+      taker_id: username,
+      task_id: taskID,
+    };
+    socket.emit("take_task", msg);
+    socket.on("take_task_res", function(data){
+      if(data.state){
+        this.props.takeTask(taskInfo);
+      }
+    });
   }
 
   renderItem = ({item}) => (
@@ -76,7 +86,7 @@ class Forum extends Component{
           price={item.task_info.price}
           description={item.task_info.description}
           onPressChat = {() => this.pressChat(item.poster_info.username, item.poster_info.email, item.poster_info.img_url)}
-          onPressAppointment = {() => this.pressAppointment(item.task_info.task_id)}
+          onPressAppointment = {() => this.pressAppointment(item.task_info.task_id, item.task_info)}
           username={item.poster_info.username}
       />
   );
@@ -164,5 +174,5 @@ export default connect(
     }),
     {
       chat,
-      appointment,
+      takeTask,
     })(Forum);

@@ -5,6 +5,7 @@ const REGISTER ="USER/REGISTER";
 const CHAT="USER/CHAT";
 const GETTASK = "USER/GETTASK";
 const TAKETASK = "USER/TAKETASK";
+const POSTTASK = "USER/POSTTASK";
 
 const initialState = {
   logError: false,
@@ -15,7 +16,9 @@ const initialState = {
   messages: [],
   buddies: {},
   buddy: "",
-  task_list: {},
+  self_take_task: [],
+  self_post_task: [],
+  underway_task: [],
 };
 
 function user(state=initialState, action){
@@ -56,7 +59,22 @@ function user(state=initialState, action){
       });
     case GETTASK:
       return Object.assign({}, state, {
-        task_list: action.task_list,
+        self_post_task: action.task_list.self_post_task,
+        self_take_task: action.task_list.self_take_task,
+        underway_task: action.task_list.underway_task,
+      });
+    case TAKETASK:
+      let self_take_task = state.self_take_task.slice();
+      self_take_task.push(action.taskInfo);
+      return Object.assign({}, state, {
+        self_take_task: self_take_task,
+      });
+    case POSTTASK:
+      let self_post_task = state.self_post_task.slice();
+      console.log("post/"+action.taskInfo);
+      self_post_task.push(action.taskInfo);
+      return Object.assign({}, state, {
+        self_post_task: self_post_task,
       });
     default:
       return state;
@@ -101,10 +119,17 @@ function getTask(task_list)
   }
 }
 
-function takeTask(taskID){
+function takeTask(taskInfo){
   return {
     type: TAKETASK,
-    taskid: taskID,
+    taskInfo: taskInfo,
+  };
+}
+
+function postTask(taskInfo){
+  return {
+    type: POSTTASK,
+    taskInfo: taskInfo,
   };
 }
 
@@ -114,4 +139,6 @@ export {
   register,
   chat,
   getTask,
+  takeTask,
+  postTask,
 };

@@ -6,9 +6,10 @@ import {
   ScrollView,
 } from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
-//import PaymentRequest from 'react-native-payments';
+import {connect} from 'react-redux';
 global.PaymentRequest = require('react-native-payments').PaymentRequest;
 
+import config from "../config/config";
 import {
   LineButton,
   LineTextButton,
@@ -44,9 +45,7 @@ class Profile extends Component{
 
     this.choose_avatar = this.choose_avatar.bind(this);
     this.state = {
-        imgUri: "https://facebook.github.io/react-native/docs/assets/favicon.png",
-        username: "Stephen",
-        email: "gdgyzzl@gmail.com"
+        imgUri: config.defaultAvatar,
     };
   }
 
@@ -71,12 +70,11 @@ change avatar.
             uri: image.sourceURL,
             type: 'file',
             name: 'photo',//image.filename
-            username: 'haolin',
+            username: this.props.username,
     };
     var body = new FormData();
         body.append('photo', photo);
-        // body.append('photo', "https://facebook.github.io/react-native/docs/assets/favicon.png");
-        body.append('username', 'haolin');
+        body.append('username', this.props.username);
 
 
     console.log(body);
@@ -91,12 +89,8 @@ change avatar.
         }
     };
     xhr.open('POST', 'http://172.26.110.5:3000/uploadphoto');
-    // xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
     xhr.send(body);
-    // socket.on('uploadphotofinish', (res) => {
-    //     console.log("finish!");
-    //     console.log(res);
-    // })
+
     });
   }
   addValue()
@@ -142,8 +136,8 @@ change avatar.
         <ScrollView contentContainerStyle={styles.contentContainer}>
           <View style={styles.section}>
             <AccountButton
-              username={this.state.username}
-              email={this.state.email}
+              username={this.props.username}
+              email={this.props.email}
               imgUri={this.state.imgUri}
               onPress={this.choose_avatar}
             />
@@ -167,4 +161,8 @@ change avatar.
   }
 }
 
-export default Profile;
+export default connect(
+    state => ({
+      username: state.user.username,
+      email: state.user.email,
+    }))(Profile);
