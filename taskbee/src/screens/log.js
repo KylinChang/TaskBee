@@ -72,6 +72,7 @@ class Log extends Component{
       user_name: this.state.username,
       password: this.state.password,
     };
+<<<<<<< HEAD
     this.props.login(this.state.username, "hello@gmail.com");
     this.props.navigation.navigate('Tabs');
     // socket.on(
@@ -83,10 +84,26 @@ class Log extends Component{
     //     }
     //   }
     // );
+=======
+    // this.props.login(this.state.username, "hello@gmail.com");
+    // this.props.navigation.navigate('Tabs');
+
+>>>>>>> 2b48cfd01082e437523bb4c099c37e5543cc4158
     socket.emit(
       'login',
       msg
     );
+    const {login, navigation} = this.props;
+
+    socket.on('login_res',
+        function(data)
+        {
+            if(data.state)
+            {
+                login(data.user_info.username, data.user_info.email, data.message_content);
+                navigation.navigate('Tabs');
+            }
+        });
   }
 
   render(){

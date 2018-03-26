@@ -9,6 +9,7 @@ const initialState = {
   username: "",
   email: "",
   avatar: "",
+  messages: [],
 };
 
 function user(state=initialState, action){
@@ -18,24 +19,27 @@ function user(state=initialState, action){
         loggedIn: true,
         username: action.username,
         email: action.email,
+        messages: action.messages,
       });
     case REGISTER:
       return Object.assign({}, state, {
         loggedIn: true,
         username: action.username,
         email: action.email,
-        avatar: action.avatar
+        avatar: action.avatar,
+        messages: [],
       });
     default:
       return state;
   }
 }
 
-function login(username, email){
+function login(username, email, messages){
   return {
     type: LOGIN,
     username: username,
     email: email,
+    messages: messages,
   }
 }
 

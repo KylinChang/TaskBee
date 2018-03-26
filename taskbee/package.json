@@ -20,6 +20,7 @@
     "react-native-image-crop-picker": "^0.20.0",
     "react-native-material-kit": "^0.5.1",
     "react-native-multiple-tags": "0.0.35",
+    "react-native-payments": "^0.4.0",
     "react-native-search-bar": "^3.4.0",
     "react-native-tab-navigator": "^0.3.4",
     "react-native-tag-select": "^2.0.0",

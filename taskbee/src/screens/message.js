@@ -5,6 +5,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import FontAwesome, { Icons } from 'react-native-fontawesome';
+import {connect} from 'react-redux';
 import {GiftedChat, Actions, Bubble, SystemMessage} from 'react-native-gifted-chat';
 
 import config from '../config/config';
@@ -59,6 +60,10 @@ class Message extends React.Component {
     messages: [],
   }
 
+  constructor(props){
+      super(props);
+      this.onSend = this.onSend.bind(this);
+  }
   componentWillMount() {
     this.setState({
       messages: [
@@ -73,16 +78,46 @@ class Message extends React.Component {
           },
         },
       ],
-    })
+  });
+  var thisSave = this;
+  socket.on('push_message', function(res){
+      console.log("received!!");
+      var msg = {
+          _id: (new Date()).toString(),
+          text: res.message_content,
+          createdAt: new Date(),
+          user:{
+              _id: 2,
+              name: res.send_user,
+              avatar: 'https://facebook.github.io/react-native/docs/assets/favicon.png',
+          },
+      };
+      // console.log(msg);
+      thisSave.setState(previousState => ({
+        messages: GiftedChat.append(previousState.messages, [msg])
+        }));
+      // console.log(thisSave);
+  });
   }
 
   onSend(messages = []) {
     this.setState(previousState => ({
       messages: GiftedChat.append(previousState.messages, messages),
     }))
-    console.log(messages);
-    socket.emit("sendmessage", messages[0].text);
+    // console.log(this);
+    // console.log(messages);
+    // console.log(this);
+    var oneMessage = {
+        send_user: this.props.username,
+        receive_user: this.props.username, // should be changed.
+        message_content: messages[0].text
+    }
+    // console.log(oneMessage);
+    socket.emit("send_message", oneMessage);
   }
+
+
+
   renderBubble (props) {
   return (
     <Bubble
@@ -114,4 +149,9 @@ class Message extends React.Component {
   }
 }
 
-export default Message;
+export default connect(
+  state => ({
+    username: state.user.username,
+    messages: state.user.messsages,
+  }),
+)(Message);
