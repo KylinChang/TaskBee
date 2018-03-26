@@ -100,14 +100,15 @@ class Register extends Component{
       user_name: username,
       password: password,
     }
-    this.props.register(username, email, config.defaultAvatar);
-    this.props.navigation.navigate('Tabs');
-     //socket.on('register_res', (data) => {
-     //  if(data.state){
-     //    this.props.login(this.state.username);
-     //    this.props.navigation.navigate('Tabs');
-     //  }
-     //});
+    const {register, navigation,} = this.props;
+    // this.props.register(username, email, config.defaultAvatar);
+    // this.props.navigation.navigate('Tabs');
+     socket.on('register_res', (data) => {
+      if(data.state){
+        register(username, email, config.defaultAvatar);
+        navigation.navigate('Tabs');
+      }
+     });
      socket.emit(
        'register',
        msg

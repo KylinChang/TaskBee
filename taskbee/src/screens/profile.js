@@ -83,12 +83,12 @@ change avatar.
         if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
             console.log("get 1!");
             console.log(xhr.responseText);
-            var imgUri = 'http://172.26.110.5:3000'+JSON.parse(xhr.responseText).url;
+            var imgUri = 'http://172.27.58.137:3000'+JSON.parse(xhr.responseText).url;
             console.log(imgUri);
             thisStore.setState({imgUri: imgUri});
         }
     };
-    xhr.open('POST', 'http://172.26.110.5:3000/uploadphoto');
+    xhr.open('POST', 'http://172.27.58.137:3000/uploadphoto');
     xhr.send(body);
 
     });

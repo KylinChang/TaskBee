@@ -55,7 +55,7 @@ class Forum extends Component{
         thisSave.setState({forumList});
       }
     };
-    xhr.open('POST', 'http://172.26.110.5:3000/get_task_list');
+    xhr.open('POST', 'http://172.27.58.137:3000/get_task_list');
     xhr.send("");
   }
 

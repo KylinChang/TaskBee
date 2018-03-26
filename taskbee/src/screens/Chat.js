@@ -139,5 +139,6 @@ export default connect(
       username: state.user.username,
       messages: state.user.messsages,
       buddy: state.user.buddy,
+      avatar: state.user.avatar,
     })
 )(Chat);

@@ -111,7 +111,7 @@ class Log extends Component{
               style={styles.inputView}
               tintColor={MKColor.Orange}
               textInputStyle={styles.inputText}
-              placeholder="email/username"
+              placeholder="username"
               onChangeText={(text) => this.setState({username:text})}
             />
 
