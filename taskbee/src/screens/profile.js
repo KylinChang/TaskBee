@@ -131,7 +131,7 @@ change avatar.
           // Your payment processing code goes here
           paymentResponse.complete('success');
           // send to server..
-          
+
           return processPayment(paymentResponse);
       });
   }
