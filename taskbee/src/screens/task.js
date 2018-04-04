@@ -119,7 +119,7 @@ class Task extends Component{
         thisSave.props.getTask(taskList);
       }
     };
-    xhr.open('POST', 'http://172.27.58.137:3000/get_self_task');
+    xhr.open('POST', config.DEVURL + '/get_self_task');
     xhr.send(body);
   }
 

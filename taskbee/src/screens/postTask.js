@@ -203,7 +203,7 @@ class PostTask extends Component{
         goBack();
       }
     };
-    xhr.open('POST', 'http://172.27.58.137:3000/post_task');
+    xhr.open('POST', config.DEVURL + '/post_task');
     // xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
     xhr.send(body);
 
