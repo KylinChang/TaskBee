@@ -554,12 +554,12 @@ io.on('connection', function(socket) {
                           time (timestamp)
                         }
      * */
-    console.log(DATA);
+    // console.log(DATA);
 
     var receiver_socket_id = user_socket[DATA.receive_user];
-    console.log(user_socket);
-    console.log(receiver_socket_id);
-    console.log(io.sockets.sockets[receiver_socket_id]);
+    //console.log(user_socket);
+    //console.log(receiver_socket_id);
+    //console.log(io.sockets.sockets[receiver_socket_id]);
 
     //console.log(Object.keys(io.sockets.sockets));
     if (io.sockets.sockets[receiver_socket_id] == undefined) {
