@@ -27,18 +27,18 @@ class Forum extends Component{
     this.state = {
       tags: config.tags,
       forumList: [
-        {
-          poster_info: {
-            username: "haolin",
-            email: "haolin@gmail.com",
-            img_url: 'https://facebook.github.io/react-native/docs/assets/favicon.png'
-          },
-          task_info: {
-            price: 30,
-            description: "lalaland",
-          },
-          tags: ['undergraduate', 'graduate'],
-        },
+        // {
+        //   poster_info: {
+        //     username: "haolin",
+        //     email: "haolin@gmail.com",
+        //     img_url: 'https://facebook.github.io/react-native/docs/assets/favicon.png'
+        //   },
+        //   task_info: {
+        //     price: 30,
+        //     description: "lalaland",
+        //   },
+        //   tags: ['undergraduate', 'graduate'],
+        // },
       ]
     }
 
@@ -55,7 +55,7 @@ class Forum extends Component{
         thisSave.setState({forumList});
       }
     };
-    xhr.open('POST', 'http://172.27.58.137:3000/get_task_list');
+    xhr.open('POST', config.DEVURL + '/get_task_list');
     xhr.send("");
   }
 
