@@ -1,8 +1,8 @@
 var mysql = require('mysql');
 var connection = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'root',
-  password : '555666',
+  host     : '13.58.57.31',
+  user     : 'peihan',
+  password : '12345678',
   database : 'TaskBee'
 });
 
