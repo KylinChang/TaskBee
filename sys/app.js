@@ -1,25 +1,23 @@
+/*
+  Import Libraries
+*/
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
 var ejs = require('ejs');
-
 var users = require('./routes/users');
-
 var app = express();
-
 var mysql = require('mysql');
-
 var fs = require('fs');
-
 var multer = require('multer');
 
+// User Object
 var user_socket = {};
 
-maxSize = 50 * 1024 * 1024
+maxSize = 50 * 1024 * 1024;
 
 var upload = multer({limits: { fileSize: maxSize}});
 
