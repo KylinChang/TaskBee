@@ -140,7 +140,7 @@ io.on('connection', function(socket) {
       returns: DATA {state, info, message_content, email}
       return type: state(bool) indicates login state
                    info(string) indicates failure reason
-                   message_content(string) contains all message haven't been received, fields corresponding to \
+                   body(array[JSON] {message_content, send_user_info}) contains all message haven't been received, fields corresponding to \
                                             message_queue tabel in db
                    user_info(JSON) user infos, fields corresponding to User_Info table in db
     */
@@ -168,8 +168,43 @@ io.on('connection', function(socket) {
             throw err;
           }
 
-          socket.emit("login_res", {state : true, message_content : message_rows,
-                                  user_info : user_info_rows[0]});
+          var promises = [];
+          var return_body = [];
+
+          var promise = function(message_rows, i, return_body) {
+
+            return new Promise (
+
+              function(resolve, reject) {
+
+                query_user_info_body = "select * from User_Info where username = \' " + message_rows[i].send_user + "\'";
+                connection.query(query_user_info_body, function(error, user_rows, fields) {
+                  if (err) {
+                    console.log("error in login: user info query error!");
+                    throw err;
+                  }
+
+                  return_body.push({message_content : message_rows[i], send_user_info : user_rows[0]});
+                  resolve(1);
+                });
+
+              }
+            )
+          }
+
+          for (var i = 0; i < message_rows.length; i += 1) {
+
+              promises.push(promise(message_rows, i, return_body));
+
+          }
+
+          Promise.all(promises).then(function(values) {
+
+            socket.emit("login_res", {state : true, body : return_body,
+                                    user_info : user_info_rows[0]});
+
+          });
+
         });
       }
 
