@@ -19,6 +19,7 @@ export default config = {
   colorPink: '#F9678F',
   colorText: '#4A4A4A',
   colorBorder: 'rgba(0,0,0,.1)',
+  colorRipple: 'rgba(0,0,0,.1)',
   colorSubtle: '#E7E7E7',
 
   borderRaidus: 3,

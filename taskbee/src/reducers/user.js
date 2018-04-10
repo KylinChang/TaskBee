@@ -2,6 +2,7 @@ import config from '../config/config';
 
 const LOGIN="USER/LOGIN";
 const REGISTER ="USER/REGISTER";
+const LOGOUT="USER/LOGOUT";
 const CHAT="USER/CHAT";
 const GETTASK = "USER/GETTASK";
 const TAKETASK = "USER/TAKETASK";
@@ -36,14 +37,23 @@ function user(state=initialState, action){
       });
     case REGISTER:
       return Object.assign({}, state, {
-        loggedIn: true,
+        loggedIn: false,
         username: action.username,
         email: action.email,
+        messages: action.messages,
+        buddies: action.buddies,
         avatar: action.avatar,
-        messages: [],
-        buddies: {},
         buddy: "",
         task_list: {},
+      });
+    case LOGOUT:
+      return Object.assign({}, state, {
+        loggedIn: true,
+        logError: false,
+        username: "",
+        email: "",
+        avatar: "",
+        buddy: "",
       });
     case CHAT:
       let buddies = Object.assign({}, state.buddies);
@@ -101,6 +111,12 @@ function register(username, email, avatar){
   }
 }
 
+function logout(){
+  return {
+    type: LOGOUT,
+  }
+}
+
 function chat(buddy, email, avatar)
 {
   return {
@@ -137,6 +153,7 @@ export {
   user,
   login,
   register,
+  logout,
   chat,
   getTask,
   takeTask,

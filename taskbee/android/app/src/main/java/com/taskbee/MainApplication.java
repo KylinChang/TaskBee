@@ -4,6 +4,11 @@ import android.app.Application;
 
 import com.facebook.react.ReactApplication;
 import com.oblador.vectoricons.VectorIconsPackage;
+import com.reactnativepayments.ReactNativePaymentsPackage;
+import com.github.xinthink.rnmk.ReactMaterialKitPackage;
+import com.reactnative.ivpusic.imagepicker.PickerPackage;
+import com.mapbox.rctmgl.RCTMGLPackage;
+import com.oblador.vectoricons.VectorIconsPackage;
 import com.github.xinthink.rnmk.ReactMaterialKitPackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.mapbox.rctmgl.RCTMGLPackage;
@@ -36,6 +41,11 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new VectorIconsPackage(),
+            new ReactNativePaymentsPackage(),
+            new ReactMaterialKitPackage(),
+            new PickerPackage(),
+            new RCTMGLPackage(),
             new VectorIconsPackage(),
             new ReactMaterialKitPackage(),
             new PickerPackage(),

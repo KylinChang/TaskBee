@@ -18,7 +18,7 @@ import FontAwesome, { Icons } from 'react-native-fontawesome';
 import {getTask,} from '../reducers/user';
 import TaskPost from './taskPost';
 import TaskTake from './taskTake';
-import TaskUnderway from './taskUnderway';
+import TaskOngoing from './taskOngoing';
 import config from '../config/config';
 import Icon from '../components/icon';
 import {
@@ -54,22 +54,22 @@ const styles = StyleSheet.create({
 */
 const TaskTabs = TabNavigator(
   {
-    TaskUnderway: {
-      screen: TaskUnderway,
+    TaskOngoing: {
+      screen: TaskOngoing,
       navigationOptions: {
-        title: 'Underway',
+        title: 'Ongoing',
       },
     },
     TaskPost: {
       screen: TaskPost,
       navigationOptions: {
-        title: 'Post',
+        title: 'Posted',
       },
     },
     TaskTake: {
       screen: TaskTake,
       navigationOptions: {
-        title: 'Take',
+        title: 'Taken',
       },
     },
   },

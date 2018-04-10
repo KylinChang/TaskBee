@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
 import {connect} from 'react-redux';
+import {logout, } from '../reducers/user';
 global.PaymentRequest = require('react-native-payments').PaymentRequest;
 
 import config from "../config/config";
@@ -47,9 +48,15 @@ class Profile extends Component{
     this.state = {
         imgUri: config.defaultAvatar,
     };
+
+    this.onLogout = this.onLogout.bind(this);
   }
 
-
+  onLogout(){
+    const {logout, navigation} = this.props;
+    logout();
+    navigation.navigate('Log');
+  }
 
 /*
 change avatar.
@@ -142,18 +149,17 @@ change avatar.
               onPress={this.choose_avatar}
             />
           </View>
-          <View style={styles.section}>
+          {/* <View style={styles.section}>
             <LineButton icon="vallet" label={"Wallet"} text={'$'}
               onPress = {this.addValue}/>
             <View style={styles.spliter}/>
             <LineButton label={"My Posts"}/>
             <View style={styles.spliter}/>
             <LineButton label={"My Underway Appointments"}/>
-          </View>
+          </View> */}
           <View style={styles.section}>
-            <LineTextButton label={"Log Out"}/>
+            <LineTextButton label={"Log Out"} onPress={this.onLogout}/>
           </View>
-
 
         </ScrollView>
       </View>
@@ -165,4 +171,6 @@ export default connect(
     state => ({
       username: state.user.username,
       email: state.user.email,
-    }))(Profile);
+    }),{
+      logout,
+    })(Profile);
