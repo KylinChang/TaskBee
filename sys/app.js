@@ -288,62 +288,7 @@ io.on('connection', function(socket) {
     }
   });
 
-    socket.on("take_task", function(DATA) {
-      /*
-       *  some user take task
-       *  params: DATA {
-       *              task_id,
-       *              taker_id
-       *            }
-          returns: None
-       * */
-      //console.log("DATA");
-
-      update_task_body = "update Task_info set is_taken = 1 \
-              where task_id = \'" + DATA.task_id + "\'";
-
-      connection.query(update_task_body, function(err, result) {
-        if (err) {
-          console.log("error in take task: update task info error!");
-          throw err;
-        }
-
-        insert_task_serve_body = "insert into User_Task_Serve \
-                        (task_id, taker_id) \
-                        VALUES ( " + DATA.task_id + ", " + DATA.taker_id + ")";
-
-        connection.query(insert_task_serve_body, function(err, result) {
-          if (err) {
-            console.log("error in take task: insert task server error!");
-            throw err;
-          }
-
-          socket.emit("take_task_res", {state: true});
-        });
-      });
-    });
-
-    socket.on("complete_task", function(DATA) {
-      /*
-       * complete one task
-       * params: DATA {task_id}
-       * */
-      console.log(DATA);
-
-      var date = new Date();
-      var curdate = ""+date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
-      update_task_body = "update Task_Info set is_completed = 1, completed_time = \'" + curdate + " \
-              where task_id = " + DATA.task_id;
-
-      connection.query(update_task_body, function(err, result) {
-        if (err) {
-          console.log("error in complete task: update task state error!");
-          throw err;
-        }
-
-        // do nothing
-      });
-    });
+   
 
     socket.on("add_friend", function(DATA) {
       /*
