@@ -11,7 +11,6 @@ var users = require('./routes/users');
 
 var app = express();
 
-//var connection = require('./model/db');
 var mysql = require('mysql');
 
 var fs = require('fs');
@@ -21,16 +20,6 @@ var multer = require('multer');
 var user_socket = {};
 
 maxSize = 50 * 1024 * 1024
-// var storage = multer.diskStorage({
-//   destination: './images/',
-//   filename: function (req, file, cb) {
-//     crypto.pseudoRandomBytes(16, function (err, raw) {
-//       if (err) return cb(err)
-//
-//       cb(null, raw.toString('hex') + path.extname(file.originalname))
-//     });
-//   }
-// });
 
 var upload = multer({limits: { fileSize: maxSize}});
 
@@ -46,13 +35,11 @@ app.set('view engine', 'html');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(cookieParser());
-//app.use(upload.array());
 app.use(express.static(path.join(__dirname, 'public')));
 
 var routes = require('./routes/index');
 app.use('/', routes);
 app.use('/users', users);
-//app.use(express.static(path.join(__dirname, 'images')));
 app.use('/images', express.static(__dirname+'/images/'))
 
 app.get('/', function(req, res, next) {
@@ -377,13 +364,6 @@ app.use(function(err, req, res, next) {
   });
 });
 
-//var io = require('socket.io')(1234);
-//console.log("start to listen on socket..");
-//io.on('reqData', function (data) {
-//  console.log(data);
-//  socket.emit('getData', { my: 'data' });
-//});
-
 var connection = require('./model/db');
 
 var io = require('socket.io')(1234);
@@ -598,52 +578,6 @@ io.on('connection', function(socket) {
       });
     }
   });
-
-// socket.on('post_task', upload.single('task_image', 3), function(DATA) {
-//   /*
-//     user post a task
-//     params: DATA {
-//                   user_name
-//                   descritpion
-//                   price
-//                   start_date(YYYY-MM-DD)
-//                   end_date(YYYY-MM-DD)
-//                   tag
-//                   imgs(send by files)}
-//   */
-//   insert_task_body = "insert into Task_Info \
-//       (poster_name, description, price, start_date, end_date) \
-//       VALUES ( \'" + user_name + "\', \'" + description + "\', " + price + ", \'" +
-//       start_date + "\', \'" + end_date + "\'" + " )";
-//   // for (int i = 0; i < 3; i += 1) {
-//   //   var fs =
-//   // }
-//
-//   var pic_name = './images/' + user_rows[0].user_id.toString() + '.JPG';
-//   var fstream = fs.createWriteStream(pic_name);
-//   fstream.write(req.file.buffer, function () {
-//     res.json({url : pic_name.substr(1)});
-//   });
-//   fstream.end();
-//
-
-  //socket.on('send_message', function ());
-
-  // socket.on('upload_photo', function(DATA) {
-  //   /*
-  //     upload photo
-  //     params: DATA {photo}
-  //     returns: None
-  //   */
-  //   console.log(DATA);
-  //   var fstream = fs.createWriteStream('/images/tmp.JPG');
-  //   fstream.write(DATA.body);
-  //   fstream.end();
-  // });
-
-    // socket.on('get_task_list', function() {
-    //
-    // });
 
     socket.on("take_task", function(DATA) {
       /*
