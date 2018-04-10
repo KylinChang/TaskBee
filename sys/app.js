@@ -1,3 +1,6 @@
+/*
+  Import Libraries
+*/
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -10,11 +13,14 @@ var users = require('./routes/users');
 var app = express();
 var mysql = require('mysql');
 var fs = require('fs');
+var multer = require('multer');
+
+// User Object
 var user_socket = {};
 var connection = require('./model/db');
 
 const max_limit = '100mb'
-const  maxSize = 50 * 1024 * 1024
+const maxSize = 50 * 1024 * 1024
 
 app.use(bodyParser.urlencoded({ limit: max_limit, extended: true, parameterLimit: maxSize }));
 app.use(bodyParser.json({limit: max_limit}));
