@@ -196,14 +196,48 @@ io.on('connection', function(socket) {
                 connection.query(delete_message_body, function(err, res) {
                   if (err) {
                     console.log("error in log: delete message error!");
-                    throw;
+                    throw err;
                   }
 
-                  
+                  var promises = [];
+                  var return_body = [];
+
+                  var promise = function(message_rows, i, return_body) {
+
+                    return new Promise (
+
+                      function(resolve, reject) {
+
+                        query_user_info_body = "select * from User_Info where username = \' " + message_rows[i].send_user + "\'";
+                        connection.query(query_user_info_body, function(error, user_rows, fields) {
+                          if (err) {
+                            console.log("error in login: user info query error!");
+                            throw err;
+                          }
+
+                          return_body.push({message_content : message_rows[i], send_user_info : user_rows[0]});
+                          resolve(1);
+                        });
+
+                      }
+                    )
+                  }
+
+                  for (var i = 0; i < message_rows.length; i += 1) {
+
+                      promises.push(promise(message_rows, i, return_body));
+
+                  }
+
+                  Promise.all(promises).then(function(values) {
+
+                    socket.emit("login_res", {state : true, body : return_body,
+                                            user_info : user_info_rows[0]});
+
+                  });
+
                 });
 
-                socket.emit("login_res", {state : true, message_content : message_rows,
-                            user_info : user_info_rows[0]});
               });
             }
             else {
