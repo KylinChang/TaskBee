@@ -7,6 +7,8 @@ export default config = {
   isIOS: Platform.OS == 'ios',
   DEVWebsite: 'http://13.58.57.31:1234',
   DEVURL: 'http://13.58.57.31:3000',
+  //DEVWebsite: 'http://172.26.110.208:1234',
+  //DEVURL: 'http://172.26.110.208:3000',
   tags: ['undergraduate', 'graduate', 'sport', 'art', 'others'],
 
   mapboxPublicKey: 'pk.eyJ1Ijoia3lsaW5jaGFuZyIsImEiOiJjamV0aHNjbjcwaTc3MnFtcGg2c2VlZnNhIn0.H2aVgZ8lkQDkeF1nXOZISg',

@@ -103,7 +103,7 @@ class Chat extends React.Component {
     // console.log(this);
     var oneMessage = {
       send_user: this.props.username,
-      receive_user: this.props.buddy, // should be changed.
+      receive_user: this.props.buddy.username, // should be changed.
       message_content: messages[0].text
     }
      console.log(oneMessage);
