@@ -51,7 +51,7 @@ router.post('/get_friends', function (req, res, next) {
       throw err;
     }
 
-    socket.emit("get_friends_res", {friend_names: friend_rows});
+    req.json({friend_names: friend_rows});
   });
 });
 

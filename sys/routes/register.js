@@ -1,9 +1,13 @@
 var express    = require('express');
 var router     = express.Router();
 var connection = require('../model/db');
-var bcrypt     = require('bcrypt');
+var bcrypt     = require('bcryptjs');
+var multer     = require('multer');
 
-router.post('/register', function (req, res, next) {
+const maxSize    = 50 * 1024 * 1024
+var upload     = multer({limits: { fileSize: maxSize}});
+
+router.post('/register', upload.single(), function (req, res, next) {
   /*
     register function
     params: req {email, user_name, password}
@@ -22,7 +26,7 @@ router.post('/register', function (req, res, next) {
     }
 
     if (user_name_rows.length > 0) {
-      socket.emit("register_res", {state : false, info : "user name exists"});
+      res.json({state : false, info : "user name exists"});
     }
 
     var query_email_body = "select * from User_Info where \
@@ -35,7 +39,7 @@ router.post('/register', function (req, res, next) {
       }
 
       if (email_rows.length > 0) {
-        socket.emit("register_res", {state : false, info : "email exists"});
+        res.json({state : false, info : "email exists"});
       }
 
       // bcrypt encrption
@@ -45,7 +49,7 @@ router.post('/register', function (req, res, next) {
           console.log("error in register: bcrypt getSalt failed");
           throw err;
         }
-        bcrypt.hash(reg.body.password, salt, function(err, hashed_password) {
+        bcrypt.hash(req.body.password, salt, function(err, hashed_password) {
           if (err) {
             console.log("error in register: bcrypt hash failed");
             throw err;
@@ -56,13 +60,13 @@ router.post('/register', function (req, res, next) {
 
           insert_user_info_body = 'insert into User_Info \
             (username, email, password, create_time, money) \
-            values( \'' + DATA.user_name + '\', \'' + DATA.email + '\', \'' + hashed_password + '\',\''
+            values( \'' + req.body.user_name + '\', \'' + req.body.email + '\', \'' + hashed_password + '\',\''
             + curdate + '\', 0 )';
 
           connection.query(insert_user_info_body, function(err, result) {
                 if (err) throw err;
                 console.log("register succeed!");
-                socket.emit("register_res", {state : true});
+                res.json({state : true});
           });
         });
       });

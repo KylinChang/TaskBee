@@ -47,7 +47,7 @@ router.post('/get_profile', function (req, res, next) {
             pic_name = undefined;
           }
 
-          socket.emit('get_profile_res', {user_info : user_info_rows[0], task_post : task_post_rows,
+          res.json({user_info : user_info_rows[0], task_post : task_post_rows,
             task_serve : task_serve_rows, skills : skill_rows, pic_name : pic_name});
         });
       });
