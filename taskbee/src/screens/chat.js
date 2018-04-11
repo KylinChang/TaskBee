@@ -42,6 +42,11 @@ const styles = StyleSheet.create({
 class Chat extends React.Component {
   state = {
     messages: [],
+    buddy: {
+      username: "",
+      email: "",
+      avatar: ""
+    }
   }
 
   constructor(props){
@@ -52,37 +57,41 @@ class Chat extends React.Component {
   componentWillMount() {
     this.setState({
       messages: [
-        {
-          _id: 1,
-          text: 'Hello developer',
-          createdAt: new Date(),
-          user: {
-            _id: 2,
-            name: 'React Native',
-            avatar: 'https://facebook.github.io/react-native/docs/assets/favicon.png',
-          },
-        },
+        //{
+        //  _id: 1,
+        //  text: 'Hello developer',
+        //  createdAt: new Date(),
+        //  user: {
+        //    _id: 2,
+        //    name: 'React Native',
+        //    avatar: 'https://facebook.github.io/react-native/docs/assets/favicon.png',
+        //  },
+        //},
       ],
     });
-    var thisSave = this;
-    socket.on('push_message', function(res){
-      console.log("chat page::received!!");
-      var msg = {
-        _id: (new Date()).toString(),
-        text: res.message_content,
-        createdAt: new Date(),
-        user:{
-          _id: 2,
-          name: res.send_user,
-          avatar: 'https://facebook.github.io/react-native/docs/assets/favicon.png',
-        },
-      };
-      // console.log(msg);
-      thisSave.setState(previousState => ({
-        messages: GiftedChat.append(previousState.messages, [msg])
-      }));
-      // console.log(thisSave);
-    });
+
+    //var thisSave = this;
+    //socket.on('push_message', function(res){
+    //  console.log("chat page::received!!");
+    //  var msg = {
+    //    _id: (new Date()).toString(),
+    //    text: res.message_content,
+    //    createdAt: new Date(),
+    //    user:{
+    //      _id: 2,
+    //      name: res.send_user,
+    //      avatar: 'https://facebook.github.io/react-native/docs/assets/favicon.png',
+    //    },
+    //  };
+    //  // console.log(msg);
+    //  thisSave.setState(previousState => ({
+    //    messages: GiftedChat.append(previousState.messages, [msg])
+    //  }));
+    //  // console.log(thisSave);
+    //});
+
+
+
   }
 
   onSend(messages = []) {
@@ -121,6 +130,35 @@ class Chat extends React.Component {
 
 
   render() {
+    let buddy = this.props.buddy;
+    //console.log(this.props.buddy);
+    //console.log(this.state.buddy);
+    if(buddy.username != this.state.buddy.username)
+    {
+      this.setState({buddy: buddy});
+    }
+    //this.setState({messages: this.props.buddies[buddy.username]});
+
+    console.log( this.props.buddies);
+    console.log( this.props.buddy);
+
+    this.props.buddies[buddy.username].messages.forEach(function (rawMsg, i) {
+      var msg = {
+        _id: rawMsg.timestamp,
+        text: rawMsg.content,
+        createdAt: new Date(rawMsg.timestamp), // new Date().. * 1000?
+        user:{
+          _id: 2,
+          name: rawMsg.send_user.username,
+          avatar: rawMsg.send_user.avatar,
+        },
+      };
+      // console.log(msg);
+      this.setState(previousState => ({
+        messages: GiftedChat.append(previousState.messages, [msg])
+      }));
+
+    });
     return (
         <GiftedChat
             messages={this.state.messages}
@@ -138,6 +176,7 @@ export default connect(
     state => ({
       username: state.user.username,
       messages: state.user.messsages,
+      buddies: state.user.buddies,
       buddy: state.user.buddy,
       avatar: state.user.avatar,
     })

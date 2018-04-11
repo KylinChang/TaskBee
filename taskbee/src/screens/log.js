@@ -15,7 +15,7 @@ import Flower from '../components/flower';
 import Icon from '../components/icon';
 import {SubmitButton,} from '../components/button';
 
-import {login, } from '../reducers/user';
+import {login, getMessage} from '../reducers/user';
 // import {socket, } from '../utils/socket';
 
 const styles = StyleSheet.create({
@@ -76,14 +76,19 @@ class Log extends Component{
       'login',
       msg
     );
-    const {login, navigation} = this.props;
+    const {login, navigation, getMessage} = this.props;
 
     socket.on('login_res',
         function(data)
         {
             if(data.state)
             {
-                login(data.user_info.username, data.user_info.email, data.message_content);
+                login(data.user_info.username, data.user_info.email, data.user_info.avatar);
+
+                data.body.forEach(function (line, i) {
+                  getMessage(line.send_user_info, data.user_info, line.message_content.send_time, line.message_content.content, true);
+                });
+
                 navigation.navigate('Tabs');
             }
         });
@@ -146,4 +151,5 @@ export default connect(
   }),
   {
     login,
+    getMessage,
   })(Log);
