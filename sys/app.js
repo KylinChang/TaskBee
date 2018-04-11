@@ -50,7 +50,7 @@ app.use(function(req, res, next) {
 });
 
 
-/* 
+/*
   error handlers
   development error handler
   will print stacktrace
@@ -67,7 +67,7 @@ if (app.get('env') === 'development') {
   });
 }
 
-/* 
+/*
   production error handler
   no stacktraces leaked to user
 */
@@ -89,6 +89,7 @@ var io = require('socket.io')(1234);
 console.log("start to listen on socket..");
 io.on('connection', function(socket) {
   console.log('a user connected');
+
   socket.on('send_message', function (DATA) {
     /*
      *  forward message from one user to another
@@ -141,6 +142,77 @@ io.on('connection', function(socket) {
         io.to(receiver_socket_id).emit("push_message", {message_content: DATA.message_content, user_info: user_info_rows[0], time: curdate});
       });
     }
+  });
+
+  /*
+    login function
+  */
+  socket.on('login', function (DATA) {
+      /*
+        login function
+        params: req {user_name, password}
+        returns: req {state, info, message_content, email}
+        return type: state(bool) indicates login state
+                     info(string) indicates failure reason
+                     message_content(string) contains all message haven't been received, fields corresponding to \
+                                              message_queue tabel in db
+                     user_info(JSON) user infos, fields corresponding to User_Info table in db
+      */
+      console.log(DATA);
+
+      var query_login_body = "select * from User_Info where username = \'" + DATA.user_name + "\'";
+      connection.query(query_login_body, function(err, user_info_rows, fields) {
+        if (err) {
+          console.log("error in login: query login error!");
+          throw err;
+        }
+
+        if (user_info_rows.length <= 0) {
+          socket.emit("login_res", {state : false, info : "user name not found"});
+        }
+        else {
+          // grab the hased user password from DB
+          var hash_in_DB = user_info_rows[0].password;
+
+          bcrypt.compare(DATA.password, hash_in_DB, function(err, matched) {
+            if (err) {
+              console.log("error in login: bcrypt compare failed");
+              throw err;
+            }
+            if (matched) {
+              console.log("login: password matched!");
+              user_socket[DATA.user_name] = socket.id;
+              query_message_body = "select * from message_queue where receive_user = \'" +
+                                    DATA.user_name + "\'";
+
+              connection.query(query_message_body, function(err, message_rows, fields) {
+                if (err) {
+                  console.log("error in login: query message error!");
+                  throw err;
+                }
+
+                delete_message_body = "delete * from message_queue where receive_user = \'" +
+                                    DATA.user_name + "\'";
+                connection.query(delete_message_body, function(err, res) {
+                  if (err) {
+                    console.log("error in log: delete message error!");
+                    throw;
+                  }
+
+                  
+                });
+
+                socket.emit("login_res", {state : true, message_content : message_rows,
+                            user_info : user_info_rows[0]});
+              });
+            }
+            else {
+              console.log("login: matched failed");
+              socket.emit("login_res", {state : false, info : "wrong password"});
+            }
+          });
+        }
+      });
   });
 });
 
