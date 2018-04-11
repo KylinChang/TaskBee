@@ -1,5 +1,5 @@
-var express = require('express');
-var router = express.Router();
+var express    = require('express');
+var router     = express.Router();
 var connection = require('../model/db');
 
 router.post("/get_task_list", function(req, res, next) {
@@ -15,12 +15,11 @@ router.post("/get_task_list", function(req, res, next) {
    * */
   console.log("in get task list!");
 
-  var date = new Date();
+  var date    = new Date();
   var curdate = ""+date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
 
   var query_task_body = "select * from Task_Info \
     where is_completed = " + 0 + " and end_date >= \'" + curdate + "\'";
-  //console.log(query_task_body);
 
   connection.query(query_task_body, function(err, task_rows, fields) {
     if (err) {
@@ -28,7 +27,7 @@ router.post("/get_task_list", function(req, res, next) {
       throw err;
     }
 
-    var promises = []
+    var promises  = []
     var task_list = []
 
     var promise = function(query_tag_body, query_user_info_body, task_row) {
@@ -73,7 +72,6 @@ router.post("/get_task_list", function(req, res, next) {
     }
 
     Promise.all(promises).then(function(values) {
-      //console.log(task_list);
       res.json({forumList: task_list});
     });
   });

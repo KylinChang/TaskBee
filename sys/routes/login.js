@@ -1,6 +1,7 @@
-var express = require('express');
-var router = express.Router();
+var express    = require('express');
+var router     = express.Router();
 var connection = require('../model/db');
+var bcrypt     = require('bcrypt');
 
 router.post('/login', function (req, res, next) {
     /*
@@ -24,24 +25,38 @@ router.post('/login', function (req, res, next) {
 
       if (user_info_rows.length <= 0) {
         socket.emit("login_res", {state : false, info : "user name not found"});
-      } else if (user_info_rows[0].password != req.password) {
-        socket.emit("login_res", {state : false, info : "wrong password"});
-      } else {
-        user_socket[req.user_name] = socket.id;
-        query_message_body = "select * from message_queue where receive_user = \'" +
-                              req.user_name + "\'";
+      } 
+      else {
+        // grab the hased user password from DB
+        var hash_in_DB = user_info_rows[0].password;
 
-        connection.query(query_message_body, function(err, message_rows, fields) {
+        bcrypt.compare(req.body.password, hash_in_DB, function(err, matched) {
           if (err) {
-            console.log("error in login: query message error!");
+            console.log("error in login: bcrypt compare failed");
             throw err;
           }
+          if (matched) {
+            console.log("login: password matched!");
+            user_socket[req.body.user_name] = socket.id;
+            query_message_body = "select * from message_queue where receive_user = \'" +
+                                  req.body.user_name + "\'";
 
-          socket.emit("login_res", {state : true, message_content : message_rows,
-                                  user_info : user_info_rows[0]});
+            connection.query(query_message_body, function(err, message_rows, fields) {
+              if (err) {
+                console.log("error in login: query message error!");
+                throw err;
+              }
+
+              socket.emit("login_res", {state : true, message_content : message_rows,
+                          user_info : user_info_rows[0]});
+            });
+          }
+          else {
+            console.log("login: matched failed");
+            socket.emit("login_res", {state : false, info : "wrong password"});
+          }
         });
       }
-
     });
 });
 

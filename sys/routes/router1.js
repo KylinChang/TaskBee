@@ -1,10 +1,10 @@
-var express = require('express');
-var router = express.Router();
-var multer = require('multer');
-var maxSize = 50 * 1024 * 1024
-var upload = multer({limits: { fileSize: maxSize}});
+var express    = require('express');
+var router     = express.Router();
+var multer     = require('multer');
+var maxSize    = 50 * 1024 * 1024
+var upload     = multer({limits: { fileSize: maxSize}});
 var connection = require('../model/db');
-var fs = require('fs');
+var fs         = require('fs');
 
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
@@ -55,7 +55,7 @@ router.post('/post_task', upload.array('photo', 3), function(req, res, next) {
 
   */
   console.log("enter post task!");
-  //console.log(req);
+
   insert_task_body = "insert into Task_Info \
       (poster_name, description, price, start_date, end_date) \
       VALUES ( \'" + req.body.user_name + "\', \'" + req.body.description + "\', " + req.body.price + ", \'" +
@@ -83,7 +83,6 @@ router.post('/post_task', upload.array('photo', 3), function(req, res, next) {
                       where task_id = \'" + result.insertId + "\'";
 
           fstream.write(req.files[i].buffer, function () {
-            //console.log("write file" + i.toString() + " succeed!");
 
             console.log(update_img_url_body);
 
@@ -158,7 +157,7 @@ router.post("/get_self_task", upload.single(), function(req, res, next) {
    *              self_take_task (array)
    *            }
    *            ## note: every task in array has all fields of Task_Info and User_Info in db
-   * */
+   */
   var DATA = req.body;
   console.log(DATA);
 
@@ -199,18 +198,6 @@ router.post("/get_self_task", upload.single(), function(req, res, next) {
           console.log("error in get self task: get take task error!");
           throw err;
         }
-
-        // query_user_info_body = "select * from User_Info \
-        //       where username = \'" + DATA.user_name + "\'";
-        //
-        // connection.query(query_user_info_body, function(err, user_info_rows, fields) {
-        //   if (err) {
-        //     console.log("error in get self task: get user info error!");
-        //     throw err;
-        //   }
-        //
-        //
-        // });
 
         res.json({self_post_task: post_task_rows, underway_task: underway_rows, self_take_task: take_task_rows});
       });

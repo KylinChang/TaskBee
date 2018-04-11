@@ -1,5 +1,5 @@
-var express = require('express');
-var router = express.Router();
+var express    = require('express');
+var router     = express.Router();
 var connection = require('../model/db');
 
 router.post('/add_friend', function (req, res, next) {
