@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var connection = require('../model/db');
 
-router.post('login', function (req, res, next) {
+router.post('/login', function (req, res, next) {
     /*
       login function
       params: req {user_name, password}
@@ -44,3 +44,5 @@ router.post('login', function (req, res, next) {
 
     });
 });
+
+module.exports = router;

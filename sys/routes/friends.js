@@ -1,3 +1,7 @@
+var express = require('express');
+var router = express.Router();
+var connection = require('../model/db');
+
 router.post('/add_friend', function (req, res, next) {
   /*
     add one friend to friend list
@@ -51,4 +55,4 @@ router.post('/get_friends', function (req, res, next) {
   });
 });
 
-});
+module.exports = router;

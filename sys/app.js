@@ -83,66 +83,69 @@ open socket I/O
 
 */
 
+var io = require('socket.io')(1234);
+console.log("start to listen on socket..");
+io.on('connection', function(socket) {
+  console.log('Zhixin Liu connected');
+  socket.on('send_message', function (DATA) {
+    /*
+     *  forward message from one user to another
+     *  params: DATA {
+                      send_user
+                      receive_user
+                      message_content
+                    }
+     *  returns: None
+     *  message sent to receiver: {
+                          message_content (string)
+                          user_info (JSON, has all field of User_Info table in db)
+                          time (timestamp)
+                        }
+     * */
+    // console.log(DATA);
 
+    var receiver_socket_id = user_socket[DATA.receive_user];
+    //console.log(user_socket);
+    //console.log(receiver_socket_id);
+    //console.log(io.sockets.sockets[receiver_socket_id]);
 
-socket.on('send_message', function (DATA) {
-  /*
-   *  forward message from one user to another
-   *  params: DATA {
-                    send_user
-                    receive_user
-                    message_content
-                  }
-   *  returns: None
-   *  message sent to receiver: {
-                        message_content (string)
-                        user_info (JSON, has all field of User_Info table in db)
-                        time (timestamp)
-                      }
-   * */
-  // console.log(DATA);
+    //console.log(Object.keys(io.sockets.sockets));
+    if (io.sockets.sockets[receiver_socket_id] == undefined) {
+      console.log("receive user offline!");
+      user_socket[DATA.receive_user] = undefined;
+    }
 
-  var receiver_socket_id = user_socket[DATA.receive_user];
-  //console.log(user_socket);
-  //console.log(receiver_socket_id);
-  //console.log(io.sockets.sockets[receiver_socket_id]);
+    if (user_socket[DATA.receive_user] == undefined) {
+      console.log("can't find receive user!");
+      insert_message_body = "insert into message_queue \
+        (send_user, receive_user, content) \
+        VALUES( \'" + DATA.send_user + "\', \'" + DATA.receive_user + "\', \'" + DATA.message_content + "\' )";
 
-  //console.log(Object.keys(io.sockets.sockets));
-  if (io.sockets.sockets[receiver_socket_id] == undefined) {
-    console.log("receive user offline!");
-    user_socket[DATA.receive_user] = undefined;
-  }
+      connection.query(insert_message_body, function(err, result) {
+        if (err) {
+          console.log('error in send message: insert message error!');
+          throw err;
+        }
 
-  if (user_socket[DATA.receive_user] == undefined) {
-    console.log("can't find receive user!");
-    insert_message_body = "insert into message_queue \
-      (send_user, receive_user, content) \
-      VALUES( \'" + DATA.send_user + "\', \'" + DATA.receive_user + "\', \'" + DATA.message_content + "\' )";
+      });
+    } else {
+      console.log("message sent!");
+      var date = new Date();
+      var curdate = ""+date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
 
-    connection.query(insert_message_body, function(err, result) {
-      if (err) {
-        console.log('error in send message: insert message error!');
-        throw err;
-      }
+      var query_user_info_body = "select * from User_Info \
+            where User_Info.username = \'" + DATA.send_user + "\'";
 
-    });
-  } else {
-    console.log("message sent!");
-    var date = new Date();
-    var curdate = ""+date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+      connection.query(query_user_info_body, function(err, user_info_rows, fields) {
+        if (err) {
+          console.log("error in send message: query sender info error!");
+          throw err;
+        }
 
-    var query_user_info_body = "select * from User_Info \
-          where User_Info.username = \'" + DATA.send_user + "\'";
-
-    connection.query(query_user_info_body, function(err, user_info_rows, fields) {
-      if (err) {
-        console.log("error in send message: query sender info error!");
-        throw err;
-      }
-
-      io.to(receiver_socket_id).emit("push_message", {message_content: DATA.message_content, user_info: user_info_rows[0], time: curdate});
-    });
-  }
+        io.to(receiver_socket_id).emit("push_message", {message_content: DATA.message_content, user_info: user_info_rows[0], time: curdate});
+      });
+    }
+  });
 });
 
 

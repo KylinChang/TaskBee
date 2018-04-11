@@ -58,3 +58,5 @@ router.post('/complete_task', function (req, res, next) {
       // do nothing
     });
 });
+
+module.exports = router;
