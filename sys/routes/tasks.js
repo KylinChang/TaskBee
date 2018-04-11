@@ -1,5 +1,5 @@
-var express = require('express');
-var router = express.Router();
+var express    = require('express');
+var router     = express.Router();
 var connection = require('../model/db');
 
 router.post('/take_task', function (req, res, next) {
@@ -10,8 +10,7 @@ router.post('/take_task', function (req, res, next) {
      *              taker_id
      *            }
         returns: None
-     * */
-    //console.log("req");
+     */
 
     update_task_body = "update Task_info set is_taken = 1 \
             where task_id = \'" + req.body.task_id + "\'";
@@ -41,7 +40,7 @@ router.post('/complete_task', function (req, res, next) {
     /*
      * complete one task
      * params: req {task_id}
-     * */
+     */
     console.log(req.body);
 
     var date = new Date();

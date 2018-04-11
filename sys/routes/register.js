@@ -1,6 +1,7 @@
-var express = require('express');
-var router = express.Router();
+var express    = require('express');
+var router     = express.Router();
 var connection = require('../model/db');
+var bcrypt     = require('bcrypt');
 
 router.post('/register', function (req, res, next) {
   /*
@@ -25,7 +26,7 @@ router.post('/register', function (req, res, next) {
     }
 
     var query_email_body = "select * from User_Info where \
-                        email = \'" + req.email + "\'";
+                        email = \'" + req.body.email + "\'";
 
     connection.query(query_email_body, function(err, email_rows, field) {
       if (err) {
@@ -37,18 +38,33 @@ router.post('/register', function (req, res, next) {
         socket.emit("register_res", {state : false, info : "email exists"});
       }
 
-      var date = new Date();
-      var curdate = ""+date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
-      insert_user_info_body = 'insert into User_Info \
-      (username, email, password, create_time, money) \
-      values( \'' + req.user_name + '\', \'' + req.email + '\', \'' + req.password + '\',\''
-  + curdate + '\', 0 )';
+      // bcrypt encrption
+      const saltRounds = 10;
+      bcrypt.genSalt(saltRounds, function(err, salt) {
+        if (err) {
+          console.log("error in register: bcrypt getSalt failed");
+          throw err;
+        }
+        bcrypt.hash(reg.body.password, salt, function(err, hashed_password) {
+          if (err) {
+            console.log("error in register: bcrypt hash failed");
+            throw err;
+          }
 
-      connection.query(insert_user_info_body, function(err, result) {
-            if (err) throw err;
-            console.log("register succeed!");
+          var date = new Date();
+          var curdate = "" + date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
 
-            socket.emit("register_res", {state : true});
+          insert_user_info_body = 'insert into User_Info \
+            (username, email, password, create_time, money) \
+            values( \'' + DATA.user_name + '\', \'' + DATA.email + '\', \'' + hashed_password + '\',\''
+            + curdate + '\', 0 )';
+
+          connection.query(insert_user_info_body, function(err, result) {
+                if (err) throw err;
+                console.log("register succeed!");
+                socket.emit("register_res", {state : true});
+          });
+        });
       });
     });
   });

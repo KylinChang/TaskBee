@@ -1,26 +1,27 @@
 /*
   Import Libraries
 */
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
+
+var express      = require('express');
+var path         = require('path');
+var favicon      = require('serve-favicon');
+var logger       = require('morgan');
 var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var router = require('./routes/index')
-var ejs = require('ejs');
-var users = require('./routes/users');
-var app = express();
-var mysql = require('mysql');
-var fs = require('fs');
-var multer = require('multer');
+var bodyParser   = require('body-parser');
+var router       = require('./routes/index')
+var ejs          = require('ejs');
+var users        = require('./routes/users');
+var app          = express();
+var mysql        = require('mysql');
+var fs           = require('fs');
+var multer       = require('multer');
 
 // User Object
 var user_socket = {};
-var connection = require('./model/db');
+var connection  = require('./model/db');
 
 const max_limit = '100mb'
-const maxSize = 50 * 1024 * 1024
+const maxSize   = 50 * 1024 * 1024
 
 app.use(bodyParser.urlencoded({ limit: max_limit, extended: true, parameterLimit: maxSize }));
 app.use(bodyParser.json({limit: max_limit}));
@@ -31,7 +32,6 @@ app.engine('.html', ejs.__express);
 app.set('view engine', 'html');
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -44,16 +44,18 @@ app.use(router);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
+  var err    = new Error('Not Found');
   err.status = 404;
   next(err);
 });
 
 
-// error handlers
+/* 
+  error handlers
+  development error handler
+  will print stacktrace
+*/
 
-// development error handler
-// will print stacktrace
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
     console.log(err.stack);
@@ -65,8 +67,11 @@ if (app.get('env') === 'development') {
   });
 }
 
-// production error handler
-// no stacktraces leaked to user
+/* 
+  production error handler
+  no stacktraces leaked to user
+*/
+
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error', {
@@ -77,16 +82,13 @@ app.use(function(err, req, res, next) {
 
 
 /*
-
 open socket I/O
-
-
 */
 
 var io = require('socket.io')(1234);
 console.log("start to listen on socket..");
 io.on('connection', function(socket) {
-  console.log('Zhixin Liu connected');
+  console.log('a user connected');
   socket.on('send_message', function (DATA) {
     /*
      *  forward message from one user to another
@@ -102,14 +104,8 @@ io.on('connection', function(socket) {
                           time (timestamp)
                         }
      * */
-    // console.log(DATA);
 
     var receiver_socket_id = user_socket[DATA.receive_user];
-    //console.log(user_socket);
-    //console.log(receiver_socket_id);
-    //console.log(io.sockets.sockets[receiver_socket_id]);
-
-    //console.log(Object.keys(io.sockets.sockets));
     if (io.sockets.sockets[receiver_socket_id] == undefined) {
       console.log("receive user offline!");
       user_socket[DATA.receive_user] = undefined;
@@ -130,7 +126,7 @@ io.on('connection', function(socket) {
       });
     } else {
       console.log("message sent!");
-      var date = new Date();
+      var date    = new Date();
       var curdate = ""+date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
 
       var query_user_info_body = "select * from User_Info \
@@ -147,9 +143,5 @@ io.on('connection', function(socket) {
     }
   });
 });
-
-
-
-
 
 module.exports = app;
