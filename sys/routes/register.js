@@ -45,7 +45,7 @@ router.post('/register', function (req, res, next) {
           console.log("error in register: bcrypt getSalt failed");
           throw err;
         }
-        bcrypt.hash(reg.body.password, salt, function(err, hashed_password) {
+        bcrypt.hash(req.body.password, salt, function(err, hashed_password) {
           if (err) {
             console.log("error in register: bcrypt hash failed");
             throw err;
