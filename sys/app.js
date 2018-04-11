@@ -190,7 +190,7 @@ io.on('connection', function(socket) {
                   throw err;
                 }
 
-                delete_message_body = "delete * from message_queue where receive_user = \'" +
+                delete_message_body = "delete from message_queue where receive_user = \'" +
                                     DATA.user_name + "\'";
                 connection.query(delete_message_body, function(err, res) {
                   if (err) {
