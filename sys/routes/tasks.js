@@ -228,7 +228,7 @@ router.post("/get_self_task", upload.single(), function(req, res, next) {
   });
 });
 
-router.post("/get_task_list", function(req, res, next) {
+router.post("/get_task_list", upload.single(), function(req, res, next) {
   /*
    *  get all active task
    *  params: None

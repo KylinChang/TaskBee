@@ -2,8 +2,12 @@ var express    = require('express');
 var router     = express.Router();
 var connection = require('../model/db');
 var bcrypt     = require('bcryptjs');
+var multer     = require('multer');
 
-router.post('/register', function (req, res, next) {
+const maxSize    = 50 * 1024 * 1024
+var upload     = multer({limits: { fileSize: maxSize}});
+
+router.post('/register', upload.single(), function (req, res, next) {
   /*
     register function
     params: req {email, user_name, password}
@@ -56,7 +60,7 @@ router.post('/register', function (req, res, next) {
 
           insert_user_info_body = 'insert into User_Info \
             (username, email, password, create_time, money) \
-            values( \'' + DATA.user_name + '\', \'' + DATA.email + '\', \'' + hashed_password + '\',\''
+            values( \'' + req.body.user_name + '\', \'' + req.body.email + '\', \'' + hashed_password + '\',\''
             + curdate + '\', 0 )';
 
           connection.query(insert_user_info_body, function(err, result) {

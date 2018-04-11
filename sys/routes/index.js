@@ -1,6 +1,6 @@
 var express     = require('express');
 var router      = express.Router();
-var avatar     = require('./avatar');
+var avatar      = require('./avatar');
 var get_profile = require('./get_profile');
 var register    = require('./register');
 var tasks       = require('./tasks');
