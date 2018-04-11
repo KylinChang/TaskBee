@@ -10,6 +10,9 @@ router.use(router2);
 router.use(get_profile);
 router.use(login);
 router.use(register);
+router.use(tasks);
+router.use(friends);
+
 
 
 module.exports = router;
