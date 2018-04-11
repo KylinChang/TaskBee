@@ -1,7 +1,7 @@
 var express    = require('express');
 var router     = express.Router();
 var connection = require('../model/db');
-var bcrypt     = require('bcrypt');
+var bcrypt     = require('bcryptjs');
 
 router.post('/register', function (req, res, next) {
   /*
@@ -22,7 +22,7 @@ router.post('/register', function (req, res, next) {
     }
 
     if (user_name_rows.length > 0) {
-      socket.emit("register_res", {state : false, info : "user name exists"});
+      res.json({state : false, info : "user name exists"});
     }
 
     var query_email_body = "select * from User_Info where \
@@ -35,7 +35,7 @@ router.post('/register', function (req, res, next) {
       }
 
       if (email_rows.length > 0) {
-        socket.emit("register_res", {state : false, info : "email exists"});
+        res.json({state : false, info : "email exists"});
       }
 
       // bcrypt encrption
@@ -62,7 +62,7 @@ router.post('/register', function (req, res, next) {
           connection.query(insert_user_info_body, function(err, result) {
                 if (err) throw err;
                 console.log("register succeed!");
-                socket.emit("register_res", {state : true});
+                res.json({state : true});
           });
         });
       });

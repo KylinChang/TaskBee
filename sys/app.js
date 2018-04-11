@@ -2,6 +2,7 @@
   Import Libraries
 */
 
+var bcrypt       = require('bcryptjs');
 var express      = require('express');
 var path         = require('path');
 var favicon      = require('serve-favicon');
@@ -10,7 +11,6 @@ var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
 var router       = require('./routes/index')
 var ejs          = require('ejs');
-var users        = require('./routes/users');
 var app          = express();
 var mysql        = require('mysql');
 var fs           = require('fs');
@@ -38,7 +38,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 var routes = require('./routes/index');
 app.use('/', routes);
-app.use('/users', users);
 app.use('/images', express.static(__dirname+'/images/'));
 app.use(router);
 
