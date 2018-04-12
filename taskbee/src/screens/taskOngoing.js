@@ -27,7 +27,7 @@ import {
   OrderItem,
 } from '../components/list';
 
-class TaskUnderway extends Component{
+class TaskOngoing extends Component{
   constructor(props){
     super(props);
   }
@@ -46,7 +46,6 @@ class TaskUnderway extends Component{
   );
 
   render(){
-    console.log("super underway");
     const {underway_task} = this.props;
     console.log(underway_task);
     let data = [];
@@ -80,4 +79,4 @@ export default connect(
       username: state.user.username,
       email: state.user.email,
       underway_task: state.user.underway_task,
-    }))(TaskUnderway);
+    }))(TaskOngoing);

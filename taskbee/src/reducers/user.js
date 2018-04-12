@@ -2,10 +2,12 @@ import config from '../config/config';
 
 const LOGIN="USER/LOGIN";
 const REGISTER ="USER/REGISTER";
+const LOGOUT="USER/LOGOUT";
 const CHAT="USER/CHAT";
 const GETTASK = "USER/GETTASK";
 const TAKETASK = "USER/TAKETASK";
 const POSTTASK = "USER/POSTTASK";
+const GETMESSAGE = "USER/GETMESSAGE";
 
 const initialState = {
   logError: false,
@@ -14,8 +16,8 @@ const initialState = {
   email: "",
   avatar: "",
   messages: [],
-  buddies: {},
-  buddy: "",
+  buddies: {},   // all buddies.
+  buddy: {},    // current chat buddy.
   self_take_task: [],
   self_post_task: [],
   underway_task: [],
@@ -28,34 +30,47 @@ function user(state=initialState, action){
         loggedIn: true,
         username: action.username,
         email: action.email,
-        messages: action.messages,
-        buddies: action.buddies,
+        //messages: action.messages,
+        //buddies: action.buddies,
         avatar: action.avatar,
         buddy: "",
         task_list: {},
       });
     case REGISTER:
       return Object.assign({}, state, {
-        loggedIn: true,
+        loggedIn: false,
         username: action.username,
         email: action.email,
+        messages: action.messages,
+        buddies: action.buddies,
         avatar: action.avatar,
-        messages: [],
-        buddies: {},
         buddy: "",
         task_list: {},
       });
+    case LOGOUT:
+      return Object.assign({}, state, {
+        loggedIn: true,
+        logError: false,
+        username: "",
+        email: "",
+        avatar: "",
+        buddy: "",
+      });
     case CHAT:
       let buddies = Object.assign({}, state.buddies);
-      buddies[action.buddy] = {
-        buddy_name: action.buddy,
-        date: new Date(),
-        email: action.email,
-        avatar: action.avatar,
-      };
+        if(Object.keys(buddies).indexOf(action.buddy.username) == -1)
+        {
+          buddies[action.buddy.username] = {
+            username: action.buddy.username,
+            date: new Date().getTime(),
+            email: action.buddy.email,
+            avatar: action.buddy.avatar,
+            messages: []
+          }
+        }
       return Object.assign({}, state, {
-        buddies: buddies,
         buddy: action.buddy,
+        buddies: buddies
       });
     case GETTASK:
       return Object.assign({}, state, {
@@ -76,18 +91,63 @@ function user(state=initialState, action){
       return Object.assign({}, state, {
         self_post_task: self_post_task,
       });
+    case GETMESSAGE:
+      buddies = Object.assign({}, state.buddies);
+      // add buddy...
+      let username = action.sender.username;
+      let email = action.sender.email;
+      let avatar = action.sender.avatar;
+      if(!action.isReveiver){
+        username = action.receiver.username;
+        email = action.receiver.email;
+        avatar = action.receiver.avatar;
+      }
+      if(Object.keys(buddies).indexOf(username) != -1)
+      {
+        buddies[username].date = action.timestamp;
+      }
+      else
+      {
+        buddies[username] = {
+          username: username,
+          date: action.timestamp,
+          email: email,
+          avatar: avatar,
+          messages: []
+        };
+      }
+      buddies[username].messages.push(action.content);
+
+      // add message
+      let messages = state.messages;
+      messages.push({
+        sender: action.sender,
+        receiver: action.receiver,
+        timestamp: action.timestamp,
+        content: action.content
+      });
+
+      //maybe update notification here..
+
+
+      return Object.assign({}, state, {
+        buddies: buddies,
+        buddy: username,
+        messages: messages
+      });
+
     default:
       return state;
   }
 }
 
-function login(username, email, messages, buddies, avatar){
+function login(username, email, avatar){
   return {
     type: LOGIN,
     username: username,
     email: email,
-    messages: messages,
-    buddies: buddies,
+    //messages: messages,
+    //buddies: buddies,
     avatar: avatar,
   }
 }
@@ -101,15 +161,31 @@ function register(username, email, avatar){
   }
 }
 
-function chat(buddy, email, avatar)
+function logout(){
+  return {
+    type: LOGOUT,
+  }
+}
+
+function chat(buddy)  // {username, email, avatar}
 {
   return {
     type: CHAT,
     buddy: buddy,
-    email: email,
-    avatar: avatar,
   }
 }
+
+//function chat(sender, receiver, timestamp, content, isReceiver) //sender, receiver: object, {username, avatar, email}; other: string
+//{
+//  return {
+//    type: CHAT,
+//    sender: sender,
+//    receiver: receiver,
+//    timestamp: timestamp,
+//    content: content,
+//    isReveiver: isReceiver,
+//  }
+//}
 
 function getTask(task_list)
 {
@@ -133,12 +209,26 @@ function postTask(taskInfo){
   };
 }
 
+function getMessage(sender, receiver, timestamp, content, isReceiver) //sender, receiver: object, {username, avatar, email}; other: string
+{
+  return {
+    type: GETMESSAGE,
+    sender: sender,
+    receiver: receiver,
+    timestamp: timestamp,
+    content: content,
+    isReveiver: isReceiver,
+  }
+}
+
 export {
   user,
   login,
   register,
+  logout,
   chat,
   getTask,
   takeTask,
   postTask,
+  getMessage,
 };

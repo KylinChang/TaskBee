@@ -10,6 +10,8 @@ import FontAwesome, { Icons } from 'react-native-fontawesome';
 import {connect} from 'react-redux';
 import {GiftedChat, Actions, Bubble, SystemMessage} from 'react-native-gifted-chat';
 
+import {chat} from '../reducers/user';
+
 import config from '../config/config';
 import {
     FabButton,
@@ -43,29 +45,34 @@ class Message extends Component{
             email: "gdgyzzl@gmail.com",
             buddiesList: [],
         };
-        const {buddiesList} = this.state;
-        let thisSave = this;
-        socket.on('push_message', function(res){
-            console.log('message page:: received');
-            console.log(res);
-            if(!buddiesList.includes(res.send_user))
-            {
-                let tmp = buddiesList.slice();
-                tmp.push(res.send_user);
-                thisSave.setState({buddiesList: tmp});
-                //this.state.buddiesList.push(res.send_user);
-            }
-        });
+        //const {buddiesList} = this.state;
+        //let thisSave = this;
+        //socket.on('push_message', function(res){
+        //    console.log('message page:: received');
+        //    console.log(res);
+        //    if(!buddiesList.includes(res.send_user))
+        //    {
+        //        let tmp = buddiesList.slice();
+        //        tmp.push(res.send_user);
+        //        thisSave.setState({buddiesList: tmp});
+        //        //this.state.buddiesList.push(res.send_user);
+        //    }
+        //});
+    }
+
+    pressBuddy(username, email, avatar){
+        chat({username: username, email: email, avatar: avatar});
+        this.props.navigation.navigate('Chat');
     }
 
     renderItem = ({item}) => (
 
         <View style={styles.section}>
             <ChatButton
-                username={item.buddy_name}
+                username={item.username}
                 email={item.email}
                 imgUri={item.avatar}
-                onPress={() => this.props.navigation.navigate('Chat')}
+                onPress={() => this.pressBuddy(item.username, item.email, item.avatar)}
             />
         </View>
 
@@ -84,7 +91,7 @@ class Message extends Component{
         {
             this.state.buddiesList.push(buddies[key]);
         }
-       this.state.buddiesList.sort(function (a, b) {
+        this.state.buddiesList.sort(function (a, b) {
             return a.date < b.date;
         });
         console.log(this.state.buddiesList);
@@ -109,5 +116,8 @@ export default connect(
         username: state.user.username,
         messages: state.user.messsages,
         buddies: state.user.buddies,
-    })
+    }),
+    {
+        chat,
+    }
 )(Message);
