@@ -137,8 +137,6 @@ class Chat extends React.Component {
           messages: GiftedChat.append(previousState.messages, [msg])
         }));
       });
-      console.log(newMsgs);
-      console.log(this.state.messages);
       //this.setState({
       //  messages: newMsgs
       //});
