@@ -15,8 +15,21 @@ import ImagePicker from 'react-native-image-crop-picker';
 import Calendar from 'react-native-calendar-select';
 import MultipleTags from 'react-native-multiple-tags';
 
+import {
+  AccentFabButton,
+  FabButton,
+  ChatButton,
+} from '../components/button';
+import TextFieldAnimated from '../components/TextFieldAnimated';
+
+
 import config from '../config/config';
 import {postTask,} from '../reducers/user';
+
+var { Dimensions } = require('react-native')
+
+var width = Dimensions.get('window').width;
+var height = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
   container: {
@@ -24,7 +37,8 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flex: 1,
-    paddingHorizontal: config.normalPadding,
+    paddingRight: 28,
+    paddingLeft: 28,
   },
   dateContainer: {
     flex: 1,
@@ -36,9 +50,32 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 18,
     height: 200,
-    borderWidth:2,
-    borderColor: config.colorBorder,
-    padding: config.normalPadding,
+    paddingRight: 5,
+    paddingLeft: 28,
+    paddingBottom: 5,
+    paddingTop: 15,
+    // lineHeight: 23,
+    // borderWidth:2,
+    // borderColor: config.colorBorder,
+    // padding: config.normalPadding,
+  },
+  price: {
+    fontSize: 18,
+    flex: 1,
+    width: 80,
+    paddingHorizontal: 0,
+    marginHorizontal: 0,
+    // borderRightWidth: 1,
+    // borderColor: 'rgba(0,0,0,.1)',
+
+  },
+  location: {
+    fontSize: 18,
+    flex: 2,
+    width: width - 140,
+    // alignsItems: 'flex-end',
+    marginHorizontal: 0,
+    paddingHorizontal: 0,
   },
   textPrice: {
     flex: 1,
@@ -48,19 +85,30 @@ const styles = StyleSheet.create({
     borderBottomColor: config.colorPrimary,
   },
 
-  button: {
-    borderWidth: StyleSheet.hairlineWidth,
+  buttonDate:{
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderBottomWidth: StyleSheet.hairlineWidth,
     borderColor: 'rgba(0,0,0,.1)',
-    shadowRadius: 1,
-    shadowOffset: {width: 0, height: 0.5},
-    shadowOpacity: 0.7,
-    shadowColor: 'black',
     height: 42,
-    borderRadius: 21,
-    paddingHorizontal: 24,
+    borderRadius: 0,
+    paddingHorizontal: 0,
+    marginHorizontal: 0,
     alignItems: 'center',
     justifyContent: 'center',
-    marginVertical: 10,
+    paddingVertical: 0,
+    marginVertical: 0,
+  },
+
+  button: {
+    shadowRadius: 0,
+    height: 42,
+    borderRadius: 5,
+    paddingHorizontal: 0,
+    marginHorizontal: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 0,
+    marginVertical: 0,
   },
   taskItemImages:{
     flex: 1,
@@ -70,6 +118,16 @@ const styles = StyleSheet.create({
     height: 100,
     marginRight: 9,
   },
+  fabContainer: {
+    flex: 1,
+    // flexDirection: "row",
+    position: 'absolute',
+    top: height - 350,
+    right: 10,
+  },
+  fabCol:{
+    marginLeft: 10, marginRight: 10,
+  },
 });
 
 class PostTask extends Component{
@@ -77,6 +135,7 @@ class PostTask extends Component{
     super(props);
 
     this.state = {
+      title: "",
       description: "",
       taskImgs: [],
       startDate: new Date(),
@@ -149,7 +208,7 @@ class PostTask extends Component{
     const {goBack} = this.props.navigation;
     const {username, email} = this.props;
     const {
-      description, price, taskImgs, startDate, endDate, tags,
+      title, description, price, taskImgs, startDate, endDate, tags,
     } = this.state;
 
     if(description.length==0){
@@ -255,30 +314,50 @@ class PostTask extends Component{
             title="Topic"
           />
         </View>
+
+        <TextFieldAnimated
+            label="Title"
+            // onChangeText={ () => {} }
+            // onChangeText={(changedText) => this.setState({description: changedText})}
+            placeholder={'Title'}
+        />
+        <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignSelf: 'stretch', padding: 0}}>
+        <TextFieldAnimated
+          label = "Price"
+          style = {styles.price}
+          placeholder = {'Price'}
+          keyboardType={'numeric'}
+          onChangeText={this.onPrice}
+        />
+
+        <TextFieldAnimated
+          label = "Specific loaction (optional)"
+          style = {styles.location}
+          placeholder = {'Specific loaction (optional)'}
+        />
+        </View>
         <TextInput
-          style={styles.textInput}
+          label = "Description"
+          style = {styles.textInput}
           multiline
           autoFocus
           editable
           onChangeText={(text) => this.setState({description: text})}
           maxLength={800}
           maxHeight={200}
-          placeholder={"Task description"}
+          placeholder={'Description'}
         />
         {this.state.taskImgs.length>0? this.renderImages() : null}
+        <View style={styles.fabContainer}>
+          <View style={styles.fabCol}>
+            <FabButton onPress={this.onAddPhotos}>
+              <Image pointerEvents="none" source={require('../../assets/plus_white.png')}/>
+            </FabButton>
+        </View>
+        </View>
         <View style={styles.buttonContainer}>
-          <TextInput
-            style={styles.textPrice}
-            placeholder={"Price: free as default"}
-            keyboardType={'numeric'}
-            onChangeText={this.onPrice}
-          />
-        <MKButton
-            style={styles.button}
-            shadowRadius = {1}
-            shadowOffset={{width: 0, height: 0.5}}
-            shadowOpacity={0.5}
-            backgroundColor={config.colorBlue}
+          <MKButton
+            style={styles.buttonDate}
             onPress={this.openCalendar}
           >
             <Text style={{fontWeight: 'bold'}}>
@@ -287,19 +366,6 @@ class PostTask extends Component{
         </MKButton>
         <MKButton
           style={styles.button}
-          shadowRadius = {1}
-          shadowOffset={{width: 0, height: 0.5}}
-          shadowOpacity={0.5}
-          backgroundColor={config.colorRed}
-          onPress={this.onAddPhotos}
-        >
-          <Text style={{fontWeight: 'bold'}}>Add Photos</Text>
-        </MKButton>
-        <MKButton
-          style={styles.button}
-          shadowRadius = {1}
-          shadowOffset={{width: 0, height: 0.5}}
-          shadowOpacity={0.5}
           backgroundColor={config.colorPrimary}
           onPress={this.onSubmit}
         >
