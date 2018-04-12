@@ -49,9 +49,9 @@ class Forum extends Component{
     var thisSave = this;
     xhr.onreadystatechange = function () {
       if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-        console.log("get forum data!");
+        //console.log("get forum data!");
         var forumList = JSON.parse(xhr.responseText).forumList; // array
-        console.log(JSON.parse(xhr.responseText));
+        //console.log(JSON.parse(xhr.responseText));
         thisSave.setState({forumList});
       }
     };

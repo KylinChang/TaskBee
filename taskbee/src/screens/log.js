@@ -81,12 +81,13 @@ class Log extends Component{
     socket.on('login_res',
         function(data)
         {
+          //console.log(data);
             if(data.state)
             {
                 login(data.user_info.username, data.user_info.email, data.user_info.avatar);
 
                 data.body.forEach(function (line, i) {
-                  getMessage(line.send_user_info, data.user_info, line.message_content.send_time, line.message_content.content, true);
+                  getMessage(line.message_content.send_user, data.user_info, line.message_content.send_time, line.message_content.content, true);
                 });
 
                 navigation.navigate('Tabs');

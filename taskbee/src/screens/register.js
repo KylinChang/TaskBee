@@ -19,6 +19,8 @@ import {
   SubmitButton,
 } from '../components/button'
 
+import config from '../config/config';
+
 const styles = StyleSheet.create({
   main: {
     flex: 1,
@@ -103,16 +105,40 @@ class Register extends Component{
     const {register, navigation,} = this.props;
     // this.props.register(username, email, config.defaultAvatar);
     // this.props.navigation.navigate('Tabs');
-     socket.on('register_res', (data) => {
-      if(data.state){
-        register(username, email, config.defaultAvatar);
-        navigation.navigate('Tabs');
+
+
+    var body = new FormData();
+
+    body.append('email', email);
+    body.append('user_name', username);
+    body.append('password', password);
+
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+      if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+        var data = JSON.parse(xhr.responseText); // array
+        if(data.state){
+          register(username, email, config.defaultAvatar);
+          navigation.navigate('Tabs');
+        }
       }
-     });
-     socket.emit(
-       'register',
-       msg
-     );
+    };
+    console.log(body);
+    xhr.open('POST', config.DEVURL + '/register');
+    xhr.send(body);
+
+
+     //
+     //socket.on('register_res', (data) => {
+     // if(data.state){
+     //   register(username, email, config.defaultAvatar);
+     //   navigation.navigate('Tabs');
+     // }
+     //});
+     //socket.emit(
+     //  'register',
+     //  msg
+     //);
   }
 
   render(){

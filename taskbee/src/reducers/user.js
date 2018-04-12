@@ -8,6 +8,7 @@ const GETTASK = "USER/GETTASK";
 const TAKETASK = "USER/TAKETASK";
 const POSTTASK = "USER/POSTTASK";
 const GETMESSAGE = "USER/GETMESSAGE";
+const CLEARNOTIFY = "USER/CLEARNOTIFY";
 
 const initialState = {
   logError: false,
@@ -15,12 +16,14 @@ const initialState = {
   username: "",
   email: "",
   avatar: "",
+  me: {},
   messages: [],
   buddies: {},   // all buddies.
   buddy: {},    // current chat buddy.
   self_take_task: [],
   self_post_task: [],
   underway_task: [],
+  notify: 0,
 };
 
 function user(state=initialState, action){
@@ -35,6 +38,7 @@ function user(state=initialState, action){
         avatar: action.avatar,
         buddy: "",
         task_list: {},
+        me: {username: action.username, email: action.email, avatar: action.avatar},
       });
     case REGISTER:
       return Object.assign({}, state, {
@@ -46,6 +50,7 @@ function user(state=initialState, action){
         avatar: action.avatar,
         buddy: "",
         task_list: {},
+        me: {username: action.username, email: action.email, avatar: action.avatar},
       });
     case LOGOUT:
       return Object.assign({}, state, {
@@ -65,7 +70,8 @@ function user(state=initialState, action){
             date: new Date().getTime(),
             email: action.buddy.email,
             avatar: action.buddy.avatar,
-            messages: []
+            messages: [],
+            newMessages: 0,
           }
         }
       return Object.assign({}, state, {
@@ -91,13 +97,13 @@ function user(state=initialState, action){
       return Object.assign({}, state, {
         self_post_task: self_post_task,
       });
-    case GETMESSAGE:
+    case GETMESSAGE:                                  // add just ONE message!!
       buddies = Object.assign({}, state.buddies);
       // add buddy...
       let username = action.sender.username;
       let email = action.sender.email;
       let avatar = action.sender.avatar;
-      if(!action.isReveiver){
+      if(!action.isReceiver){
         username = action.receiver.username;
         email = action.receiver.email;
         avatar = action.receiver.avatar;
@@ -113,27 +119,42 @@ function user(state=initialState, action){
           date: action.timestamp,
           email: email,
           avatar: avatar,
-          messages: []
+          messages: [],
+          newMessages: 0,
         };
       }
-      buddies[username].messages.push(action.content);
 
-      // add message
-      let messages = state.messages;
-      messages.push({
+      let msg = {
         sender: action.sender,
         receiver: action.receiver,
         timestamp: action.timestamp,
         content: action.content
-      });
+      };
+      buddies[username].messages.push(msg);
+        if(action.isReceiver)
+        {
+          buddies[username].newMessages++;
+        }
+      console.log(buddies);
+      // add message
+      let messages = state.messages;
+      messages.push(msg);
 
       //maybe update notification here..
 
-
       return Object.assign({}, state, {
         buddies: buddies,
-        buddy: username,
-        messages: messages
+        buddy: {username: username, email: email, avatar: avatar},
+        messages: messages,
+        notify: state.notify + 1,
+      });
+    case CLEARNOTIFY:                         // clear newMessages, add to messages, subtract from notify.
+      buddies = Object.assign({}, state.buddies);
+      let notify = state.notify - buddies[action.username].newMessages;
+      buddies[action.username].newMessages = 0;
+      return Object.assign({}, state, {
+        notify: notify,
+        buddies: buddies,
       });
 
     default:
@@ -183,7 +204,7 @@ function chat(buddy)  // {username, email, avatar}
 //    receiver: receiver,
 //    timestamp: timestamp,
 //    content: content,
-//    isReveiver: isReceiver,
+//    isReceiver: isReceiver,
 //  }
 //}
 
@@ -217,7 +238,15 @@ function getMessage(sender, receiver, timestamp, content, isReceiver) //sender, 
     receiver: receiver,
     timestamp: timestamp,
     content: content,
-    isReveiver: isReceiver,
+    isReceiver: isReceiver,
+  }
+}
+
+function clearNotify(username)
+{
+  return {
+    type: CLEARNOTIFY,
+    username: username,
   }
 }
 
@@ -231,4 +260,5 @@ export {
   takeTask,
   postTask,
   getMessage,
+  clearNotify,
 };

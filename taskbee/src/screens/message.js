@@ -58,11 +58,20 @@ class Message extends Component{
         //        //this.state.buddiesList.push(res.send_user);
         //    }
         //});
+        this.makeBuddiesList = this.makeBuddiesList.bind(this);
     }
 
     pressBuddy(username, email, avatar){
         chat({username: username, email: email, avatar: avatar});
         this.props.navigation.navigate('Chat');
+    }
+
+    componentDidMount(){
+        this.makeBuddiesList();
+    }
+
+    componentWillReceiveProps(nextProps){
+        this.makeBuddiesList();
     }
 
     renderItem = ({item}) => (
@@ -84,20 +93,21 @@ class Message extends Component{
         ///>
     );
 
-
-    render(){
+    makeBuddiesList = () => {
         const {buddies} = this.props;
+        let newList = [];
         for(var key in buddies)
         {
-            this.state.buddiesList.push(buddies[key]);
+            newList.push(buddies[key]);
         }
-        this.state.buddiesList.sort(function (a, b) {
+        newList.sort(function (a, b) {
             return a.date < b.date;
         });
-        console.log(this.state.buddiesList);
-        //var buddiesList = Object.keys(buddies).sort(function (a, b) {
-        //    return buddies[a].date < buddies[b].date;
-        //});
+        this.setState({buddiesList: newList});
+        //console.log(this.state.buddiesList);
+    };
+
+    render(){
         return(
             <View style={styles.container}>
                 {this.state.buddiesList.length > 0 &&

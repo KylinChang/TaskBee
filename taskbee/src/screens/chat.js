@@ -19,6 +19,7 @@ import {
     FabButton,
 } from '../components/button';
 
+import {clearNotify, getMessage} from '../reducers/user';
 
 
 const styles = StyleSheet.create({
@@ -52,6 +53,7 @@ class Chat extends React.Component {
   constructor(props){
     super(props);
     this.onSend = this.onSend.bind(this);
+    this.updateChat = this.updateChat.bind(this);
     //console.log(this.props.buddy);
   }
   componentWillMount() {
@@ -89,9 +91,58 @@ class Chat extends React.Component {
     //  }));
     //  // console.log(thisSave);
     //});
+  }
 
+  componentDidMount(){
+    console.log("in mount");
+    this.updateChat();
+  }
 
+  componentWillReceiveProps(nextProps){
+    console.log("in props");
+    console.log(nextProps);
+    this.updateChat();
+  }
 
+  updateChat(){
+    let buddy = this.props.buddy;
+    let buddies = this.props.buddies;
+    //console.log( this.props.buddies);
+    //console.log( this.props.buddy);
+    //console.log( this.state);
+    let thisSave = this;
+    if(buddy.username != this.state.buddy.username || buddies[buddy.username].newMessages != 0)
+    //if(true)
+    {
+      this.setState({buddy: buddy, messages: []});
+      const {clearNotify} = this.props;
+      clearNotify(buddy.username);
+      let newMsgs = [];
+      buddies[buddy.username].messages.forEach(function (rawMsg, i) {
+        var msg = {
+          _id: new Date().getTime() + i,
+          text: rawMsg.content,
+          createdAt: new Date(rawMsg.timestamp), // new Date().. * 1000?
+          user:{
+            _id: 2,
+            name: rawMsg.sender.username,
+            avatar: rawMsg.sender.avatar,
+          },
+        };
+        newMsgs.push(msg);
+        thisSave.setState(previousState => ({
+          messages: GiftedChat.append(previousState.messages, [msg])
+        }));
+      });
+      console.log(newMsgs);
+      console.log(this.state.messages);
+      //this.setState({
+      //  messages: newMsgs
+      //});
+      //this.setState(previousState => ({
+      //  messages: GiftedChat.append(previousState.messages, newMsgs)
+      //}));
+    }
   }
 
   onSend(messages = []) {
@@ -101,12 +152,15 @@ class Chat extends React.Component {
     // console.log(this);
     // console.log(messages);
     // console.log(this);
+    const {getMessage} = this.props;
+
     var oneMessage = {
       send_user: this.props.username,
+      //receive_user: this.props.username,
       receive_user: this.props.buddy.username, // should be changed.
       message_content: messages[0].text
     }
-     console.log(oneMessage);
+    getMessage(this.props.me, this.props.buddy, new Date().getTime(), messages[0].text, false);
     socket.emit("send_message", oneMessage);
   }
 
@@ -130,35 +184,36 @@ class Chat extends React.Component {
 
 
   render() {
-    let buddy = this.props.buddy;
-    //console.log(this.props.buddy);
-    //console.log(this.state.buddy);
-    if(buddy.username != this.state.buddy.username)
-    {
-      this.setState({buddy: buddy});
-    }
     //this.setState({messages: this.props.buddies[buddy.username]});
 
-    console.log( this.props.buddies);
-    console.log( this.props.buddy);
+    //console.log( this.props.buddies);
+    //console.log( this.props.buddy);
 
-    this.props.buddies[buddy.username].messages.forEach(function (rawMsg, i) {
-      var msg = {
-        _id: rawMsg.timestamp,
-        text: rawMsg.content,
-        createdAt: new Date(rawMsg.timestamp), // new Date().. * 1000?
-        user:{
-          _id: 2,
-          name: rawMsg.send_user.username,
-          avatar: rawMsg.send_user.avatar,
-        },
-      };
-      // console.log(msg);
-      this.setState(previousState => ({
-        messages: GiftedChat.append(previousState.messages, [msg])
-      }));
-
-    });
+    //if(this.props.notify)
+    //{
+    //  console.log(buddies[buddy.username].messages);
+    //  let newMsgs = [];
+    //  buddies[buddy.username].messages.forEach(function (rawMsg, i) {
+    //    console.log(i);
+    //    var msg = {
+    //      _id: rawMsg.timestamp,
+    //      text: rawMsg.content,
+    //      createdAt: new Date(rawMsg.timestamp), // new Date().. * 1000?
+    //      user:{
+    //        _id: 2,
+    //        name: rawMsg.sender.username,
+    //        avatar: rawMsg.sender.avatar,
+    //      },
+    //    };
+    //    console.log(msg);
+    //    newMsgs.push(msg);
+    //  });
+    //  this.setState(previousState => ({
+    //    messages: GiftedChat.append(previousState.messages, newMsgs)
+    //  }));
+    //  const {clearNotify} = this.props;
+    //  clearNotify(buddy.username);
+    //}
     return (
         <GiftedChat
             messages={this.state.messages}
@@ -179,5 +234,11 @@ export default connect(
       buddies: state.user.buddies,
       buddy: state.user.buddy,
       avatar: state.user.avatar,
-    })
+      notify: state.user.notify,
+      me: state.user.me,
+    }),
+    {
+      clearNotify,
+      getMessage,
+    }
 )(Chat);
