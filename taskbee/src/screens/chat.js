@@ -119,12 +119,15 @@ class Chat extends React.Component {
       clearNotify(buddy.username);
       let newMsgs = [];
       buddies[buddy.username].messages.forEach(function (rawMsg, i) {
-        var msg = {
+        let id = 2;
+        if(rawMsg.sender.username == thisSave.props.me.username)
+            id = 1;
+        let msg = {
           _id: new Date().getTime() + i,
           text: rawMsg.content,
           createdAt: new Date(rawMsg.timestamp), // new Date().. * 1000?
           user:{
-            _id: 2,
+            _id: id,
             name: rawMsg.sender.username,
             avatar: rawMsg.sender.avatar,
           },
