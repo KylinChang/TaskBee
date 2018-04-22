@@ -141,6 +141,9 @@ function user(state=initialState, action){
       messages.push(msg);
 
       //maybe update notification here..
+        notify = state.notify;
+        if(state.buddy.username !== action.sender.username)
+            notify += 1;
 
       return Object.assign({}, state, {
         buddies: buddies,

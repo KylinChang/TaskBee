@@ -63,6 +63,7 @@ class Message extends Component{
 
     pressBuddy(username, email, avatar){
         chat({username: username, email: email, avatar: avatar});
+        console.log(this.props.buddies);
         this.props.navigation.navigate('Chat');
     }
 
