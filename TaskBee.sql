@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `TaskBee` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `TaskBee`;
 -- MySQL dump 10.13  Distrib 5.7.17, for macos10.12 (x86_64)
 --
 -- Host: localhost    Database: TaskBee
@@ -34,15 +36,6 @@ CREATE TABLE `Follow_Up_Info` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Follow_Up_Info`
---
-
-LOCK TABLES `Follow_Up_Info` WRITE;
-/*!40000 ALTER TABLE `Follow_Up_Info` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Follow_Up_Info` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `Friend_List`
 --
 
@@ -54,15 +47,6 @@ CREATE TABLE `Friend_List` (
   `friend_name` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `Friend_List`
---
-
-LOCK TABLES `Friend_List` WRITE;
-/*!40000 ALTER TABLE `Friend_List` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Friend_List` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `Post_Info`
@@ -82,15 +66,6 @@ CREATE TABLE `Post_Info` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Post_Info`
---
-
-LOCK TABLES `Post_Info` WRITE;
-/*!40000 ALTER TABLE `Post_Info` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Post_Info` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `Post_Tag`
 --
 
@@ -103,15 +78,6 @@ CREATE TABLE `Post_Tag` (
   PRIMARY KEY (`post_id`,`topic_tag_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `Post_Tag`
---
-
-LOCK TABLES `Post_Tag` WRITE;
-/*!40000 ALTER TABLE `Post_Tag` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Post_Tag` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `Skill_Tag`
@@ -127,15 +93,6 @@ CREATE TABLE `Skill_Tag` (
   PRIMARY KEY (`skill_tag_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `Skill_Tag`
---
-
-LOCK TABLES `Skill_Tag` WRITE;
-/*!40000 ALTER TABLE `Skill_Tag` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Skill_Tag` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `Task_Info`
@@ -164,16 +121,6 @@ CREATE TABLE `Task_Info` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Task_Info`
---
-
-LOCK TABLES `Task_Info` WRITE;
-/*!40000 ALTER TABLE `Task_Info` DISABLE KEYS */;
-INSERT INTO `Task_Info` VALUES (57,'Alice',0,0,'Hi, I’m Alice!',NULL,NULL,NULL,0,'/images/57_0.JPG',NULL,NULL,'2018-03-26 04:00:00','2018-03-26 04:00:00'),(58,'Bob',0,0,'Can some body teach me photography? ',NULL,NULL,NULL,100,'/images/58_0.JPG','/images/58_1.JPG',NULL,'2018-03-26 04:00:00','2018-03-26 04:00:00'),(59,'Bob',0,0,'Hello just say hi',NULL,NULL,NULL,10,'/images/59_0.JPG','/images/59_1.JPG','/images/59_2.JPG','2018-03-26 04:00:00','2018-03-30 04:00:00');
-/*!40000 ALTER TABLE `Task_Info` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `Task_Tag`
 --
 
@@ -187,16 +134,6 @@ CREATE TABLE `Task_Tag` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=122 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `Task_Tag`
---
-
-LOCK TABLES `Task_Tag` WRITE;
-/*!40000 ALTER TABLE `Task_Tag` DISABLE KEYS */;
-INSERT INTO `Task_Tag` VALUES (50,'undergraduate',74),(50,'graduate',75),(50,'sport',76),(50,'art',77),(50,'others',78),(51,'undergraduate',79),(51,'graduate',80),(51,'sport',81),(51,'art',82),(51,'others',83),(52,'undergraduate',84),(52,'graduate',85),(52,'sport',86),(52,'art',87),(52,'others',88),(53,'undergraduate',89),(53,'graduate',90),(53,'sport',91),(53,'art',92),(53,'others',93),(54,'undergraduate',94),(54,'graduate',95),(54,'sport',96),(54,'art',97),(54,'others',98),(55,'undergraduate',99),(55,'graduate',100),(55,'sport',101),(55,'art',102),(55,'others',103),(56,'undergraduate',104),(56,'graduate',105),(56,'sport',106),(56,'art',107),(56,'others',108),(57,'undergraduate',109),(57,'graduate',110),(57,'sport',111),(57,'art',112),(57,'others',113),(58,'undergraduate',114),(58,'graduate',115),(58,'sport',116),(58,'art',117),(58,'others',118),(59,'graduate',119),(59,'art',120),(59,'others',121);
-/*!40000 ALTER TABLE `Task_Tag` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `Topic_Tag`
@@ -214,15 +151,6 @@ CREATE TABLE `Topic_Tag` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Topic_Tag`
---
-
-LOCK TABLES `Topic_Tag` WRITE;
-/*!40000 ALTER TABLE `Topic_Tag` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Topic_Tag` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `User_Follow_Up`
 --
 
@@ -236,15 +164,6 @@ CREATE TABLE `User_Follow_Up` (
   PRIMARY KEY (`follow_up_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `User_Follow_Up`
---
-
-LOCK TABLES `User_Follow_Up` WRITE;
-/*!40000 ALTER TABLE `User_Follow_Up` DISABLE KEYS */;
-/*!40000 ALTER TABLE `User_Follow_Up` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `User_Info`
@@ -261,19 +180,11 @@ CREATE TABLE `User_Info` (
   `user_id` int(11) NOT NULL AUTO_INCREMENT,
   `money` decimal(32,0) DEFAULT NULL,
   `img_url` varchar(60) DEFAULT NULL,
+  `longitude` decimal(5,2) DEFAULT NULL,
+  `latitude` decimal(5,2) DEFAULT NULL,
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `User_Info`
---
-
-LOCK TABLES `User_Info` WRITE;
-/*!40000 ALTER TABLE `User_Info` DISABLE KEYS */;
-INSERT INTO `User_Info` VALUES ('haolin','123@gmail','123456','2018-03-25 03:01:57',1,0,NULL),('Stephen','Stephen@gmail.com','123','2018-03-25 04:00:00',2,0,NULL),('123','123@gmail.com','123','2018-03-25 04:00:00',3,0,NULL),('321','321@gmail.com','321','2018-03-25 04:00:00',4,0,NULL),('Alice','Alice@yale.edu','123','2018-03-26 04:00:00',5,0,'/images/5.JPG'),('Bob','Bob@yale.edu','123','2018-03-26 04:00:00',6,0,'/images/6.JPG');
-/*!40000 ALTER TABLE `User_Info` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `User_Tag`
@@ -290,15 +201,6 @@ CREATE TABLE `User_Tag` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `User_Tag`
---
-
-LOCK TABLES `User_Tag` WRITE;
-/*!40000 ALTER TABLE `User_Tag` DISABLE KEYS */;
-/*!40000 ALTER TABLE `User_Tag` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `User_Task_Serve`
 --
 
@@ -311,15 +213,6 @@ CREATE TABLE `User_Task_Serve` (
   PRIMARY KEY (`task_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `User_Task_Serve`
---
-
-LOCK TABLES `User_Task_Serve` WRITE;
-/*!40000 ALTER TABLE `User_Task_Serve` DISABLE KEYS */;
-/*!40000 ALTER TABLE `User_Task_Serve` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `message_queue`
@@ -337,16 +230,6 @@ CREATE TABLE `message_queue` (
   PRIMARY KEY (`message_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `message_queue`
---
-
-LOCK TABLES `message_queue` WRITE;
-/*!40000 ALTER TABLE `message_queue` DISABLE KEYS */;
-INSERT INTO `message_queue` VALUES ('Bob','Alice','Cool',28,'2018-03-26 10:31:32'),('Bob','Alice','Niu',29,'2018-03-26 10:31:37');
-/*!40000 ALTER TABLE `message_queue` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -357,4 +240,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-03 19:39:13
+-- Dump completed on 2018-04-22 14:02:49
