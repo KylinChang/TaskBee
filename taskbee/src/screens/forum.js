@@ -63,6 +63,8 @@ class Forum extends Component{
   pressChat(buddy, email, avatar)
   {
     this.props.chat({username: buddy, email: email, avatar: avatar});
+    console.log(buddy);
+    console.log(email);
     this.props.navigation.navigate('Chat');
   }
 

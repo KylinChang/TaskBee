@@ -59,10 +59,11 @@ class Message extends Component{
         //    }
         //});
         this.makeBuddiesList = this.makeBuddiesList.bind(this);
+        this.pressBuddy = this.pressBuddy.bind(this);
     }
 
     pressBuddy(username, email, avatar){
-        chat({username: username, email: email, avatar: avatar});
+        this.props.chat({username: username, email: email, avatar: avatar});
         console.log(this.props.buddies);
         this.props.navigation.navigate('Chat');
     }
