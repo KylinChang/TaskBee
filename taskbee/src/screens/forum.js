@@ -18,6 +18,7 @@ import {SubmitButton,} from '../components/button';
 import config from '../config/config';
 import {chat, takeTask} from '../reducers/user';
 import {OrderItem, } from '../components/list';
+var PushNotification = require('react-native-push-notification');
 
 class Forum extends Component{
   constructor(props){
