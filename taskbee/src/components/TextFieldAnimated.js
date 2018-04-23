@@ -1,7 +1,3 @@
-/**
- * Created by sha on 7/5/17.
- */
-
 import React, { Component } from 'react';
 import {
     TextInput,
@@ -132,15 +128,7 @@ class TextFieldAnimated extends Component {
                         placeholder={placeholder}
                         placeholderTextColor="#b6b6b6"
                         value={value}
-                        onChangeText= {
-                            // the call back for the caller to take any actions on
-                            // onChangeText('text')
-                            (changedText) => {
-                                console.log(changedText);
-
-                                this.onTextFieldTextChange(changedText);
-                            }
-                        }
+                        onChangeText= {onChangeText}
                         onFocus={ () => {
                             console.log(`onFocus : ${label}`);
                             this.onTextFieldFocused();

@@ -1,4 +1,6 @@
-import React, {Component} from 'react';
+import React, {
+  Component,
+} from 'react';
 import {
   View,
   Text,
@@ -7,6 +9,7 @@ import {
   Image,
   StyleSheet,
   ScrollView,
+  Dimensions,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
@@ -26,8 +29,6 @@ import TextFieldAnimated from '../components/TextFieldAnimated';
 import config from '../config/config';
 import {postTask,} from '../reducers/user';
 
-var { Dimensions } = require('react-native')
-
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
 
@@ -45,6 +46,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingHorizontal: config.normalPadding,
   },
+  bottomContainer: {
+    flex: 1,
+    flexDirection: "row",
+    position: 'absolute',
+    bottom: 0,
+    width: width,
+  },
 
   textInput: {
     flex: 1,
@@ -54,10 +62,6 @@ const styles = StyleSheet.create({
     paddingLeft: 28,
     paddingBottom: 5,
     paddingTop: 15,
-    // lineHeight: 23,
-    // borderWidth:2,
-    // borderColor: config.colorBorder,
-    // padding: config.normalPadding,
   },
   price: {
     fontSize: 18,
@@ -65,24 +69,13 @@ const styles = StyleSheet.create({
     width: 80,
     paddingHorizontal: 0,
     marginHorizontal: 0,
-    // borderRightWidth: 1,
-    // borderColor: 'rgba(0,0,0,.1)',
-
   },
   location: {
     fontSize: 18,
     flex: 2,
     width: width - 140,
-    // alignsItems: 'flex-end',
     marginHorizontal: 0,
     paddingHorizontal: 0,
-  },
-  textPrice: {
-    flex: 1,
-    fontSize: 18,
-    padding: config.normalPadding,
-    borderBottomWidth:2,
-    borderBottomColor: config.colorPrimary,
   },
 
   buttonDate:{
@@ -102,13 +95,12 @@ const styles = StyleSheet.create({
   button: {
     shadowRadius: 0,
     height: 42,
-    borderRadius: 5,
     paddingHorizontal: 0,
     marginHorizontal: 0,
-    alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 0,
-    marginVertical: 0,
+    textAlign: 'center',
+    alignItems: "center",
+    width: width / 2,
   },
   taskItemImages:{
     flex: 1,
@@ -120,9 +112,9 @@ const styles = StyleSheet.create({
   },
   fabContainer: {
     flex: 1,
-    // flexDirection: "row",
+    flexDirection: "row",
     position: 'absolute',
-    top: height - 350,
+    bottom: 60,
     right: 10,
   },
   fabCol:{
@@ -147,6 +139,7 @@ class PostTask extends Component{
       tagValid: false,
       hasErr: false,
       tags: [],
+      isSubmit: false,
     }
 
     this.onPrice = this.onPrice.bind(this);
@@ -191,20 +184,28 @@ class PostTask extends Component{
   }
 
   onAddPhotos(){
+    let thisStore = this;
     ImagePicker.openPicker({
       multiple: true,
       maxFiles: 3,
       mediaType: "photo",
+      cropping: true,
+      compressImageMaxWidth: 200,
+      compressImageMaxHeight: 200,
+      compressImageQuality: 0.75,
     }).then(images => {
       let taskImgs = [];
       for(let i=0; i<images.length; i++){
         taskImgs.push(images[i].sourceURL);
       }
-      this.setState({taskImgs: taskImgs});
+      thisStore.setState({taskImgs: taskImgs});
     });
   }
 
   onSubmit(){
+    const {isSubmit} = this.state;
+    if(isSubmit) return;
+    this.setState({isSubmit: true});
     const {goBack} = this.props.navigation;
     const {username, email} = this.props;
     const {
@@ -260,12 +261,12 @@ class PostTask extends Component{
         console.log(taskInfo);
         thisSave.props.postTask(taskInfo);
         goBack();
+      }else{
+        thisSave.setState({isSubmit: false});
       }
     };
     xhr.open('POST', config.DEVURL + '/post_task');
-    // xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
     xhr.send(body);
-
   }
 
   renderImages(){
@@ -299,10 +300,10 @@ class PostTask extends Component{
 
   render(){
     const {startDate, endDate} = this.state;
-    console.log(startDate);
-    console.log(endDate);
+    const {goBack} = this.props.navigation;
 
     return (
+      <View style={{flex: 1}}>
       <ScrollView style={styles.container}>
         {this.state.hasErr && this.renderErr()}
         <View style={{flex:1, padding: config.normalPadding}}>
@@ -314,13 +315,17 @@ class PostTask extends Component{
             title="Topic"
           />
         </View>
+        <View style={styles.buttonContainer}>
+          <MKButton
+            style={styles.buttonDate}
+            onPress={this.openCalendar}
+          >
+            <Text style={{fontWeight: 'bold'}}>
+              {"Date: " + this.getYYYYMMDD(startDate) + " / " + this.getYYYYMMDD(endDate)}
+            </Text>
+        </MKButton>
+        </View>
 
-        <TextFieldAnimated
-            label="Title"
-            // onChangeText={ () => {} }
-            // onChangeText={(changedText) => this.setState({description: changedText})}
-            placeholder={'Title'}
-        />
         <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignSelf: 'stretch', padding: 0}}>
         <TextFieldAnimated
           label = "Price"
@@ -348,30 +353,8 @@ class PostTask extends Component{
           placeholder={'Description'}
         />
         {this.state.taskImgs.length>0? this.renderImages() : null}
-        <View style={styles.fabContainer}>
-          <View style={styles.fabCol}>
-            <FabButton onPress={this.onAddPhotos}>
-              <Image pointerEvents="none" source={require('../../assets/plus_white.png')}/>
-            </FabButton>
-        </View>
-        </View>
-        <View style={styles.buttonContainer}>
-          <MKButton
-            style={styles.buttonDate}
-            onPress={this.openCalendar}
-          >
-            <Text style={{fontWeight: 'bold'}}>
-              {"Date: " + this.getYYYYMMDD(startDate) + " / " + this.getYYYYMMDD(endDate)}
-            </Text>
-        </MKButton>
-        <MKButton
-          style={styles.button}
-          backgroundColor={config.colorPrimary}
-          onPress={this.onSubmit}
-        >
-          <Text style={{fontWeight: 'bold'}}>Submit</Text>
-        </MKButton>
-        </View>
+
+
         <Calendar
           i18n="en"
           ref={(calendar) => {this.calendar = calendar;}}
@@ -381,6 +364,30 @@ class PostTask extends Component{
           onConfirm={this.confirmDate}
         />
       </ScrollView>
+      <View style={styles.fabContainer}>
+        <View style={styles.fabCol}>
+          <FabButton onPress={this.onAddPhotos}>
+            <Image pointerEvents="none" source={require('../../assets/plus_white.png')}/>
+          </FabButton>
+        </View>
+      </View>
+      <View style={styles.bottomContainer}>
+        <MKButton
+          style={styles.button}
+          backgroundColor={config.colorPrimary}
+          onPress={this.onSubmit}
+        >
+          <Text style={{fontWeight: 'bold'}}>Submit</Text>
+        </MKButton>
+        <MKButton
+          style={styles.button}
+          backgroundColor={config.colorBlue}
+          onPress={() => goBack()}
+        >
+          <Text style={{fontWeight: 'bold'}}>Cancel</Text>
+        </MKButton>
+      </View>
+    </View>
     );
   }
 }

@@ -38,7 +38,7 @@ class TaskTake extends Component{
         item.img_url0?{uri: config.DEVURL+item.img_url0}:null,
         item.img_url1?{uri: config.DEVURL+item.img_url1}:null,
         item.img_url2?{uri: config.DEVURL+item.img_url2}:null,]}
-        userImg={item.img_url}
+        userImg={item.img_url?config.DEVURL+item.img_url:null}
         price={item.price}
         description={item.description}
         username={item.poster_name}

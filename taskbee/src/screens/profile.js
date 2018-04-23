@@ -65,9 +65,11 @@ class Profile extends Component{
     */
     choose_avatar(){
         ImagePicker.openPicker({
-            width: 300,
-            height: 400,
-            cropping: true
+            cropping: true,
+            compressImageMaxWidth: 100,
+            compressImageMaxHeight: 100,
+            compressImageQuality: 0.75,
+            mediaType: "photo",
         }).then(image => {
             var thisStore = this;
             // this.setState({imgUri: image.path});

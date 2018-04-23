@@ -21,8 +21,8 @@ const styles = {
         borderWidth: 0,
         borderBottomWidth: 1,
         elevation: 1,
-        marginLeft: 25,
-        marginRight: 5,
+        marginLeft: 10,
+        marginRight: 10,
         marginTop: 5
     }
 };

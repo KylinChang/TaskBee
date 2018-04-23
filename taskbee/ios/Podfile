@@ -28,6 +28,8 @@ target 'taskbee' do
   # Mapbox
   pod 'react-native-mapbox-gl', :path => '../node_modules/@mapbox/react-native-mapbox-gl'
   pod 'RNImageCropPicker', :path =>  '../node_modules/react-native-image-crop-picker'
+  pod 'react-native-image-resizer', :path => '../node_modules/react-native-image-resizer'
+
 end
 
 # very important to have, unless you removed React dependencies for Libraries

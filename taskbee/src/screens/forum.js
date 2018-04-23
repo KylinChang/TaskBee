@@ -84,8 +84,12 @@ class Forum extends Component{
 
   renderItem = ({item}) => (
       <OrderItem
-          taskImgs={[item.task_info.img_url0, item.task_info.img_url1, item.task_info.img_url2]}
-          userImg={item.poster_info.img_url}
+        taskImgs={[
+          item.task_info.img_url0?{uri: config.DEVURL+item.task_info.img_url0}:null,
+          item.task_info.img_url1?{uri: config.DEVURL+item.task_info.img_url1}:null,
+          item.task_info.img_url2?{uri: config.DEVURL+item.task_info.img_url2}:null,]}
+          // taskImgs={[item.task_info.img_url0, item.task_info.img_url1, item.task_info.img_url2]}
+          userImg={config.DEVURL+item.poster_info.img_url}
           price={item.task_info.price}
           description={item.task_info.description}
           onPressChat = {() => this.pressChat(item.poster_info.username, item.poster_info.email, item.poster_info.img_url)}
@@ -108,7 +112,7 @@ class Forum extends Component{
     }
 
     return(
-    <View>
+    <View style={styles.container}>
       <MultipleTags
         tags={config.tags}
         preselectedTags={config.tags}
@@ -129,8 +133,10 @@ class Forum extends Component{
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    backgroundColor: '#F5FCFF',
+    // justifyContent: 'center',
+    // backgroundColor: '#F5FCFF',
+    top: 5,
+    bottom: 20,
   },
 
   container_forums: {

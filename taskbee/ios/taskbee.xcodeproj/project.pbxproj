@@ -68,6 +68,12 @@
 		F3929E853D1A4618B96AAD29 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5E79B403C6AD489E94E4ED66 /* Entypo.ttf */; };
 		F7B833B3AD0E4F59AFE7F79C /* libReactNativePayments.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EC428728C64E4A41A4EE7F22 /* libReactNativePayments.a */; };
 		FBEADCA3150242AAB9B3CD50 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 07F1387391494092B9290136 /* MaterialIcons.ttf */; };
+		3678CBB85C1943E98A619634 /* cm.png in Resources */ = {isa = PBXBuildFile; fileRef = AFD1B85245A3477F9A80082D /* cm.png */; };
+		1D39E2D176D74A3FA0B508AC /* hp.png in Resources */ = {isa = PBXBuildFile; fileRef = 02E228861202448692854AEF /* hp.png */; };
+		EFEB647BBBF044D79940996F /* jcy.png in Resources */ = {isa = PBXBuildFile; fileRef = E567CBD6F5DD4781ACC7BF5F /* jcy.png */; };
+		8735E30586264454B07B76EF /* may.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E4375F9F57848AEB4278B63 /* may.png */; };
+		0D32CE248EB4426AB5653923 /* zhm.png in Resources */ = {isa = PBXBuildFile; fileRef = 31CA062428764C46BD70BAC3 /* zhm.png */; };
+		46E022B4DC0E414A96775FC0 /* zzl.png in Resources */ = {isa = PBXBuildFile; fileRef = 2EECBF8CD35B4FA89532ADA2 /* zzl.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -454,6 +460,12 @@
 		E3DCDB5CF2D945FEA66C3F62 /* plus_white.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = plus_white.png; path = ../assets/plus_white.png; sourceTree = "<group>"; };
 		EC428728C64E4A41A4EE7F22 /* libReactNativePayments.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libReactNativePayments.a; sourceTree = "<group>"; };
 		F5C191EA771D35CC35270E0E /* Pods-taskbee.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-taskbee.release.xcconfig"; path = "Pods/Target Support Files/Pods-taskbee/Pods-taskbee.release.xcconfig"; sourceTree = "<group>"; };
+		AFD1B85245A3477F9A80082D /* cm.png */ = {isa = PBXFileReference; name = "cm.png"; path = "../assets/cm.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		02E228861202448692854AEF /* hp.png */ = {isa = PBXFileReference; name = "hp.png"; path = "../assets/hp.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		E567CBD6F5DD4781ACC7BF5F /* jcy.png */ = {isa = PBXFileReference; name = "jcy.png"; path = "../assets/jcy.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		9E4375F9F57848AEB4278B63 /* may.png */ = {isa = PBXFileReference; name = "may.png"; path = "../assets/may.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		31CA062428764C46BD70BAC3 /* zhm.png */ = {isa = PBXFileReference; name = "zhm.png"; path = "../assets/zhm.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		2EECBF8CD35B4FA89532ADA2 /* zzl.png */ = {isa = PBXFileReference; name = "zzl.png"; path = "../assets/zzl.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -680,6 +692,12 @@
 				0F0AAE7BF2094A49B2D054A2 /* rubicon-icon-font.ttf */,
 				8D78C5295CE04218880FFA47 /* SimpleLineIcons.ttf */,
 				11FB9BDCE0924280A52D9F98 /* Zocial.ttf */,
+				AFD1B85245A3477F9A80082D /* cm.png */,
+				02E228861202448692854AEF /* hp.png */,
+				E567CBD6F5DD4781ACC7BF5F /* jcy.png */,
+				9E4375F9F57848AEB4278B63 /* may.png */,
+				31CA062428764C46BD70BAC3 /* zhm.png */,
+				2EECBF8CD35B4FA89532ADA2 /* zzl.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1369,6 +1387,12 @@
 				F0DBD5D5AB25492D8C51F37B /* rubicon-icon-font.ttf in Resources */,
 				D4F08E5C95744616879C03B2 /* SimpleLineIcons.ttf in Resources */,
 				610AF616B4EB4589AD4C0BBF /* Zocial.ttf in Resources */,
+				3678CBB85C1943E98A619634 /* cm.png in Resources */,
+				1D39E2D176D74A3FA0B508AC /* hp.png in Resources */,
+				EFEB647BBBF044D79940996F /* jcy.png in Resources */,
+				8735E30586264454B07B76EF /* may.png in Resources */,
+				0D32CE248EB4426AB5653923 /* zhm.png in Resources */,
+				46E022B4DC0E414A96775FC0 /* zzl.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

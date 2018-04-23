@@ -125,12 +125,12 @@ class TaskMap extends Component{
                   {this.renderAnnotations()}
 
               </MapboxGL.MapView>
-              <View>
+              {/* <View>
                 <Text>Timestamp: {this.state.timestamp}</Text>
                 <Text>Latitude: {this.state.latitude}</Text>
                 <Text>Longitude: {this.state.longitude}</Text>
                 <Text>Altitude: {this.state.altitude}</Text>
-              </View>
+              </View> */}
             </View>
         );
     }

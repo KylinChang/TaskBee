@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     borderRadius: config.borderRadius,
     borderWidth: config.borderWidth,
     borderColor: config.colorBorder,
-    marginBottom: 20,
+    marginBottom: 30,
   },
   taskItemMain: {
     flex: 1,
@@ -196,7 +196,7 @@ class OrderItem extends Component{
       <View style={styles.taskItem}>
 
         <View style={styles.taskItemUser}>
-          <Image source={{uri: userImg?userImg:config.defaultAvatar}} key={new Date()} style={{width: 36, height: 36, marginLeft: 12}}/>
+          <Image source={{uri: userImg?userImg:config.defaultAvatar}} style={{width: 36, height: 36, marginLeft: 12}}/>
           <Text style={styles.textUser}>{username}</Text>
           <View style={{flex: 1}}>
             <Text style={styles.textPrice}>{"$" + price}</Text>
@@ -231,29 +231,6 @@ class OrderItem extends Component{
         </View>
 
       </View>
-    );
-  }
-}
-
-class ForumItem extends Component{
-  constructor(props){
-    super(props);
-  }
-
-  render(){
-    const {onPress} = this.props;
-
-    return(
-      <TouchableOpacity
-        onPress={onPress}
-        style={styles.forumItem}
-        rippleColor={config.colorRipple}
-        shadowRadius={1}
-        shadowOffset={{width: 0, height: 0.5}}
-        shadowOpacity={0.7}
-        >
-
-      </TouchableOpacity>
     );
   }
 }
