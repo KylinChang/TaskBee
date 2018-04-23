@@ -64,5 +64,5 @@ export default connect(
     state => ({
       username: state.user.username,
       email: state.user.email,
-      self_post_take: state.user.self_post_take,
+      self_take_task: state.user.self_take_task,
     }))(TaskTake);
