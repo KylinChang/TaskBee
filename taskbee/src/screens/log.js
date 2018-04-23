@@ -126,7 +126,7 @@ class Log extends Component{
                 //console.log(data);
                 if(data.state)
                 {
-                    login(data.user_info.username, data.user_info.email, data.user_info.avatar);
+                    login(data.user_info.username, data.user_info.email, data.user_info.img_url);
 
                     data.body.forEach(function (line, i) {
                         getMessage(line.message_content.send_user, data.user_info, line.message_content.send_time, line.message_content.content, true);
