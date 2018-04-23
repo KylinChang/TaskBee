@@ -38,7 +38,7 @@ class TaskTake extends Component{
         item.img_url0?{uri: config.DEVURL+item.img_url0}:null,
         item.img_url1?{uri: config.DEVURL+item.img_url1}:null,
         item.img_url2?{uri: config.DEVURL+item.img_url2}:null,]}
-        userImg={item.img_url?config.DEVURL+item.img_url:null}
+        userImg={item.img_url?config.DEVURL+item.img_url:config.defaultAvatar}
         price={item.price}
         description={item.description}
         username={item.poster_name}
@@ -47,10 +47,12 @@ class TaskTake extends Component{
 
   render(){
     console.log(this.props.self_take_task);
+    let data = this.props.self_take_task;
+    data = data.reverse();
     return (
       <View>
         <FlatList
-            data={this.props.self_take_task}
+            data={data}
             renderItem={this.renderItem}
         />
       </View>

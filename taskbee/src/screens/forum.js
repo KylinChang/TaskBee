@@ -19,12 +19,14 @@ import config from '../config/config';
 import {chat, takeTask} from '../reducers/user';
 import {OrderItem, } from '../components/list';
 var PushNotification = require('react-native-push-notification');
+import PTRView from 'react-native-pull-to-refresh';
 
 class Forum extends Component{
   constructor(props){
     super(props);
     this.pressChat = this.pressChat.bind(this);
     this.pressAppointment = this.pressAppointment.bind(this);
+    this._refresh = this._refresh.bind(this);
     this.state = {
       tags: config.tags,
       forumList: [
@@ -50,9 +52,7 @@ class Forum extends Component{
     var thisSave = this;
     xhr.onreadystatechange = function () {
       if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-        //console.log("get forum data!");
-        var forumList = JSON.parse(xhr.responseText).forumList; // array
-        //console.log(JSON.parse(xhr.responseText));
+        var forumList = JSON.parse(xhr.responseText).forumList.reverse(); // array
         thisSave.setState({forumList});
       }
     };
@@ -89,7 +89,7 @@ class Forum extends Component{
           item.task_info.img_url1?{uri: config.DEVURL+item.task_info.img_url1}:null,
           item.task_info.img_url2?{uri: config.DEVURL+item.task_info.img_url2}:null,]}
           // taskImgs={[item.task_info.img_url0, item.task_info.img_url1, item.task_info.img_url2]}
-          userImg={config.DEVURL+item.poster_info.img_url}
+          userImg={item.poster_info.img_url?config.DEVURL+item.poster_info.img_url:config.defaultAvatar}
           price={item.task_info.price}
           description={item.task_info.description}
           onPressChat = {() => this.pressChat(item.poster_info.username, item.poster_info.email, item.poster_info.img_url)}
@@ -97,6 +97,19 @@ class Forum extends Component{
           username={item.poster_info.username}
       />
   );
+
+  _refresh(){
+    var xhr = new XMLHttpRequest();
+    var thisSave = this;
+    xhr.onreadystatechange = function () {
+      if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+        var forumList = JSON.parse(xhr.responseText).forumList.reverse(); // array
+        thisSave.setState({forumList});
+      }
+    };
+    xhr.open('POST', config.DEVURL + '/get_task_list');
+    xhr.send("");
+  }
 
   render(){
     const {tags} = this.state;
@@ -120,10 +133,12 @@ class Forum extends Component{
         onChangeItem={(tags) => {this.setState({tags})}}
         title="Topic"
       />
-      <FlatList
+      <PTRView onRefresh={this._refresh} >
+        <FlatList
           data={forumList_}
           renderItem={this.renderItem}
-      />
+        />
+      </PTRView>
 
     </View>
     );

@@ -37,7 +37,7 @@ class TaskPost extends Component{
         item.img_url0?{uri: config.DEVURL+item.img_url0}:null,
         item.img_url1?{uri: config.DEVURL+item.img_url1}:null,
         item.img_url2?{uri: config.DEVURL+item.img_url2}:null,]}
-        userImg={item.img_url?config.DEVURL+item.img_url:null}
+        userImg={this.props.avatar?config.DEVURL+this.props.avatar:config.defaultAvatar}
         price={item.price}
         description={item.description}
         username={item.poster_name}
@@ -49,7 +49,7 @@ class TaskPost extends Component{
     return (
       <View>
         <FlatList
-            data={this.props.self_post_task}
+            data={this.props.self_post_task.reverse()}
             renderItem={this.renderItem}
         />
       </View>
@@ -62,4 +62,5 @@ export default connect(
       username: state.user.username,
       email: state.user.email,
       self_post_task: state.user.self_post_task,
+      avatar: state.user.avatar,
     }))(TaskPost);

@@ -61,6 +61,7 @@ class TaskOngoing extends Component{
         poster_name: item.poster_name,
       });
     }
+    data = data.reverse();
     console.log("data");
     console.log(data);
     return (

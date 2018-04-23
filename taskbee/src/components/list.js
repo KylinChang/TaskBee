@@ -196,7 +196,7 @@ class OrderItem extends Component{
       <View style={styles.taskItem}>
 
         <View style={styles.taskItemUser}>
-          <Image source={{uri: userImg?userImg:config.defaultAvatar}} style={{width: 36, height: 36, marginLeft: 12}}/>
+          <Image source={{uri: userImg?userImg:config.defaultAvatar}} key={new Date()} style={{width: 36, height: 36, marginLeft: 12}}/>
           <Text style={styles.textUser}>{username}</Text>
           <View style={{flex: 1}}>
             <Text style={styles.textPrice}>{"$" + price}</Text>

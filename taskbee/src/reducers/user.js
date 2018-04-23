@@ -92,10 +92,13 @@ function user(state=initialState, action){
       });
     case POSTTASK:
       let self_post_task = state.self_post_task.slice();
+      let underway_task = state.underway_task.slice();
       console.log("post/"+action.taskInfo);
       self_post_task.push(action.taskInfo);
+      underway_task.push(action.taskInfo);
       return Object.assign({}, state, {
         self_post_task: self_post_task,
+        underway_task: underway_task,
       });
     case GETMESSAGE:                                  // add just ONE message!!
       buddies = Object.assign({}, state.buddies);

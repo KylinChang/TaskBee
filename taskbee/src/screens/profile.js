@@ -47,7 +47,7 @@ class Profile extends Component{
         this.choose_avatar = this.choose_avatar.bind(this);
         this.state = {
             // imgUri: config.defaultAvatar,
-            imgUri: config.DEVURL + this.props.avatar
+            imgUri: this.props.avatar?config.DEVURL + this.props.avatar:null
         };
         console.log(this.props);
 
@@ -65,10 +65,12 @@ class Profile extends Component{
     */
     choose_avatar(){
         ImagePicker.openPicker({
+            width: 100,
+            height: 100,
             cropping: true,
-            compressImageMaxWidth: 100,
-            compressImageMaxHeight: 100,
-            compressImageQuality: 0.75,
+            compressImageMaxWidth: 64,
+            compressImageMaxHeight: 64,
+            compressImageQuality: 0.2,
             mediaType: "photo",
         }).then(image => {
             var thisStore = this;
