@@ -1,3 +1,6 @@
+/*
+ * Index file for all reducers, combining all reducers together
+*/
 import {
   combineReducers,
 } from 'redux';

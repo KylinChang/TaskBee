@@ -17,7 +17,6 @@ import Icon from '../components/icon';
 import {SubmitButton,} from '../components/button';
 
 import {login, getMessage} from '../reducers/user';
-// import {socket, } from '../utils/socket';
 var PushNotification = require('react-native-push-notification');
 
 const styles = StyleSheet.create({

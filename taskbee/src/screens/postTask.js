@@ -23,7 +23,7 @@ import {
   FabButton,
   ChatButton,
 } from '../components/button';
-import TextFieldAnimated from '../components/TextFieldAnimated';
+import {TextFieldAnimated} from '../components/text';
 
 
 import config from '../config/config';

@@ -1,0 +1,585 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#FFF",
+      "borderColor": "rgba(0,0,0,.1)",
+      "borderRadius": undefined,
+      "borderWidth": 0.5,
+      "flex": 1,
+      "marginBottom": 30,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#FFF",
+        "flex": 1,
+        "flexDirection": "row",
+        "height": 48,
+      }
+    }
+  >
+    <Image
+      source={
+        Object {
+          "uri": "https:test1.taskitem.com:8000//user1",
+        }
+      }
+      style={
+        Object {
+          "height": 36,
+          "marginLeft": 12,
+          "width": 36,
+        }
+      }
+    />
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "fontSize": 18,
+          "marginLeft": 9,
+        }
+      }
+    >
+      taskitem-test1
+    </Text>
+    <View
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "#E6381F",
+            "fontSize": 18,
+            "marginRight": 9,
+            "textAlign": "right",
+          }
+        }
+      >
+        $100
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "alignSelf": "stretch",
+        "backgroundColor": "#E7E7E7",
+        "height": 0.5,
+      }
+    }
+  />
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "padding": 14,
+      }
+    }
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#4A4A4A",
+          "fontSize": 18,
+          "marginBottom": 9,
+        }
+      }
+    >
+      Task test1
+    </Text>
+    <RCTScrollView
+      contentContainerStyle={
+        Object {
+          "alignItems": "center",
+          "justifyContent": "center",
+        }
+      }
+      data={
+        Array [
+          "https:test1.taskitem.com:8000//task1",
+        ]
+      }
+      disableVirtualization={false}
+      getItem={[Function]}
+      getItemCount={[Function]}
+      horizontal={true}
+      initialNumToRender={10}
+      invertStickyHeaders={undefined}
+      keyExtractor={[Function]}
+      maxToRenderPerBatch={10}
+      numColumns={1}
+      onContentSizeChange={[Function]}
+      onEndReachedThreshold={2}
+      onLayout={[Function]}
+      onMomentumScrollEnd={[Function]}
+      onScroll={[Function]}
+      onScrollBeginDrag={[Function]}
+      onScrollEndDrag={[Function]}
+      renderItem={[Function]}
+      scrollEventThrottle={50}
+      stickyHeaderIndices={Array []}
+      style={
+        Object {
+          "flex": 1,
+          "height": 108,
+        }
+      }
+      updateCellsBatchingPeriod={50}
+      viewabilityConfigCallbackPairs={Array []}
+      windowSize={21}
+    >
+      <View>
+        <View
+          onLayout={[Function]}
+          style={
+            Array [
+              Object {
+                "flexDirection": "row",
+              },
+              null,
+            ]
+          }
+        >
+          <Image
+            source={
+              Object {
+                "uri": undefined,
+              }
+            }
+            style={
+              Object {
+                "height": 100,
+                "marginRight": 9,
+                "width": 100,
+              }
+            }
+          />
+        </View>
+      </View>
+    </RCTScrollView>
+  </View>
+  <View
+    style={
+      Object {
+        "alignSelf": "stretch",
+        "backgroundColor": "#E7E7E7",
+        "height": 0.5,
+      }
+    }
+  />
+</View>
+`;
+
+exports[`renders correctly 2`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#FFF",
+      "borderColor": "rgba(0,0,0,.1)",
+      "borderRadius": undefined,
+      "borderWidth": 0.5,
+      "flex": 1,
+      "marginBottom": 30,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#FFF",
+        "flex": 1,
+        "flexDirection": "row",
+        "height": 48,
+      }
+    }
+  >
+    <Image
+      source={
+        Object {
+          "uri": "https:test1.orderitem.com:8000//user1",
+        }
+      }
+      style={
+        Object {
+          "height": 36,
+          "marginLeft": 12,
+          "width": 36,
+        }
+      }
+    />
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "fontSize": 18,
+          "marginLeft": 9,
+        }
+      }
+    >
+      orderitem-test1
+    </Text>
+    <View
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "#E6381F",
+            "fontSize": 18,
+            "marginRight": 9,
+            "textAlign": "right",
+          }
+        }
+      >
+        $100
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "alignSelf": "stretch",
+        "backgroundColor": "#E7E7E7",
+        "height": 0.5,
+      }
+    }
+  />
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "padding": 14,
+      }
+    }
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#4A4A4A",
+          "fontSize": 18,
+          "marginBottom": 9,
+        }
+      }
+    >
+      Order test1
+    </Text>
+    <RCTScrollView
+      contentContainerStyle={
+        Object {
+          "alignItems": "center",
+          "justifyContent": "center",
+        }
+      }
+      data={
+        Array [
+          "https:test1.orderitem.com:8000//task1",
+        ]
+      }
+      disableVirtualization={false}
+      getItem={[Function]}
+      getItemCount={[Function]}
+      horizontal={true}
+      initialNumToRender={10}
+      invertStickyHeaders={undefined}
+      keyExtractor={[Function]}
+      maxToRenderPerBatch={10}
+      numColumns={1}
+      onContentSizeChange={[Function]}
+      onEndReachedThreshold={2}
+      onLayout={[Function]}
+      onMomentumScrollEnd={[Function]}
+      onScroll={[Function]}
+      onScrollBeginDrag={[Function]}
+      onScrollEndDrag={[Function]}
+      renderItem={[Function]}
+      scrollEventThrottle={50}
+      stickyHeaderIndices={Array []}
+      style={
+        Object {
+          "flex": 1,
+          "height": 108,
+        }
+      }
+      updateCellsBatchingPeriod={50}
+      viewabilityConfigCallbackPairs={Array []}
+      windowSize={21}
+    >
+      <View>
+        <View
+          onLayout={[Function]}
+          style={
+            Array [
+              Object {
+                "flexDirection": "row",
+              },
+              null,
+            ]
+          }
+        >
+          <Image
+            source={
+              Object {
+                "uri": undefined,
+              }
+            }
+            style={
+              Object {
+                "height": 100,
+                "marginRight": 9,
+                "width": 100,
+              }
+            }
+          />
+        </View>
+      </View>
+    </RCTScrollView>
+  </View>
+  <View
+    style={
+      Object {
+        "alignSelf": "stretch",
+        "backgroundColor": "#E7E7E7",
+        "height": 0.5,
+      }
+    }
+  />
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "flexDirection": "row",
+        "height": 32,
+      }
+    }
+  >
+    <MKTouchable
+      accessibilityComponentType={undefined}
+      accessibilityLabel={undefined}
+      accessibilityTraits={undefined}
+      accessible={true}
+      enabled={true}
+      hitSlop={undefined}
+      maskBorderRadius={2}
+      maskColor="rgba(255,255,255,0.15)"
+      maskDuration={200}
+      maskEnabled={true}
+      nativeID={undefined}
+      onChange={[Function]}
+      onLayout={[Function]}
+      onPress={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      onTouch={[Function]}
+      pointerEvents="box-only"
+      rippleColor="rgba(255,255,255,0.2)"
+      rippleDuration={200}
+      rippleLocation="tapLocation"
+      shadowAniEnabled={true}
+      style={
+        Array [
+          Array [
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#4A90E2",
+              "flex": 1,
+              "height": 32,
+              "justifyContent": "center",
+            },
+            Object {},
+          ],
+          Object {
+            "shadowOffset": Object {
+              "height": 1,
+              "width": 0,
+            },
+          },
+        ]
+      }
+      testID={undefined}
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        pointerEvents="none"
+        style={
+          Object {
+            "fontSize": 18,
+          }
+        }
+      >
+        Chat
+      </Text>
+      <View
+        collapsable={undefined}
+        style={
+          Object {
+            "backgroundColor": "rgba(255,255,255,0.15)",
+            "borderRadius": 0,
+            "height": 1,
+            "left": -0,
+            "opacity": 0,
+            "overflow": "hidden",
+            "position": "absolute",
+            "top": -0,
+            "width": 1,
+          }
+        }
+      >
+        <View
+          collapsable={undefined}
+          style={
+            Object {
+              "backgroundColor": "rgba(255,255,255,0.2)",
+              "borderRadius": 0,
+              "height": 0,
+              "left": 0,
+              "top": 0,
+              "transform": Array [
+                Object {
+                  "scale": 0,
+                },
+              ],
+              "width": 0,
+            }
+          }
+        />
+      </View>
+    </MKTouchable>
+    <MKTouchable
+      accessibilityComponentType={undefined}
+      accessibilityLabel={undefined}
+      accessibilityTraits={undefined}
+      accessible={true}
+      enabled={true}
+      hitSlop={undefined}
+      maskBorderRadius={2}
+      maskColor="rgba(255,255,255,0.15)"
+      maskDuration={200}
+      maskEnabled={true}
+      nativeID={undefined}
+      onChange={[Function]}
+      onLayout={[Function]}
+      onPress={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      onTouch={[Function]}
+      pointerEvents="box-only"
+      rippleColor="rgba(255,255,255,0.2)"
+      rippleDuration={200}
+      rippleLocation="tapLocation"
+      shadowAniEnabled={true}
+      style={
+        Array [
+          Array [
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#FFAB4D",
+              "flex": 1,
+              "height": 32,
+              "justifyContent": "center",
+            },
+            Object {},
+          ],
+          Object {
+            "shadowOffset": Object {
+              "height": 1,
+              "width": 0,
+            },
+          },
+        ]
+      }
+      testID={undefined}
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        pointerEvents="none"
+        style={
+          Object {
+            "fontSize": 18,
+          }
+        }
+      >
+        Make Appointment
+      </Text>
+      <View
+        collapsable={undefined}
+        style={
+          Object {
+            "backgroundColor": "rgba(255,255,255,0.15)",
+            "borderRadius": 0,
+            "height": 1,
+            "left": -0,
+            "opacity": 0,
+            "overflow": "hidden",
+            "position": "absolute",
+            "top": -0,
+            "width": 1,
+          }
+        }
+      >
+        <View
+          collapsable={undefined}
+          style={
+            Object {
+              "backgroundColor": "rgba(255,255,255,0.2)",
+              "borderRadius": 0,
+              "height": 0,
+              "left": 0,
+              "top": 0,
+              "transform": Array [
+                Object {
+                  "scale": 0,
+                },
+              ],
+              "width": 0,
+            }
+          }
+        />
+      </View>
+    </MKTouchable>
+  </View>
+</View>
+`;

@@ -56,43 +56,11 @@ class Chat extends React.Component {
         super(props);
         this.onSend = this.onSend.bind(this);
         this.updateChat = this.updateChat.bind(this);
-        //console.log(this.props.buddy);
     }
     componentWillMount() {
         this.setState({
-            messages: [
-                //{
-                //  _id: 1,
-                //  text: 'Hello developer',
-                //  createdAt: new Date(),
-                //  user: {
-                //    _id: 2,
-                //    name: 'React Native',
-                //    avatar: 'https://facebook.github.io/react-native/docs/assets/favicon.png',
-                //  },
-                //},
-            ],
+            messages: [],
         });
-
-        //var thisSave = this;
-        //socket.on('push_message', function(res){
-        //  console.log("chat page::received!!");
-        //  var msg = {
-        //    _id: (new Date()).toString(),
-        //    text: res.message_content,
-        //    createdAt: new Date(),
-        //    user:{
-        //      _id: 2,
-        //      name: res.send_user,
-        //      avatar: 'https://facebook.github.io/react-native/docs/assets/favicon.png',
-        //    },
-        //  };
-        //  // console.log(msg);
-        //  thisSave.setState(previousState => ({
-        //    messages: GiftedChat.append(previousState.messages, [msg])
-        //  }));
-        //  // console.log(thisSave);
-        //});
     }
 
     componentDidMount(){
@@ -156,12 +124,10 @@ class Chat extends React.Component {
         console.log( this.state);
         let thisSave = this;
         if(buddy.username != this.state.buddy.username || buddies[buddy.username].newMessages != 0)
-        //if(true)
         {
             this.setState({buddy: buddy, messages: []});
             console.log(this.props.notify);
             console.log(buddies[buddy.username].newMessages);
-            // PushNotificationIOS.setApplicationIconBadgeNumber(0);
 
             let newMsgs = [];
             buddies[buddy.username].messages.forEach(function (rawMsg, i) {
@@ -183,32 +149,14 @@ class Chat extends React.Component {
                     messages: GiftedChat.append(previousState.messages, [msg])
                 }));
             });
-            //this.setState({
-            //  messages: newMsgs
-            //});
-            //this.setState(previousState => ({
-            //  messages: GiftedChat.append(previousState.messages, newMsgs)
-            //}));
         }
     }
 
     onSend(messages = []) {
-        // PushNotification.localNotificationSchedule({
-        //     /* iOS and Android properties */
-        //     title: "My Notification Title", // (optional)
-        //     message: "My Notification Message", // (required)
-        //     playSound: true, // (optional) default: true
-        //     soundName: 'default', // (optional) Sound to play when the notification is shown. Value of 'default' plays the default sound. It can be set to a custom sound such as 'android.resource://com.xyz/raw/my_sound'. It will look for the 'my_sound' audio file in 'res/raw' directory and play it. default: 'default' (default sound is played)
-        //     date: new Date(Date.now() + (5 * 1000)) // in 60 secs
-        // });
-        // PushNotificationIOS.setApplicationIconBadgeNumber(10);
-
         this.setState(previousState => ({
             messages: GiftedChat.append(previousState.messages, messages),
         }))
-        // console.log(this);
-        // console.log(messages);
-        // console.log(this);
+
         const {getMessage} = this.props;
 
         var oneMessage = {
@@ -232,9 +180,6 @@ class Chat extends React.Component {
                     left: {
                         backgroundColor: 'white'
                     }
-                    // right: {
-                    //   backgroundColor: '#2c3e50'
-                    // }
                 }}
             />
         )
@@ -242,36 +187,6 @@ class Chat extends React.Component {
 
 
     render() {
-        //this.setState({messages: this.props.buddies[buddy.username]});
-
-        //console.log( this.props.buddies);
-        //console.log( this.props.buddy);
-
-        //if(this.props.notify)
-        //{
-        //  console.log(buddies[buddy.username].messages);
-        //  let newMsgs = [];
-        //  buddies[buddy.username].messages.forEach(function (rawMsg, i) {
-        //    console.log(i);
-        //    var msg = {
-        //      _id: rawMsg.timestamp,
-        //      text: rawMsg.content,
-        //      createdAt: new Date(rawMsg.timestamp), // new Date().. * 1000?
-        //      user:{
-        //        _id: 2,
-        //        name: rawMsg.sender.username,
-        //        avatar: rawMsg.sender.avatar,
-        //      },
-        //    };
-        //    console.log(msg);
-        //    newMsgs.push(msg);
-        //  });
-        //  this.setState(previousState => ({
-        //    messages: GiftedChat.append(previousState.messages, newMsgs)
-        //  }));
-        //  const {clearNotify} = this.props;
-        //  clearNotify(buddy.username);
-        //}
         return (
             <GiftedChat
                 messages={this.state.messages}

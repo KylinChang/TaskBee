@@ -1,0 +1,633 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<MKTouchable
+  accessibilityComponentType={undefined}
+  accessibilityLabel={undefined}
+  accessibilityTraits={undefined}
+  accessible={true}
+  backgroundColor="#fff"
+  enabled={true}
+  hitSlop={undefined}
+  maskBorderRadius={2}
+  maskColor="rgba(255,255,255,0.15)"
+  maskDuration={200}
+  maskEnabled={true}
+  nativeID={undefined}
+  onChange={[Function]}
+  onLayout={[Function]}
+  onPress={undefined}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  onTouch={[Function]}
+  pointerEvents="box-only"
+  rippleColor="rgba(255,255,255,0.2)"
+  rippleDuration={200}
+  rippleLocation="tapLocation"
+  shadowAniEnabled={true}
+  style={
+    Array [
+      Array [
+        Array [
+          Object {
+            "alignItems": "center",
+            "flex": 1,
+            "flexDirection": "row",
+            "height": 48,
+            "paddingHorizontal": 14,
+          },
+          undefined,
+        ],
+        Object {},
+      ],
+      Object {
+        "shadowOffset": Object {
+          "height": 1,
+          "width": 0,
+        },
+      },
+    ]
+  }
+  testID={undefined}
+>
+  <Image
+    source={
+      Object {
+        "uri": "submit-test1-img-uri",
+      }
+    }
+    style={
+      Object {
+        "height": 36,
+        "width": 36,
+      }
+    }
+  />
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "flexDirection": "column",
+        "paddingHorizontal": 14,
+      }
+    }
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      pointerEvents="none"
+      style={
+        Object {
+          "color": "#4a4a4a",
+          "marginLeft": 9,
+        }
+      }
+    >
+      test1
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      pointerEvents="none"
+      style={
+        Object {
+          "color": "#4a4a4a",
+          "marginLeft": 9,
+        }
+      }
+    >
+      Email: submit.test1@test.edu
+    </Text>
+  </View>
+  <View
+    collapsable={undefined}
+    style={
+      Object {
+        "backgroundColor": "rgba(255,255,255,0.15)",
+        "borderRadius": 0,
+        "height": 1,
+        "left": -0,
+        "opacity": 0,
+        "overflow": "hidden",
+        "position": "absolute",
+        "top": -0,
+        "width": 1,
+      }
+    }
+  >
+    <View
+      collapsable={undefined}
+      style={
+        Object {
+          "backgroundColor": "rgba(255,255,255,0.2)",
+          "borderRadius": 0,
+          "height": 0,
+          "left": 0,
+          "top": 0,
+          "transform": Array [
+            Object {
+              "scale": 0,
+            },
+          ],
+          "width": 0,
+        }
+      }
+    />
+  </View>
+</MKTouchable>
+`;
+
+exports[`renders correctly 2`] = `
+<MKTouchable
+  accessibilityComponentType={undefined}
+  accessibilityLabel={undefined}
+  accessibilityTraits={undefined}
+  accessible={true}
+  backgroundColor="#fff"
+  enabled={true}
+  hitSlop={undefined}
+  maskBorderRadius={2}
+  maskColor="rgba(255,255,255,0.15)"
+  maskDuration={200}
+  maskEnabled={true}
+  nativeID={undefined}
+  onChange={[Function]}
+  onLayout={[Function]}
+  onPress={undefined}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  onTouch={[Function]}
+  pointerEvents="box-only"
+  rippleColor="rgba(255,255,255,0.2)"
+  rippleDuration={200}
+  rippleLocation="tapLocation"
+  shadowAniEnabled={true}
+  style={
+    Array [
+      Array [
+        Array [
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#fff",
+            "flex": 1,
+            "flexDirection": "row",
+            "height": 48,
+            "paddingHorizontal": 14,
+          },
+          undefined,
+        ],
+        Object {},
+      ],
+      Object {
+        "shadowOffset": Object {
+          "height": 1,
+          "width": 0,
+        },
+      },
+    ]
+  }
+  testID={undefined}
+>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    ellipsizeMode="tail"
+    pointerEvents="none"
+    style={
+      Object {
+        "color": "#4a4a4a",
+        "marginLeft": 9,
+      }
+    }
+  />
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flex": 1,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      pointerEvents="none"
+      style={
+        Object {
+          "flex": 1,
+          "textAlign": "right",
+        }
+      }
+    >
+      
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={false}
+      ellipsizeMode="tail"
+      style={
+        Array [
+          Object {
+            "color": "#737373",
+            "fontSize": 16,
+          },
+          undefined,
+          Object {
+            "fontFamily": "taskbee-icons",
+            "fontStyle": "normal",
+            "fontWeight": "normal",
+          },
+        ]
+      }
+    >
+      m
+    </Text>
+  </View>
+  <View
+    collapsable={undefined}
+    style={
+      Object {
+        "backgroundColor": "rgba(255,255,255,0.15)",
+        "borderRadius": 0,
+        "height": 1,
+        "left": -0,
+        "opacity": 0,
+        "overflow": "hidden",
+        "position": "absolute",
+        "top": -0,
+        "width": 1,
+      }
+    }
+  >
+    <View
+      collapsable={undefined}
+      style={
+        Object {
+          "backgroundColor": "rgba(255,255,255,0.2)",
+          "borderRadius": 0,
+          "height": 0,
+          "left": 0,
+          "top": 0,
+          "transform": Array [
+            Object {
+              "scale": 0,
+            },
+          ],
+          "width": 0,
+        }
+      }
+    />
+  </View>
+</MKTouchable>
+`;
+
+exports[`renders correctly 3`] = `
+<MKTouchable
+  accessibilityComponentType={undefined}
+  accessibilityLabel={undefined}
+  accessibilityTraits={undefined}
+  accessible={true}
+  backgroundColor="#fff"
+  enabled={true}
+  hitSlop={undefined}
+  maskBorderRadius={2}
+  maskColor="rgba(255,255,255,0.15)"
+  maskDuration={200}
+  maskEnabled={true}
+  nativeID={undefined}
+  onChange={[Function]}
+  onLayout={[Function]}
+  onPress={undefined}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  onTouch={[Function]}
+  pointerEvents="box-only"
+  rippleColor="rgba(255,255,255,0.2)"
+  rippleDuration={200}
+  rippleLocation="tapLocation"
+  shadowAniEnabled={true}
+  style={
+    Array [
+      Array [
+        Array [
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#fff",
+            "flex": 1,
+            "height": 48,
+            "justifyContent": "center",
+            "paddingHorizontal": 14,
+          },
+          undefined,
+        ],
+        Object {},
+      ],
+      Object {
+        "shadowOffset": Object {
+          "height": 1,
+          "width": 0,
+        },
+      },
+    ]
+  }
+  testID={undefined}
+>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    ellipsizeMode="tail"
+    pointerEvents="none"
+    style={
+      Object {
+        "alignItems": "center",
+        "color": "#4a4a4a",
+        "justifyContent": "center",
+      }
+    }
+  />
+  <View
+    collapsable={undefined}
+    style={
+      Object {
+        "backgroundColor": "rgba(255,255,255,0.15)",
+        "borderRadius": 0,
+        "height": 1,
+        "left": -0,
+        "opacity": 0,
+        "overflow": "hidden",
+        "position": "absolute",
+        "top": -0,
+        "width": 1,
+      }
+    }
+  >
+    <View
+      collapsable={undefined}
+      style={
+        Object {
+          "backgroundColor": "rgba(255,255,255,0.2)",
+          "borderRadius": 0,
+          "height": 0,
+          "left": 0,
+          "top": 0,
+          "transform": Array [
+            Object {
+              "scale": 0,
+            },
+          ],
+          "width": 0,
+        }
+      }
+    />
+  </View>
+</MKTouchable>
+`;
+
+exports[`renders correctly 4`] = `
+<MKTouchable
+  accessibilityComponentType={undefined}
+  accessibilityLabel={undefined}
+  accessibilityTraits={undefined}
+  accessible={true}
+  backgroundColor="#3F51B5"
+  enabled={true}
+  fab={true}
+  hitSlop={undefined}
+  maskBorderRadius={2}
+  maskBorderRadiusInPercent={50}
+  maskColor="rgba(255,255,255,0.15)"
+  maskDuration={200}
+  maskEnabled={true}
+  nativeID={undefined}
+  onChange={[Function]}
+  onLayout={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  onTouch={[Function]}
+  pointerEvents="box-only"
+  rippleColor="rgba(255,255,255,0.2)"
+  rippleDuration={200}
+  rippleLocation="center"
+  shadowAniEnabled={true}
+  style={
+    Array [
+      Array [
+        Array [
+          Object {
+            "alignItems": "center",
+            "justifyContent": "center",
+            "padding": 8,
+          },
+          Object {
+            "backgroundColor": "#3F51B5",
+          },
+          Object {
+            "borderRadius": 24,
+            "height": 48,
+            "width": 48,
+          },
+          Object {
+            "elevation": 4,
+            "shadowColor": "black",
+            "shadowOffset": Object {
+              "height": 0.5,
+              "width": 0,
+            },
+            "shadowOpacity": 0.4,
+            "shadowRadius": 1,
+          },
+        ],
+        Object {},
+      ],
+      Object {
+        "shadowOffset": Object {
+          "height": 1,
+          "width": 0,
+        },
+      },
+    ]
+  }
+  testID={undefined}
+  textStyle={
+    Array [
+      Object {
+        "fontSize": 14,
+      },
+      undefined,
+    ]
+  }
+>
+  <View
+    collapsable={undefined}
+    style={
+      Object {
+        "backgroundColor": "rgba(255,255,255,0.15)",
+        "borderRadius": 0,
+        "height": 1,
+        "left": -0,
+        "opacity": 0,
+        "overflow": "hidden",
+        "position": "absolute",
+        "top": -0,
+        "width": 1,
+      }
+    }
+  >
+    <View
+      collapsable={undefined}
+      style={
+        Object {
+          "backgroundColor": "rgba(255,255,255,0.2)",
+          "borderRadius": 0,
+          "height": 0,
+          "left": 0,
+          "top": 0,
+          "transform": Array [
+            Object {
+              "scale": 0,
+            },
+          ],
+          "width": 0,
+        }
+      }
+    />
+  </View>
+</MKTouchable>
+`;
+
+exports[`renders correctly 5`] = `
+<MKTouchable
+  accent={true}
+  accessibilityComponentType={undefined}
+  accessibilityLabel={undefined}
+  accessibilityTraits={undefined}
+  accessible={true}
+  backgroundColor="#FF4081"
+  enabled={true}
+  fab={true}
+  hitSlop={undefined}
+  maskBorderRadius={2}
+  maskBorderRadiusInPercent={50}
+  maskColor="rgba(255,255,255,0.15)"
+  maskDuration={200}
+  maskEnabled={true}
+  nativeID={undefined}
+  onChange={[Function]}
+  onLayout={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  onTouch={[Function]}
+  pointerEvents="box-only"
+  rippleColor="rgba(255,255,255,0.2)"
+  rippleDuration={200}
+  rippleLocation="center"
+  shadowAniEnabled={true}
+  style={
+    Array [
+      Array [
+        Array [
+          Object {
+            "alignItems": "center",
+            "justifyContent": "center",
+            "padding": 8,
+          },
+          Object {
+            "backgroundColor": "#FF4081",
+          },
+          Object {
+            "borderRadius": 24,
+            "height": 48,
+            "width": 48,
+          },
+          Object {
+            "elevation": 4,
+            "shadowColor": "black",
+            "shadowOffset": Object {
+              "height": 0.5,
+              "width": 0,
+            },
+            "shadowOpacity": 0.4,
+            "shadowRadius": 1,
+          },
+        ],
+        Object {},
+      ],
+      Object {
+        "shadowOffset": Object {
+          "height": 1,
+          "width": 0,
+        },
+      },
+    ]
+  }
+  testID={undefined}
+  textStyle={
+    Array [
+      Object {
+        "fontSize": 14,
+      },
+      undefined,
+    ]
+  }
+>
+  <View
+    collapsable={undefined}
+    style={
+      Object {
+        "backgroundColor": "rgba(255,255,255,0.15)",
+        "borderRadius": 0,
+        "height": 1,
+        "left": -0,
+        "opacity": 0,
+        "overflow": "hidden",
+        "position": "absolute",
+        "top": -0,
+        "width": 1,
+      }
+    }
+  >
+    <View
+      collapsable={undefined}
+      style={
+        Object {
+          "backgroundColor": "rgba(255,255,255,0.2)",
+          "borderRadius": 0,
+          "height": 0,
+          "left": 0,
+          "top": 0,
+          "transform": Array [
+            Object {
+              "scale": 0,
+            },
+          ],
+          "width": 0,
+        }
+      }
+    />
+  </View>
+</MKTouchable>
+`;

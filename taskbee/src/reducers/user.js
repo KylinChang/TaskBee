@@ -1,5 +1,6 @@
 import config from '../config/config';
 
+// Action types
 const LOGIN="USER/LOGIN";
 const REGISTER ="USER/REGISTER";
 const LOGOUT="USER/LOGOUT";
@@ -10,6 +11,7 @@ const POSTTASK = "USER/POSTTASK";
 const GETMESSAGE = "USER/GETMESSAGE";
 const CLEARNOTIFY = "USER/CLEARNOTIFY";
 
+// User state
 const initialState = {
   logError: false,
   loggedIn: false,
@@ -17,13 +19,13 @@ const initialState = {
   email: "",
   avatar: "",
   me: {},
-  messages: [],
+  messages: [],  // messsage list
   buddies: {},   // all buddies.
-  buddy: {},    // current chat buddy.
-  self_take_task: [],
-  self_post_task: [],
-  underway_task: [],
-  notify: 0,
+  buddy: {},     // current chat buddy.
+  self_take_task: [],  // list of tasks taken by the user
+  self_post_task: [],  // list of tasks posted by the user
+  underway_task: [],   // list of ongoing tasks related to the user
+  notify: 0,     // number of unread messages
 };
 
 function user(state=initialState, action){
@@ -33,8 +35,6 @@ function user(state=initialState, action){
         loggedIn: true,
         username: action.username,
         email: action.email,
-        //messages: action.messages,
-        //buddies: action.buddies,
         avatar: action.avatar,
         buddy: "",
         task_list: {},
@@ -173,8 +173,6 @@ function login(username, email, avatar){
     type: LOGIN,
     username: username,
     email: email,
-    //messages: messages,
-    //buddies: buddies,
     avatar: avatar,
   }
 }
@@ -201,18 +199,6 @@ function chat(buddy)  // {username, email, avatar}
     buddy: buddy,
   }
 }
-
-//function chat(sender, receiver, timestamp, content, isReceiver) //sender, receiver: object, {username, avatar, email}; other: string
-//{
-//  return {
-//    type: CHAT,
-//    sender: sender,
-//    receiver: receiver,
-//    timestamp: timestamp,
-//    content: content,
-//    isReceiver: isReceiver,
-//  }
-//}
 
 function getTask(task_list)
 {

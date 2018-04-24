@@ -29,25 +29,12 @@ class Forum extends Component{
     this._refresh = this._refresh.bind(this);
     this.state = {
       tags: config.tags,
-      forumList: [
-        // {
-        //   poster_info: {
-        //     username: "haolin",
-        //     email: "haolin@gmail.com",
-        //     img_url: 'https://facebook.github.io/react-native/docs/assets/favicon.png'
-        //   },
-        //   task_info: {
-        //     price: 30,
-        //     description: "lalaland",
-        //   },
-        //   tags: ['undergraduate', 'graduate'],
-        // },
-      ]
+      forumList: [],
     }
-
   }
 
   componentWillMount(){
+    // get the task list for the forum before loading the component
     var xhr = new XMLHttpRequest();
     var thisSave = this;
     xhr.onreadystatechange = function () {
@@ -60,6 +47,7 @@ class Forum extends Component{
     xhr.send("");
   }
 
+  // trigger to chat when pressing chat button
   pressChat(buddy, email, avatar)
   {
     this.props.chat({username: buddy, email: email, avatar: avatar});
@@ -68,6 +56,7 @@ class Forum extends Component{
     this.props.navigation.navigate('Chat');
   }
 
+  // trigger to appointment when pressing appointment button
   pressAppointment(taskID, taskInfo){
     const {username} = this.props;
     let msg = {
@@ -88,7 +77,6 @@ class Forum extends Component{
           item.task_info.img_url0?{uri: config.DEVURL+item.task_info.img_url0}:null,
           item.task_info.img_url1?{uri: config.DEVURL+item.task_info.img_url1}:null,
           item.task_info.img_url2?{uri: config.DEVURL+item.task_info.img_url2}:null,]}
-          // taskImgs={[item.task_info.img_url0, item.task_info.img_url1, item.task_info.img_url2]}
           userImg={item.poster_info.img_url?config.DEVURL+item.poster_info.img_url:config.defaultAvatar}
           price={item.task_info.price}
           description={item.task_info.description}
@@ -99,6 +87,7 @@ class Forum extends Component{
   );
 
   _refresh(){
+    // pull to get the task list and refresh task list in forum
     var xhr = new XMLHttpRequest();
     var thisSave = this;
     xhr.onreadystatechange = function () {
@@ -148,8 +137,6 @@ class Forum extends Component{
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // justifyContent: 'center',
-    // backgroundColor: '#F5FCFF',
     top: 5,
     bottom: 20,
   },

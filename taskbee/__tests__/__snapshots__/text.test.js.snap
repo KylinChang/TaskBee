@@ -1,0 +1,152 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "backgroundColor": undefined,
+      },
+      Object {
+        "height": 42,
+      },
+    ]
+  }
+>
+  <TextInput
+    allowFontScaling={true}
+    onBlur={[Function]}
+    onChangeText={[Function]}
+    onFocus={[Function]}
+    secureTextEntry={undefined}
+    style={
+      Array [
+        Object {
+          "alignSelf": "stretch",
+          "backgroundColor": "transparent",
+          "marginTop": 0,
+          "paddingBottom": 2,
+          "paddingTop": 2,
+        },
+        Object {
+          "color": "rgb(117, 117, 117)",
+          "fontSize": 16,
+          "paddingLeft": 0,
+          "paddingRight": 0,
+        },
+        Object {
+          "fontSize": 18,
+        },
+      ]
+    }
+    underlineColorAndroid="transparent"
+  />
+  <View
+    pointerEvents="none"
+    style={
+      Object {
+        "height": 2,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "backgroundColor": "#FF9800",
+          "height": 2,
+          "position": "absolute",
+          "width": 0,
+        }
+      }
+    />
+    <View
+      collapsable={undefined}
+      style={
+        Object {
+          "backgroundColor": "#3F51B5",
+          "height": 2,
+          "left": 0,
+          "position": "absolute",
+          "width": 0,
+        }
+      }
+    />
+  </View>
+</View>
+`;
+
+exports[`renders correctly 2`] = `
+<View
+  style={
+    Array [
+      Object {
+        "backgroundColor": undefined,
+      },
+      Object {
+        "height": 42,
+      },
+    ]
+  }
+>
+  <TextInput
+    allowFontScaling={true}
+    onBlur={[Function]}
+    onChangeText={[Function]}
+    onFocus={[Function]}
+    password={true}
+    secureTextEntry={true}
+    style={
+      Array [
+        Object {
+          "alignSelf": "stretch",
+          "backgroundColor": "transparent",
+          "marginTop": 0,
+          "paddingBottom": 2,
+          "paddingTop": 2,
+        },
+        Object {
+          "color": "rgb(117, 117, 117)",
+          "fontSize": 16,
+          "paddingLeft": 0,
+          "paddingRight": 0,
+        },
+        Object {
+          "fontSize": 18,
+        },
+      ]
+    }
+    underlineColorAndroid="transparent"
+  />
+  <View
+    pointerEvents="none"
+    style={
+      Object {
+        "height": 2,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "backgroundColor": "#FF9800",
+          "height": 2,
+          "position": "absolute",
+          "width": 0,
+        }
+      }
+    />
+    <View
+      collapsable={undefined}
+      style={
+        Object {
+          "backgroundColor": "#3F51B5",
+          "height": 2,
+          "left": 0,
+          "position": "absolute",
+          "width": 0,
+        }
+      }
+    />
+  </View>
+</View>
+`;

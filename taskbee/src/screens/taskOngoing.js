@@ -38,7 +38,7 @@ class TaskOngoing extends Component{
         item.img_url0,
         item.img_url1,
         item.img_url2,]}
-        userImg={item.img_url?config.DEVURL+item.img_url:null}
+        userImg={item.img_url?config.DEVURL+item.img_url:config.defaultAvatar}
         price={item.price}
         description={item.description}
         username={item.poster_name}

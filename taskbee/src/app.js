@@ -50,23 +50,16 @@ PushNotification.configure({
     requestPermissions: true,
 });
 
+// make socket global variable, which can be accessed by all the components
 global.socket = openSocket(config.DEVWebsite);
 
-
-
-
-
+// user state
 const store = createStore(Reducers);
-// store.dispatch(login());
-
 
 socket.on('push_message', function(res){
     console.log("app page::message received!!");
 
     let user = store.getState().user;
-    //let username = user.username;
-    //let email = user.email;
-    //let avatar = user.avatar;
 
     store.dispatch(getMessage(res.user_info, user, res.time, res.message_content, true));
     PushNotificationIOS.getApplicationIconBadgeNumber(function (num) {
