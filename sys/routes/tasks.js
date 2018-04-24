@@ -2,8 +2,9 @@ var express    = require('express');
 var router     = express.Router();
 var connection = require('../model/db');
 var multer     = require('multer');
+var fs         = require('fs');
 
-const maxSize    = 50 * 1024 * 1024
+const maxSize  = 50 * 1024 * 1024
 var upload     = multer({limits: { fileSize: maxSize}});
 
 router.post('/take_task', function (req, res, next) {

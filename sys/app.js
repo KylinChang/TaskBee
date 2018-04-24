@@ -123,7 +123,6 @@ io.on('connection', function(socket) {
     } else {
       console.log("message sent!");
       var date    = new Date();
-      var curdate = ""+date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
 
       var query_user_info_body = "select * from User_Info \
             where User_Info.username = \'" + DATA.send_user + "\'";
@@ -134,7 +133,7 @@ io.on('connection', function(socket) {
           throw err;
         }
 
-        io.to(receiver_socket_id).emit("push_message", {message_content: DATA.message_content, user_info: user_info_rows[0], time: curdate});
+        io.to(receiver_socket_id).emit("push_message", {message_content: DATA.message_content, user_info: user_info_rows[0], time: date});
       });
     }
   });
