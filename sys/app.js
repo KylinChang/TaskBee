@@ -14,6 +14,7 @@ var app          = express();
 var mysql        = require('mysql');
 var fs           = require('fs');
 var multer       = require('multer');
+var router       = require('./routes/index')
 
 // User Object
 var user_socket = {};
@@ -21,6 +22,7 @@ var connection  = require('./model/db');
 
 const max_limit = '100mb'
 const maxSize   = 50 * 1024 * 1024
+var upload     = multer({limits: { fileSize: maxSize}});
 
 app.use(bodyParser.urlencoded({ limit: max_limit, extended: true, parameterLimit: maxSize }));
 app.use(bodyParser.json({limit: max_limit}));
@@ -35,7 +37,7 @@ app.use(logger('dev'));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/images', express.static(__dirname+'/images/'));
-app.use(require('./routes/index'));
+app.use('/', router);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -74,6 +76,7 @@ app.use(function(err, req, res, next) {
     error: err
   });
 });
+
 
 
 /*

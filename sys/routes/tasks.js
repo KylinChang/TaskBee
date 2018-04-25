@@ -100,10 +100,12 @@ router.post('/post_task', upload.array('photo', 3), function(req, res, next) {
 
         function(resolve, reject) {
 
-          var pic_name = './images/' + result.insertId.toString() + '_'  + i.toString() + '.JPG';
+          var dirname = __dirname.substr(0, __dirname.length - "/routes".length)
+          var subdir = '/images/' + result.insertId.toString() + '_'  + i.toString() + '.JPG';
+          var pic_name = dirname + subdir
           var fstream = fs.createWriteStream(pic_name);
           var update_img_url_body = "update Task_Info set \
-                      img_url" + i.toString() + " = \'" + pic_name.substr(1) + "\' \
+                      img_url" + i.toString() + " = \'" + subdir + "\' \
                       where task_id = \'" + result.insertId + "\'";
 
           fstream.write(req.files[i].buffer, function () {

@@ -1,0 +1,18 @@
+ada
+start to listen on socket..
+events.js:183
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE :::1234
+    at Object._errnoException (util.js:1022:11)
+    at _exceptionWithHostPort (util.js:1044:20)
+    at Server.setupListenHandle [as _listen2] (net.js:1367:14)
+    at listenInCluster (net.js:1408:12)
+    at Server.listen (net.js:1492:7)
+    at Server.listen.Server.attach (/home/ec2-user/se/TaskBee/sys/node_modules/socket.io/lib/index.js:237:9)
+    at new Server (/home/ec2-user/se/TaskBee/sys/node_modules/socket.io/lib/index.js:56:17)
+    at Server (/home/ec2-user/se/TaskBee/sys/node_modules/socket.io/lib/index.js:42:41)
+    at Object.<anonymous> (/home/ec2-user/se/TaskBee/sys/app.js:389:30)
+    at Module._compile (module.js:652:30)
+error: Forever detected script exited with code: 1
