@@ -1,0 +1,4 @@
+ada
+start to listen on socket..
+a user connected
+error: Forever detected script was killed by signal: SIGKILL

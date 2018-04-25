@@ -1,0 +1,9 @@
+ada
+start to listen on socket..
+a user connected
+{ user_name: 'Bob', password: '' }
+{ user_name: 'Bob', password: '123' }
+a user connected
+{ user_name: 'Bob', password: '123' }
+a user connected
+error: Forever detected script was killed by signal: SIGKILL

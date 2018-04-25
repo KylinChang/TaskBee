@@ -1,0 +1,151 @@
+
+Running node-supervisor with
+  program 'bin/www'
+  --watch '.'
+  --extensions 'node,js'
+  --exec 'node'
+
+Starting child process with 'node bin/www'
+Watching directory '/home/ec2-user/se/TaskBee/sys' for changes.
+Press rs for restarting the process.
+Parent process exiting, terminating child...
+events.js:183
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: EBADF: bad file descriptor, read
+
+Running node-supervisor with
+  program 'bin/www'
+  --watch '.'
+  --extensions 'node,js'
+  --exec 'node'
+
+Starting child process with 'node bin/www'
+Watching directory '/home/ec2-user/se/TaskBee/sys' for changes.
+Press rs for restarting the process.
+Parent process exiting, terminating child...
+events.js:183
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: EBADF: bad file descriptor, read
+
+Running node-supervisor with
+  program 'bin/www'
+  --watch '.'
+  --extensions 'node,js'
+  --exec 'node'
+
+Starting child process with 'node bin/www'
+Watching directory '/home/ec2-user/se/TaskBee/sys' for changes.
+Press rs for restarting the process.
+Parent process exiting, terminating child...
+events.js:183
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: EBADF: bad file descriptor, read
+ada
+start to listen on socket..
+a user connected
+{ user_name: '123', password: '123' }
+in get task list!
+select * from User_Info               where username = 'Bob'
+select * from User_Info               where username = 'Alice'
+[0mPOST /get_task_list [32m200 [0m7.484 ms - 1093[0m
+error in take task: update task info error!
+/home/ec2-user/se/TaskBee/sys/node_modules/mysql/lib/protocol/Parser.js:80
+        throw err; // Rethrow non-MySQL errors
+        ^
+
+Error: ER_NO_SUCH_TABLE: Table 'TaskBee.Task_info' doesn't exist
+    at Query.Sequence._packetToError (/home/ec2-user/se/TaskBee/sys/node_modules/mysql/lib/protocol/sequences/Sequence.js:52:14)
+    at Query.ErrorPacket (/home/ec2-user/se/TaskBee/sys/node_modules/mysql/lib/protocol/sequences/Query.js:77:18)
+    at Protocol._parsePacket (/home/ec2-user/se/TaskBee/sys/node_modules/mysql/lib/protocol/Protocol.js:279:23)
+    at Parser.write (/home/ec2-user/se/TaskBee/sys/node_modules/mysql/lib/protocol/Parser.js:76:12)
+    at Protocol.write (/home/ec2-user/se/TaskBee/sys/node_modules/mysql/lib/protocol/Protocol.js:39:16)
+    at Socket.<anonymous> (/home/ec2-user/se/TaskBee/sys/node_modules/mysql/lib/Connection.js:103:28)
+    at emitOne (events.js:116:13)
+    at Socket.emit (events.js:211:7)
+    at addChunk (_stream_readable.js:263:12)
+    at readableAddChunk (_stream_readable.js:250:11)
+    --------------------
+    at Protocol._enqueue (/home/ec2-user/se/TaskBee/sys/node_modules/mysql/lib/protocol/Protocol.js:145:48)
+    at Connection.query (/home/ec2-user/se/TaskBee/sys/node_modules/mysql/lib/Connection.js:208:25)
+    at Socket.<anonymous> (/home/ec2-user/se/TaskBee/sys/app.js:662:18)
+    at emitOne (events.js:116:13)
+    at Socket.emit (events.js:211:7)
+    at /home/ec2-user/se/TaskBee/sys/node_modules/socket.io/lib/socket.js:513:12
+    at _combinedTickCallback (internal/process/next_tick.js:131:7)
+    at process._tickCallback (internal/process/next_tick.js:180:9)
+
+Running node-supervisor with
+  program 'bin/www'
+  --watch '.'
+  --extensions 'node,js'
+  --exec 'node'
+
+Starting child process with 'node bin/www'
+Watching directory '/home/ec2-user/se/TaskBee/sys' for changes.
+Press rs for restarting the process.
+Parent process exiting, terminating child...
+events.js:183
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: EBADF: bad file descriptor, read
+
+Running node-supervisor with
+  program 'bin/www'
+  --watch '.'
+  --extensions 'node,js'
+  --exec 'node'
+
+Starting child process with 'node bin/www'
+Watching directory '/home/ec2-user/se/TaskBee/sys' for changes.
+Press rs for restarting the process.
+Parent process exiting, terminating child...
+events.js:183
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: EBADF: bad file descriptor, read
+
+Running node-supervisor with
+  program 'bin/www'
+  --watch '.'
+  --extensions 'node,js'
+  --exec 'node'
+
+Starting child process with 'node bin/www'
+Watching directory '/home/ec2-user/se/TaskBee/sys' for changes.
+Press rs for restarting the process.
+Parent process exiting, terminating child...
+events.js:183
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: EBADF: bad file descriptor, read
+
+Running node-supervisor with
+  program 'bin/www'
+  --watch '.'
+  --extensions 'node,js'
+  --exec 'node'
+
+Starting child process with 'node bin/www'
+Watching directory '/home/ec2-user/se/TaskBee/sys' for changes.
+Press rs for restarting the process.
+Parent process exiting, terminating child...
+events.js:183
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: EBADF: bad file descriptor, read
+[33mwarn[39m:    --minUptime not set. Defaulting to: 1000ms
+[33mwarn[39m:    --spinSleepTime not set. Your script will exit if it does not stay up for at least 1000ms
+ada
+start to listen on socket..
+a user connected
+a user connected
